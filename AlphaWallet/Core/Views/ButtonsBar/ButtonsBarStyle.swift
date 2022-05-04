@@ -10,10 +10,10 @@ import UIKit
 enum ButtonsBarStyle {
     enum Colors {
         static var primaryBackgroundActive: UIColor {
-            return R.color.cod()!
+            return R.color.electricBlueSecondary()!
         }
         static var primaryBackgroundInactive: UIColor {
-            return R.color.mike()!
+            return R.color.electricBlueSecondary()!
         }
         static var primaryTextActive: UIColor {
             return R.color.white()!
@@ -22,13 +22,13 @@ enum ButtonsBarStyle {
             return R.color.white()!
         }
         static var primaryBorderActive: UIColor {
-            return R.color.cod()!
+            return R.color.electricBlueSecondary()!
         }
         static var primaryBorderInactive: UIColor {
-            return R.color.mike()!
+            return R.color.electricBlueSecondary()!
         }
         static var primaryHighlightedBackground: UIColor {
-            return R.color.black()!
+            return R.color.electricBlueSecondary()!
         }
         static var secondaryBackgroundActive: UIColor {
             return R.color.white()!
@@ -37,7 +37,7 @@ enum ButtonsBarStyle {
             return R.color.white()!
         }
         static var secondaryTextActive: UIColor {
-            return R.color.cod()!
+            return R.color.electricBlueSecondary()!
         }
         static var secondaryTextInactive: UIColor {
             return R.color.alto()!

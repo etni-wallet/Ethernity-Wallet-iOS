@@ -208,7 +208,7 @@ class ImportWalletViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(stackView)
 
-        // importKeystoreJsonFromCloudButton.isHidden = true
+        //importKeystoreJsonFromCloudButton.isHidden = true
         buttonsBar.hideButtonInStack(button: importKeystoreJsonFromCloudButton)
         roundedBackground.addSubview(importSeedDescriptionLabel)
 
@@ -561,7 +561,7 @@ class ImportWalletViewController: UIViewController {
 //        watchControlsStackView.isHidden = true
         configureImportButtonTitle(R.string.localizable.importWalletImportButtonTitle())
         // importKeystoreJsonFromCloudButton.isHidden = true
-        buttonsBar.hideButtonInStack(button: importKeystoreJsonFromCloudButton)
+        //buttonsBar.hideButtonInStack(button: importKeystoreJsonFromCloudButton)
         importSeedDescriptionLabel.isHidden = false
         importButton.isEnabled = !mnemonicTextView.value.isEmpty
         mnemonicTextView.textView.inputAccessoryView = mnemonicSuggestionsCollectionView
@@ -575,7 +575,7 @@ class ImportWalletViewController: UIViewController {
 //        watchControlsStackView.isHidden = true
         configureImportButtonTitle(R.string.localizable.importWalletImportButtonTitle())
         // importKeystoreJsonFromCloudButton.isHidden = false
-        buttonsBar.showButtonInStack(button: importKeystoreJsonFromCloudButton, position: 1)
+        //buttonsBar.showButtonInStack(button: importKeystoreJsonFromCloudButton, position: 1)
         importSeedDescriptionLabel.isHidden = true
         importButton.isEnabled = !keystoreJSONTextView.value.isEmpty && !passwordTextField.value.isEmpty
         mnemonicTextView.textView.inputAccessoryView = nil
@@ -589,7 +589,7 @@ class ImportWalletViewController: UIViewController {
 //        watchControlsStackView.isHidden = true
         configureImportButtonTitle(R.string.localizable.importWalletImportButtonTitle())
         // importKeystoreJsonFromCloudButton.isHidden = true
-        buttonsBar.hideButtonInStack(button: importKeystoreJsonFromCloudButton)
+        //buttonsBar.hideButtonInStack(button: importKeystoreJsonFromCloudButton)
         importSeedDescriptionLabel.isHidden = true
         importButton.isEnabled = !privateKeyTextView.value.isEmpty
         mnemonicTextView.textView.inputAccessoryView = nil
