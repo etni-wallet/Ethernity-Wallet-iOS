@@ -127,6 +127,10 @@ struct Colors {
     static let sortByTextColor = UIColor(red: 51, green: 51, blue: 51)
 }
 
+struct EthernityColors {
+    static let darkBlue = UIColor(hex: "030363")
+}
+
 struct StyleLayout {
     static let sideMargin: CGFloat = 15
 }

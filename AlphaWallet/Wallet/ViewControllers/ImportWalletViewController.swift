@@ -129,9 +129,9 @@ class ImportWalletViewController: UIViewController {
 
     private lazy var privateKeyControlsStackView: UIView = privateKeyTextView.defaultLayout()
 
-    private lazy var watchControlsStackView: UIView = {
-        watchAddressTextField.defaultLayout(edgeInsets: .zero)
-    }()
+//    private lazy var watchControlsStackView: UIView = {
+//        watchAddressTextField.defaultLayout(edgeInsets: .zero)
+//    }()
 
     private lazy var importSeedDescriptionLabel: UILabel = {
         let label = UILabel()
@@ -203,7 +203,7 @@ class ImportWalletViewController: UIViewController {
             mnemonicControlsStackView,
             keystoreJSONControlsStackView,
             privateKeyControlsStackView,
-            watchControlsStackView,
+            //watchControlsStackView,
         ].asStackView(axis: .vertical)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(stackView)
@@ -246,8 +246,8 @@ class ImportWalletViewController: UIViewController {
             keystoreJSONControlsStackView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -xMargin),
             privateKeyControlsStackView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: xMargin),
             privateKeyControlsStackView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -xMargin),
-            watchControlsStackView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: xMargin),
-            watchControlsStackView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -xMargin),
+//            watchControlsStackView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: xMargin),
+//            watchControlsStackView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -xMargin),
 
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -558,7 +558,7 @@ class ImportWalletViewController: UIViewController {
         mnemonicControlsStackView.isHidden = false
         keystoreJSONControlsStackView.isHidden = true
         privateKeyControlsStackView.isHidden = true
-        watchControlsStackView.isHidden = true
+//        watchControlsStackView.isHidden = true
         configureImportButtonTitle(R.string.localizable.importWalletImportButtonTitle())
         // importKeystoreJsonFromCloudButton.isHidden = true
         buttonsBar.hideButtonInStack(button: importKeystoreJsonFromCloudButton)
@@ -572,7 +572,7 @@ class ImportWalletViewController: UIViewController {
         mnemonicControlsStackView.isHidden = true
         keystoreJSONControlsStackView.isHidden = false
         privateKeyControlsStackView.isHidden = true
-        watchControlsStackView.isHidden = true
+//        watchControlsStackView.isHidden = true
         configureImportButtonTitle(R.string.localizable.importWalletImportButtonTitle())
         // importKeystoreJsonFromCloudButton.isHidden = false
         buttonsBar.showButtonInStack(button: importKeystoreJsonFromCloudButton, position: 1)
@@ -586,7 +586,7 @@ class ImportWalletViewController: UIViewController {
         mnemonicControlsStackView.isHidden = true
         keystoreJSONControlsStackView.isHidden = true
         privateKeyControlsStackView.isHidden = false
-        watchControlsStackView.isHidden = true
+//        watchControlsStackView.isHidden = true
         configureImportButtonTitle(R.string.localizable.importWalletImportButtonTitle())
         // importKeystoreJsonFromCloudButton.isHidden = true
         buttonsBar.hideButtonInStack(button: importKeystoreJsonFromCloudButton)
@@ -600,7 +600,7 @@ class ImportWalletViewController: UIViewController {
         mnemonicControlsStackView.isHidden = true
         keystoreJSONControlsStackView.isHidden = true
         privateKeyControlsStackView.isHidden = true
-        watchControlsStackView.isHidden = false
+//        watchControlsStackView.isHidden = false
         configureImportButtonTitle(R.string.localizable.walletWatchButtonTitle())
         // importKeystoreJsonFromCloudButton.isHidden = true
         buttonsBar.hideButtonInStack(button: importKeystoreJsonFromCloudButton)
