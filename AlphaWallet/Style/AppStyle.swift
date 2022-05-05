@@ -166,7 +166,7 @@ enum Metrics {
     enum CornerRadius {
         static let popups = CGFloat(20)
         static let box = CGFloat(2)
-        static let textbox = CGFloat(5)
+        static let textbox = CGFloat(6)
         static let button = CGFloat(4)
         static let nftBox = CGFloat(8)
     }
@@ -215,7 +215,7 @@ enum DataEntry {
     }
 
     enum Color {
-        static let border = UIColor(red: 194, green: 194, blue: 194)
+        static let border = UIColor(red: 240, green: 240, blue: 240)
         static let text = Colors.appText
         static let label = Colors.appGrayLabel
         static let textFieldStatus = R.color.danger()
@@ -223,14 +223,14 @@ enum DataEntry {
         static let secondary = Colors.appGrayLabel
         static let textFieldError = R.color.danger()!
         static let textFieldShadowWhileEditing = Colors.appTint
-        static let textFieldBackground = UIColor(hex: "FBFBFB")
-        static let placeholder = UIColor(hex: "919191")
+        static let textFieldBackground = Colors.appWhite
+        static let placeholder = UIColor(hex: "6D6D6D")
         static let ensText = UIColor(red: 117, green: 185, blue: 67)
         static let searchTextFieldBackground = UIColor(red: 243, green: 244, blue: 245)
     }
 
     enum Metric {
-        static let borderThickness = CGFloat(1.0)
+        static let borderThickness = CGFloat(3.0)
         static let cornerRadius = Metrics.CornerRadius.textbox
         static let shadowRadius = CGFloat(2.0)
         static let textFieldInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)

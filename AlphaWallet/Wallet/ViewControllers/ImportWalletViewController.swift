@@ -76,7 +76,7 @@ class ImportWalletViewController: UIViewController {
         textField.textField.rightView = {
             let button = UIButton(type: .system)
             button.frame = .init(x: 0, y: 0, width: 30, height: 30)
-            button.setImage(R.image.togglePassword(), for: .normal)
+            button.setImage(R.image.togglePassword()?.withRenderingMode(.alwaysOriginal), for: .normal)
             button.tintColor = .init(red: 111, green: 111, blue: 111)
             button.addTarget(self, action: #selector(toggleMaskPassword), for: .touchUpInside)
             return button
@@ -104,30 +104,38 @@ class ImportWalletViewController: UIViewController {
     }()
 
     private lazy var mnemonicControlsStackView: UIStackView = {
-        let row2 = [mnemonicTextView.statusLabel, mnemonicCountLabel].asStackView()
+        let row2 = [mnemonicTextView.statusLabel].asStackView()
         row2.translatesAutoresizingMaskIntoConstraints = false
         let mnemonicControlsStackView = [
-            mnemonicTextView.label,
-            .spacer(height: 4),
+//            mnemonicTextView.label,
+//            .spacer(height: 4),
             mnemonicTextView,
             .spacer(height: 4),
-            row2
+            mnemonicTextView.statusLabel,
+            .spacer(height: 13),
+            importSeedDescriptionLabel
         ].asStackView(axis: .vertical, distribution: .fill)
         mnemonicControlsStackView.translatesAutoresizingMaskIntoConstraints = false
 
         return mnemonicControlsStackView
     }()
     private lazy var keystoreJSONControlsStackView: UIStackView = [
-        keystoreJSONTextView.defaultLayout(),
-        .spacer(height: 10),
-        passwordTextField.label,
+        keystoreJSONTextView,
         .spacer(height: 4),
+        keystoreJSONTextView.statusLabel,
+        .spacer(height: 18),
+//        passwordTextField.label,
+//        .spacer(height: 4),
         passwordTextField,
         .spacer(height: 4),
         passwordTextField.statusLabel
     ].asStackView(axis: .vertical)
 
-    private lazy var privateKeyControlsStackView: UIView = privateKeyTextView.defaultLayout()
+    private lazy var privateKeyControlsStackView: UIStackView = [
+        privateKeyTextView,
+        .spacer(height: 4),
+        privateKeyTextView.statusLabel
+    ].asStackView(axis: .vertical)
 
 //    private lazy var watchControlsStackView: UIView = {
 //        watchAddressTextField.defaultLayout(edgeInsets: .zero)
@@ -140,6 +148,7 @@ class ImportWalletViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     private var footerBottomConstraint: NSLayoutConstraint!
     private lazy var keyboardChecker = KeyboardChecker(self)
     private var mnemonicSuggestions: [String] = .init() {
@@ -210,7 +219,7 @@ class ImportWalletViewController: UIViewController {
 
         //importKeystoreJsonFromCloudButton.isHidden = true
         buttonsBar.hideButtonInStack(button: importKeystoreJsonFromCloudButton)
-        roundedBackground.addSubview(importSeedDescriptionLabel)
+        //roundedBackground.addSubview(importSeedDescriptionLabel)
 
         mnemonicSuggestionsCollectionView.frame = .init(x: 0, y: 0, width: 0, height: ImportWalletViewController.mnemonicSuggestionsBarHeight)
 
@@ -221,11 +230,11 @@ class ImportWalletViewController: UIViewController {
 
         footerBar.addSubview(buttonsBar)
 
-        let xMargin = CGFloat(16)
-        let heightThatFitsPrivateKeyNicely = CGFloat(ScreenChecker().isNarrowScreen ? 80 : 100)
+        let xMargin = CGFloat(30)
+        let heightThatFitsPrivateKeyNicely = CGFloat(ScreenChecker().isNarrowScreen ? 128 : 160)
 
         footerBottomConstraint = footerBar.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        footerBottomConstraint.constant = -UIApplication.shared.bottomSafeAreaHeight
+        footerBottomConstraint.constant = -UIApplication.shared.bottomSafeAreaHeight - xMargin
         keyboardChecker.constraints = [footerBottomConstraint]
 
         let labelButtonInset: CGFloat = ScreenChecker().isNarrowScreen ? 10 : 20
@@ -254,9 +263,9 @@ class ImportWalletViewController: UIViewController {
             stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
 
-            importSeedDescriptionLabel.leadingAnchor.constraint(equalTo: footerBar.leadingAnchor, constant: 30),
-            importSeedDescriptionLabel.trailingAnchor.constraint(equalTo: footerBar.trailingAnchor, constant: -30),
-            importSeedDescriptionLabel.bottomAnchor.constraint(equalTo: footerBar.topAnchor, constant: -labelButtonInset),
+//            importSeedDescriptionLabel.leadingAnchor.constraint(equalTo: footerBar.leadingAnchor, constant: 30),
+//            importSeedDescriptionLabel.trailingAnchor.constraint(equalTo: footerBar.trailingAnchor, constant: -30),
+//            importSeedDescriptionLabel.bottomAnchor.constraint(equalTo: footerBar.topAnchor, constant: -labelButtonInset),
 
             buttonsBar.topAnchor.constraint(equalTo: footerBar.topAnchor),
             buttonsBar.bottomAnchor.constraint(equalTo: footerBar.bottomAnchor),
@@ -343,6 +352,7 @@ class ImportWalletViewController: UIViewController {
 
         passwordTextField.configureOnce()
         passwordTextField.label.text = viewModel.passwordLabel
+        passwordTextField.textField.placeholder = viewModel.passwordPlaceholder
 
         privateKeyTextView.configureOnce()
         privateKeyTextView.label.text = viewModel.privateKeyLabel
