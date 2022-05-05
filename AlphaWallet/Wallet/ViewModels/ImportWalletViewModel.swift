@@ -64,7 +64,14 @@ struct ImportWalletViewModel {
             .foregroundColor: UIColor(red: 16, green: 16, blue: 16)
         ])
     }
-
+    
+    var passwordPlaceholderAttributedText: NSAttributedString {
+        return .init(string: R.string.localizable.enterPassword(), attributes: [
+            .font: Fonts.regular(size: ScreenChecker().isNarrowScreen ? 12 : 14),
+            .foregroundColor: UIColor(red: 109, green: 109, blue: 109)
+        ])
+    }
+    
     func convertSegmentedControlSelectionToFilter(_ selection: ControlSelection) -> ImportWalletTab? {
         switch selection {
         case .selected(let index):

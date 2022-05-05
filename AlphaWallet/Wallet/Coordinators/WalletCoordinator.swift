@@ -43,7 +43,6 @@ class WalletCoordinator: Coordinator {
         case .watchWallet(let address):
             let controller = ImportWalletViewController(keystore: keystore, analyticsCoordinator: analyticsCoordinator)
             controller.delegate = self
-            controller.watchAddressTextField.value = address?.eip55String ?? ""
             controller.navigationItem.leftBarButtonItem = UIBarButtonItem(title: R.string.localizable.cancel(), style: .plain, target: self, action: #selector(dismiss))
             controller.showWatchTab()
             navigationController.viewControllers = [controller]
