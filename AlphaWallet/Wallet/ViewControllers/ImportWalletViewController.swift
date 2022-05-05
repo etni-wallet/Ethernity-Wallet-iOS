@@ -336,6 +336,7 @@ class ImportWalletViewController: UIViewController {
 
         mnemonicTextView.configureOnce()
         mnemonicTextView.label.text = viewModel.mnemonicLabel
+        mnemonicTextView.textViewPlaceholder = viewModel.mnemonicPlaceholder
 
         mnemonicCountLabel.font = DataEntry.Font.label
         mnemonicCountLabel.textColor = DataEntry.Color.label
@@ -349,6 +350,7 @@ class ImportWalletViewController: UIViewController {
 
         keystoreJSONTextView.configureOnce()
         keystoreJSONTextView.label.text = viewModel.keystoreJSONLabel
+        keystoreJSONTextView.textViewPlaceholder = viewModel.keystoreJSONPlaceholder
 
         passwordTextField.configureOnce()
         passwordTextField.label.text = viewModel.passwordLabel
@@ -356,6 +358,7 @@ class ImportWalletViewController: UIViewController {
 
         privateKeyTextView.configureOnce()
         privateKeyTextView.label.text = viewModel.privateKeyLabel
+        privateKeyTextView.textViewPlaceholder = viewModel.privateKeyPlaceholder
 
         watchAddressTextField.label.text = viewModel.watchAddressLabel
         watchAddressTextField.configureOnce()

@@ -110,6 +110,7 @@ struct Colors {
     static let navigationButtonTintColor = UIColor.black
     static let appWhite = UIColor.white
     static let appText = R.color.black()!
+    static let appPlaceholderText = UIColor(hex: "6D6D6D")
     static let appSubtitle = UIColor(red: 117, green: 117, blue: 117)
     static let appHighlightGreen = UIColor(red: 117, green: 185, blue: 67)
     static let appActionButtonGreen = UIColor(red: 105, green: 200, blue: 0)
@@ -217,6 +218,7 @@ enum DataEntry {
     enum Color {
         static let border = UIColor(red: 240, green: 240, blue: 240)
         static let text = Colors.appText
+        static let placeholderText = Colors.appPlaceholderText
         static let label = Colors.appGrayLabel
         static let textFieldStatus = R.color.danger()
         static let icon = Colors.appTint
@@ -282,7 +284,7 @@ enum DataEntry {
     }
 
     enum Font {
-        static let text = Fonts.regular(size: isNarrowScreen ? 14: 18)
+        static let text = Fonts.regular(size: isNarrowScreen ? 11: 15)
         static let label = Fonts.bold(size: 13)
         static let textFieldTitle = Fonts.regular(size: 13)
         static let textFieldStatus = Fonts.bold(size: 13)

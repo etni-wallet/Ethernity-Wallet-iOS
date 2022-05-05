@@ -18,8 +18,16 @@ struct ImportWalletViewModel {
         return R.string.localizable.mnemonic().uppercased()
     }
 
+    var mnemonicPlaceholder: String {
+        return R.string.localizable.mnemonicPlaceholder()
+    }
+    
     var keystoreJSONLabel: String {
         return R.string.localizable.keystoreJSON().uppercased()
+    }
+    
+    var keystoreJSONPlaceholder: String {
+        return R.string.localizable.keystoreJSONPlaceholder()
     }
 
     var passwordLabel: String {
@@ -32,6 +40,10 @@ struct ImportWalletViewModel {
 
     var privateKeyLabel: String {
         return R.string.localizable.privateKey().uppercased()
+    }
+    
+    var privateKeyPlaceholder: String {
+        return R.string.localizable.privateKeyPlaceholder()
     }
 
     var watchAddressLabel: String {

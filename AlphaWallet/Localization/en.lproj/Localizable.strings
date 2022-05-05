@@ -60,6 +60,9 @@
 "OK" = "OK";
 "Password" = "Password";
 "EnterPassword" = "Enter Password";
+"mnemonicPlaceholder" = "Enter Seed Phrase Here";
+"keystoreJSONPlaceholder" = "Enter Keystore JSON";
+"privateKeyPlaceholder" = "Enter Private Key Here";
 "Refresh" = "Refresh";
 "request.addressCopied.title" = "Address copied";
 "request.copyWallet.button.title" = "Copy wallet address";
