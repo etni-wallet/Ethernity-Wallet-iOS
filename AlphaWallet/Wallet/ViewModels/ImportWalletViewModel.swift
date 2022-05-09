@@ -18,16 +18,32 @@ struct ImportWalletViewModel {
         return R.string.localizable.mnemonic().uppercased()
     }
 
+    var mnemonicPlaceholder: String {
+        return R.string.localizable.mnemonicPlaceholder()
+    }
+    
     var keystoreJSONLabel: String {
         return R.string.localizable.keystoreJSON().uppercased()
+    }
+    
+    var keystoreJSONPlaceholder: String {
+        return R.string.localizable.keystoreJSONPlaceholder()
     }
 
     var passwordLabel: String {
         return R.string.localizable.password().uppercased()
     }
+    
+    var passwordPlaceholder: String {
+        return R.string.localizable.enterPassword()
+    }
 
     var privateKeyLabel: String {
         return R.string.localizable.privateKey().uppercased()
+    }
+    
+    var privateKeyPlaceholder: String {
+        return R.string.localizable.privateKeyPlaceholder()
     }
 
     var watchAddressLabel: String {
@@ -40,15 +56,22 @@ struct ImportWalletViewModel {
 
     var importSeedAttributedText: NSAttributedString {
         let style = NSMutableParagraphStyle()
-        style.alignment = .center
+        style.alignment = .natural
 
         return .init(string: R.string.localizable.importWalletImportSeedPhraseDescription(), attributes: [
             .paragraphStyle: style,
-            .font: Fonts.light(size: ScreenChecker().isNarrowScreen ? 14 : 16),
-            .foregroundColor: UIColor(red: 116, green: 116, blue: 116)
+            .font: Fonts.regular(size: ScreenChecker().isNarrowScreen ? 12 : 14),
+            .foregroundColor: UIColor(red: 16, green: 16, blue: 16)
         ])
     }
-
+    
+    var passwordPlaceholderAttributedText: NSAttributedString {
+        return .init(string: R.string.localizable.enterPassword(), attributes: [
+            .font: Fonts.regular(size: ScreenChecker().isNarrowScreen ? 12 : 14),
+            .foregroundColor: UIColor(red: 109, green: 109, blue: 109)
+        ])
+    }
+    
     func convertSegmentedControlSelectionToFilter(_ selection: ControlSelection) -> ImportWalletTab? {
         switch selection {
         case .selected(let index):
@@ -65,7 +88,7 @@ extension ImportWalletTab {
             .mnemonic,
             .keystore,
             .privateKey,
-            .watch,
+            //.watch,
         ]
     }
 

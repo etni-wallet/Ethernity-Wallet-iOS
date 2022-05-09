@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             let keystore: Keystore = try EtherKeystore(walletAddressesStore: walletAddressesStore, analyticsCoordinator: analyticsService)
             let navigationController = UINavigationController()
             navigationController.view.backgroundColor = Colors.appWhite
-
+            
             appCoordinator = try AppCoordinator(window: window!, analyticsService: analyticsService, keystore: keystore, walletAddressesStore: walletAddressesStore, navigationController: navigationController)
             appCoordinator.start()
 

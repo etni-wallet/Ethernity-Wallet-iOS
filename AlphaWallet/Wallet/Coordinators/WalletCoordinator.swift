@@ -37,13 +37,12 @@ class WalletCoordinator: Coordinator {
         case .importWallet:
             let controller = ImportWalletViewController(keystore: keystore, analyticsCoordinator: analyticsCoordinator)
             controller.delegate = self
-            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(title: R.string.localizable.cancel(), style: .plain, target: self, action: #selector(dismiss))
+            controller.navigationItem.leftBarButtonItem = UIBarButtonItem(image: R.image.ethNavBarBackArrow()?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(dismiss))
             navigationController.viewControllers = [controller]
             importWalletViewController = controller
         case .watchWallet(let address):
             let controller = ImportWalletViewController(keystore: keystore, analyticsCoordinator: analyticsCoordinator)
             controller.delegate = self
-            controller.watchAddressTextField.value = address?.eip55String ?? ""
             controller.navigationItem.leftBarButtonItem = UIBarButtonItem(title: R.string.localizable.cancel(), style: .plain, target: self, action: #selector(dismiss))
             controller.showWatchTab()
             navigationController.viewControllers = [controller]

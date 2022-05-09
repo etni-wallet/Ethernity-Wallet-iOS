@@ -1050,6 +1050,17 @@
 		87FF2E422567F0A3002350EB /* BlockieGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FF2E412567F0A3002350EB /* BlockieGenerator.swift */; };
 		87FF649927355FDD00D59E20 /* EnjinUserManagementInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FF649827355FDD00D59E20 /* EnjinUserManagementInterceptor.swift */; };
 		87FFEF5127EE00CB0024FCEC /* TransactionNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87FFEF5027EE00CB0024FCEC /* TransactionNotificationService.swift */; };
+		A08DCD5C2822A1EA006B093E /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A08DCD512822A1E9006B093E /* Inter-Thin.ttf */; };
+		A08DCD5D2822A1EA006B093E /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = A08DCD522822A1E9006B093E /* OFL.txt */; };
+		A08DCD5E2822A1EA006B093E /* Inter-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A08DCD532822A1E9006B093E /* Inter-Black.ttf */; };
+		A08DCD5F2822A1EA006B093E /* Inter-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A08DCD542822A1E9006B093E /* Inter-Light.ttf */; };
+		A08DCD602822A1EA006B093E /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = A08DCD552822A1E9006B093E /* README.txt */; };
+		A08DCD612822A1EA006B093E /* Inter-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A08DCD562822A1EA006B093E /* Inter-ExtraBold.ttf */; };
+		A08DCD622822A1EA006B093E /* Inter-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A08DCD572822A1EA006B093E /* Inter-Medium.ttf */; };
+		A08DCD632822A1EA006B093E /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A08DCD582822A1EA006B093E /* Inter-Regular.ttf */; };
+		A08DCD642822A1EA006B093E /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A08DCD592822A1EA006B093E /* Inter-ExtraLight.ttf */; };
+		A08DCD652822A1EA006B093E /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A08DCD5A2822A1EA006B093E /* Inter-SemiBold.ttf */; };
+		A08DCD662822A1EA006B093E /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A08DCD5B2822A1EA006B093E /* Inter-Bold.ttf */; };
 		AA26C61F20412A1E00318B9B /* TokensCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA26C61D20412A1D00318B9B /* TokensCardViewController.swift */; };
 		AA26C62320412A4100318B9B /* UIViewInspectableEnhancements.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA26C62120412A4100318B9B /* UIViewInspectableEnhancements.swift */; };
 		AA26C62420412A4100318B9B /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA26C62220412A4100318B9B /* Double.swift */; };
@@ -2177,6 +2188,17 @@
 		87FF2E412567F0A3002350EB /* BlockieGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockieGenerator.swift; sourceTree = "<group>"; };
 		87FF649827355FDD00D59E20 /* EnjinUserManagementInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnjinUserManagementInterceptor.swift; sourceTree = "<group>"; };
 		87FFEF5027EE00CB0024FCEC /* TransactionNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionNotificationService.swift; sourceTree = "<group>"; };
+		A08DCD512822A1E9006B093E /* Inter-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Thin.ttf"; sourceTree = "<group>"; };
+		A08DCD522822A1E9006B093E /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		A08DCD532822A1E9006B093E /* Inter-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Black.ttf"; sourceTree = "<group>"; };
+		A08DCD542822A1E9006B093E /* Inter-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Light.ttf"; sourceTree = "<group>"; };
+		A08DCD552822A1E9006B093E /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		A08DCD562822A1EA006B093E /* Inter-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraBold.ttf"; sourceTree = "<group>"; };
+		A08DCD572822A1EA006B093E /* Inter-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Medium.ttf"; sourceTree = "<group>"; };
+		A08DCD582822A1EA006B093E /* Inter-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Regular.ttf"; sourceTree = "<group>"; };
+		A08DCD592822A1EA006B093E /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
+		A08DCD5A2822A1EA006B093E /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.ttf"; sourceTree = "<group>"; };
+		A08DCD5B2822A1EA006B093E /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.ttf"; sourceTree = "<group>"; };
 		AA26C61D20412A1D00318B9B /* TokensCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensCardViewController.swift; sourceTree = "<group>"; };
 		AA26C62120412A4100318B9B /* UIViewInspectableEnhancements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewInspectableEnhancements.swift; sourceTree = "<group>"; };
 		AA26C62220412A4100318B9B /* Double.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
@@ -5306,6 +5328,24 @@
 			path = Types;
 			sourceTree = "<group>";
 		};
+		A08DCD502822A1BB006B093E /* inter */ = {
+			isa = PBXGroup;
+			children = (
+				A08DCD532822A1E9006B093E /* Inter-Black.ttf */,
+				A08DCD5B2822A1EA006B093E /* Inter-Bold.ttf */,
+				A08DCD562822A1EA006B093E /* Inter-ExtraBold.ttf */,
+				A08DCD592822A1EA006B093E /* Inter-ExtraLight.ttf */,
+				A08DCD542822A1E9006B093E /* Inter-Light.ttf */,
+				A08DCD572822A1EA006B093E /* Inter-Medium.ttf */,
+				A08DCD582822A1EA006B093E /* Inter-Regular.ttf */,
+				A08DCD5A2822A1EA006B093E /* Inter-SemiBold.ttf */,
+				A08DCD512822A1E9006B093E /* Inter-Thin.ttf */,
+				A08DCD522822A1E9006B093E /* OFL.txt */,
+				A08DCD552822A1E9006B093E /* README.txt */,
+			);
+			path = inter;
+			sourceTree = "<group>";
+		};
 		AAEF2CA92050A64F0038BE0D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -5344,6 +5384,7 @@
 		C876FF69204A77B400B7D0EA /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				A08DCD502822A1BB006B093E /* inter */,
 				C876FF6A204A79D300B7D0EA /* source-sans-pro */,
 			);
 			path = Fonts;
@@ -5603,19 +5644,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A08DCD652822A1EA006B093E /* Inter-SemiBold.ttf in Resources */,
+				A08DCD5D2822A1EA006B093E /* OFL.txt in Resources */,
 				C876FF82204A79D300B7D0EA /* SourceSansPro-Light.otf in Resources */,
 				C876FF84204A79D300B7D0EA /* SourceSansPro-Regular.otf in Resources */,
 				87B93B142726C79400F6EA73 /* helpers.js in Resources */,
 				C868C5292053BDE00059672B /* LaunchScreen.storyboard in Resources */,
 				87620024266E00F70059B05A /* known_contract.json in Resources */,
+				A08DCD602822A1EA006B093E /* README.txt in Resources */,
 				87D5BBCC2727D2920053E6D2 /* schema.json in Resources */,
 				C876FF85204A79D300B7D0EA /* SourceSansPro-Semibold.otf in Resources */,
 				C880330E2054371500D73D6F /* non_asset_catalog_redemption_location@3x.png in Resources */,
 				C880332020551DF800D73D6F /* howDoIGetMyMoneyInfo.html in Resources */,
+				A08DCD5F2822A1EA006B093E /* Inter-Light.ttf in Resources */,
 				613D04891FDE15F8008DE72E /* COMODO ECC Domain Validation Secure Server CA 2.cer in Resources */,
 				C887C53A2057B703005ACF81 /* termsOfService.html in Resources */,
 				C876FF7D204A79D300B7D0EA /* SourceSansPro-Bold.otf in Resources */,
 				87FBF2B728056B8E00616B7D /* GoogleService-Info.plist in Resources */,
+				A08DCD612822A1EA006B093E /* Inter-ExtraBold.ttf in Resources */,
 				C880330D2054371500D73D6F /* non_asset_catalog_redemption_location@2x.png in Resources */,
 				771AA966200D5F1900D25403 /* WordCollectionViewCell.xib in Resources */,
 				87B93B112726C59D00F6EA73 /* BrowserStorageSubscription.js in Resources */,
@@ -5623,11 +5669,14 @@
 				C88033122055034E00D73D6F /* sellInfo.html in Resources */,
 				C868C536205409160059672B /* redeemInfo.html in Resources */,
 				C876FF7A204A79D300B7D0EA /* SIL Open Font License.txt in Resources */,
+				A08DCD5C2822A1EA006B093E /* Inter-Thin.ttf in Resources */,
 				C880330C2054371500D73D6F /* non_asset_catalog_redemption_location.png in Resources */,
 				87741F1A277097BC007F4604 /* SourceSansPro-Italic.ttf in Resources */,
+				A08DCD632822A1EA006B093E /* Inter-Regular.ttf in Resources */,
 				87B93B0F2726C59D00F6EA73 /* content.js in Resources */,
 				C876FF79204A79D300B7D0EA /* README.md in Resources */,
 				C880331F20551DF800D73D6F /* howDoITransferETHIntoMyWalletInfo.html in Resources */,
+				A08DCD642822A1EA006B093E /* Inter-ExtraLight.ttf in Resources */,
 				C887C5392057B703005ACF81 /* privacyPolicy.html in Resources */,
 				87AA5DCC27303C89000A2DEA /* EnjinOauth.graphql in Resources */,
 				290B2B541F8F50030053C83E /* Localizable.strings in Resources */,
@@ -5637,10 +5686,13 @@
 				2912CD021F6A830700C6CBE3 /* Assets.xcassets in Resources */,
 				C880332220551DF800D73D6F /* whatIsEthereumInfo.html in Resources */,
 				C80DC77E22AB7FAD009CFA1C /* XDAI-bridge.tsml in Resources */,
+				A08DCD662822A1EA006B093E /* Inter-Bold.ttf in Resources */,
 				5E7C73AB79C2C5FC6C76CDFF /* ERC20-TokenScript.tsml in Resources */,
 				5E7C7F906FE07C75F357569B /* DAI.tsml in Resources */,
 				02425FB327852B85007ECF94 /* chains.zip in Resources */,
+				A08DCD5E2822A1EA006B093E /* Inter-Black.ttf in Resources */,
 				5E7C7F808D0B0B19ECEA6623 /* ETH.tsml in Resources */,
+				A08DCD622822A1EA006B093E /* Inter-Medium.ttf in Resources */,
 				5E7C706322B52C0D0CED8018 /* aETH.tsml in Resources */,
 				5E7C7CE29C74DF7FDDDB6A0D /* ERC721-TokenScript.tsml in Resources */,
 				5E7C7E1C2976FA57D53BC2CE /* ERC1155.json in Resources */,

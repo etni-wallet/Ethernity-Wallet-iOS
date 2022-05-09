@@ -83,7 +83,7 @@ extension UIBarButtonItem {
     }
 
     static func qrCodeBarButton(_ target: AnyObject, selector: Selector) -> UIBarButtonItem {
-        return .init(image: R.image.qr_code_icon(), style: .plain, target: target, action: selector)
+        return .init(image: R.image.qr_code_icon()?.withRenderingMode(.alwaysOriginal), style: .plain, target: target, action: selector)
     }
 
     static func myqrCodeBarButton(_ target: AnyObject, selector: Selector) -> UIBarButtonItem {
