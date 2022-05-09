@@ -15,7 +15,7 @@ func isRunningTests() -> Bool {
 }
 
 func isAlphaWallet() -> Bool {
-    Bundle.main.bundleIdentifier == "com.stormbird.alphawallet"
+    Bundle.main.bundleIdentifier == "io.krytech.wallet"
 }
 
 func isRunningOnMac() -> Bool {

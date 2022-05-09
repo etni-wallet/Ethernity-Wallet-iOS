@@ -750,7 +750,7 @@
 		8703FC0D270366DA0062C416 /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = 8703FC0C270366DA0062C416 /* popup.html */; };
 		8703FC0F270366DA0062C416 /* popup.css in Resources */ = {isa = PBXBuildFile; fileRef = 8703FC0E270366DA0062C416 /* popup.css */; };
 		8703FC11270366DA0062C416 /* popup.js in Resources */ = {isa = PBXBuildFile; fileRef = 8703FC10270366DA0062C416 /* popup.js */; };
-		8703FC15270366DA0062C416 /* AlphaWalletSafariExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8703FBFD270366DA0062C416 /* AlphaWalletSafariExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8703FC15270366DA0062C416 /* EthernityWalletSafariExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8703FBFD270366DA0062C416 /* EthernityWalletSafariExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		870415A125E8FBD30013F3E2 /* MixpanelCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870415A025E8FBD30013F3E2 /* MixpanelCoordinatorTests.swift */; };
 		8708772B27D0FA190004BF6E /* Tabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8708772A27D0FA190004BF6E /* Tabs.swift */; };
 		870CC47927C6561F00A19380 /* TokenObjectFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 870CC47827C6561F00A19380 /* TokenObjectFetcher.swift */; };
@@ -892,7 +892,7 @@
 		87897B9C25EF7C08006E3C75 /* ShowSeedPhraseIntroductionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87897B9B25EF7C08006E3C75 /* ShowSeedPhraseIntroductionViewController.swift */; };
 		87897B9E25EF7C50006E3C75 /* ShowSeedPhraseIntroductionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87897B9D25EF7C50006E3C75 /* ShowSeedPhraseIntroductionViewModel.swift */; };
 		878EE8EE255ADA49000210DE /* ShareContextHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878EE8ED255ADA49000210DE /* ShareContextHandler.swift */; };
-		878EE8F5255ADA49000210DE /* AlphaWalletShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 878EE8EB255ADA49000210DE /* AlphaWalletShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		878EE8F5255ADA49000210DE /* EthernityWalletShare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 878EE8EB255ADA49000210DE /* EthernityWalletShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		878EE941255BBF9B000210DE /* ItemProviderValueResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878EE940255BBF9B000210DE /* ItemProviderValueResolver.swift */; };
 		878EE944255BC367000210DE /* ShareContentAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878EE943255BC367000210DE /* ShareContentAction.swift */; };
 		878EE945255BC367000210DE /* ShareContentAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 878EE943255BC367000210DE /* ShareContentAction.swift */; };
@@ -1119,8 +1119,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				8703FC15270366DA0062C416 /* AlphaWalletSafariExtension.appex in Embed App Extensions */,
-				878EE8F5255ADA49000210DE /* AlphaWalletShare.appex in Embed App Extensions */,
+				8703FC15270366DA0062C416 /* EthernityWalletSafariExtension.appex in Embed App Extensions */,
+				878EE8F5255ADA49000210DE /* EthernityWalletShare.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1191,11 +1191,11 @@
 		290B2B691F92C0440053C83E /* ConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigTests.swift; sourceTree = "<group>"; };
 		290B2B6B1F92C35B0053C83E /* RPCServerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RPCServerTests.swift; sourceTree = "<group>"; };
 		290B2B6D1F92C3980053C83E /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		2912CCF51F6A830700C6CBE3 /* AlphaWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlphaWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2912CCF51F6A830700C6CBE3 /* EthernityWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EthernityWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2912CCF81F6A830700C6CBE3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2912CD011F6A830700C6CBE3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2912CD061F6A830700C6CBE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
-		2912CD0B1F6A830700C6CBE3 /* AlphaWalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlphaWalletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2912CD0B1F6A830700C6CBE3 /* EthernityWalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EthernityWalletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2912CD111F6A830700C6CBE3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
 		2912CD2A1F6A833E00C6CBE3 /* TransactionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewController.swift; sourceTree = "<group>"; };
 		2912CD2E1F6A83A100C6CBE3 /* ImportWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportWalletViewController.swift; sourceTree = "<group>"; };
@@ -1871,7 +1871,7 @@
 		8703F66626135B330082EE25 /* ChartHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartHistory.swift; sourceTree = "<group>"; };
 		8703F66A26136A500082EE25 /* RenameWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameWalletViewController.swift; sourceTree = "<group>"; };
 		8703F686261461E40082EE25 /* RenameWalletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenameWalletViewModel.swift; sourceTree = "<group>"; };
-		8703FBFD270366DA0062C416 /* AlphaWalletSafariExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AlphaWalletSafariExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8703FBFD270366DA0062C416 /* EthernityWalletSafariExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = EthernityWalletSafariExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8703FBFF270366DA0062C416 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
 		8703FC02270366DA0062C416 /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; path = _locales; sourceTree = "<group>"; };
 		8703FC04270366DA0062C416 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = images; sourceTree = "<group>"; };
@@ -2020,7 +2020,7 @@
 		8782035E2431FBC300792F12 /* ShowAddHideTokensViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAddHideTokensViewModel.swift; sourceTree = "<group>"; };
 		87897B9B25EF7C08006E3C75 /* ShowSeedPhraseIntroductionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSeedPhraseIntroductionViewController.swift; sourceTree = "<group>"; };
 		87897B9D25EF7C50006E3C75 /* ShowSeedPhraseIntroductionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowSeedPhraseIntroductionViewModel.swift; sourceTree = "<group>"; };
-		878EE8EB255ADA49000210DE /* AlphaWalletShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AlphaWalletShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		878EE8EB255ADA49000210DE /* EthernityWalletShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = EthernityWalletShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		878EE8ED255ADA49000210DE /* ShareContextHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareContextHandler.swift; sourceTree = "<group>"; };
 		878EE8F2255ADA49000210DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		878EE8FA255AE20A000210DE /* AlphaWalletShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlphaWalletShare.entitlements; sourceTree = "<group>"; };
@@ -2372,10 +2372,10 @@
 			isa = PBXGroup;
 			children = (
 				E4BB9F4D282116AF00077CEF /* GoogleService-Info.plist */,
-				2912CCF71F6A830700C6CBE3 /* AlphaWallet */,
-				2912CD0E1F6A830700C6CBE3 /* AlphaWalletTests */,
-				878EE8EC255ADA49000210DE /* AlphaWalletShare */,
-				8703FBFE270366DA0062C416 /* AlphaWalletSafariExtension */,
+				2912CCF71F6A830700C6CBE3 /* EthernityWallet */,
+				2912CD0E1F6A830700C6CBE3 /* EthernityWalletTests */,
+				878EE8EC255ADA49000210DE /* EthernityWalletShare */,
+				8703FBFE270366DA0062C416 /* EthernityWalletSafariExtension */,
 				2912CCF61F6A830700C6CBE3 /* Products */,
 				AD022B369F3ED81B3B044FBB /* Pods */,
 				63085EAEC378BDEB6147F15D /* Frameworks */,
@@ -2385,15 +2385,15 @@
 		2912CCF61F6A830700C6CBE3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2912CCF51F6A830700C6CBE3 /* AlphaWallet.app */,
-				2912CD0B1F6A830700C6CBE3 /* AlphaWalletTests.xctest */,
-				878EE8EB255ADA49000210DE /* AlphaWalletShare.appex */,
-				8703FBFD270366DA0062C416 /* AlphaWalletSafariExtension.appex */,
+				2912CCF51F6A830700C6CBE3 /* EthernityWallet.app */,
+				2912CD0B1F6A830700C6CBE3 /* EthernityWalletTests.xctest */,
+				878EE8EB255ADA49000210DE /* EthernityWalletShare.appex */,
+				8703FBFD270366DA0062C416 /* EthernityWalletSafariExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2912CCF71F6A830700C6CBE3 /* AlphaWallet */ = {
+		2912CCF71F6A830700C6CBE3 /* EthernityWallet */ = {
 			isa = PBXGroup;
 			children = (
 				87741F1B2770C3AD007F4604 /* WhereAreMyTokens */,
@@ -2457,10 +2457,10 @@
 				5E7C76487E444E00B78BAA14 /* BlockscanChat */,
 				5E7C72AB43EC4939E6C7D46B /* Lists */,
 			);
-			path = AlphaWallet;
+			path = EthernityWallet;
 			sourceTree = "<group>";
 		};
-		2912CD0E1F6A830700C6CBE3 /* AlphaWalletTests */ = {
+		2912CD0E1F6A830700C6CBE3 /* EthernityWalletTests */ = {
 			isa = PBXGroup;
 			children = (
 				02C7AF6D2770C3E4005367EE /* Rpc Network */,
@@ -2489,7 +2489,7 @@
 				02CEFAF92808024900CF8722 /* Utilities */,
 				5E7C754A9D6320C933F675A9 /* modules */,
 			);
-			path = AlphaWalletTests;
+			path = EthernityWalletTests;
 			sourceTree = "<group>";
 		};
 		2912CD281F6A831700C6CBE3 /* Wallet */ = {
@@ -4717,7 +4717,7 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		8703FBFE270366DA0062C416 /* AlphaWalletSafariExtension */ = {
+		8703FBFE270366DA0062C416 /* EthernityWalletSafariExtension */ = {
 			isa = PBXGroup;
 			children = (
 				8795042F27088C2B0075EEC2 /* AlphaWalletSafariExtension.entitlements */,
@@ -4725,7 +4725,7 @@
 				8703FC12270366DA0062C416 /* Info.plist */,
 				8703FC01270366DA0062C416 /* Resources */,
 			);
-			path = AlphaWalletSafariExtension;
+			path = EthernityWalletSafariExtension;
 			sourceTree = "<group>";
 		};
 		8703FC01270366DA0062C416 /* Resources */ = {
@@ -4998,7 +4998,7 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		878EE8EC255ADA49000210DE /* AlphaWalletShare */ = {
+		878EE8EC255ADA49000210DE /* EthernityWalletShare */ = {
 			isa = PBXGroup;
 			children = (
 				878EE8FA255AE20A000210DE /* AlphaWalletShare.entitlements */,
@@ -5007,7 +5007,7 @@
 				878EE940255BBF9B000210DE /* ItemProviderValueResolver.swift */,
 				878EE950255BEC20000210DE /* ItemType.swift */,
 			);
-			path = AlphaWalletShare;
+			path = EthernityWalletShare;
 			sourceTree = "<group>";
 		};
 		878EE942255BC352000210DE /* Share */ = {
@@ -5430,9 +5430,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2912CCF41F6A830700C6CBE3 /* AlphaWallet */ = {
+		2912CCF41F6A830700C6CBE3 /* EthernityWallet */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2912CD1F1F6A830700C6CBE3 /* Build configuration list for PBXNativeTarget "AlphaWallet" */;
+			buildConfigurationList = 2912CD1F1F6A830700C6CBE3 /* Build configuration list for PBXNativeTarget "EthernityWallet" */;
 			buildPhases = (
 				7C3903F7FBE1023CAA5AED0C /* [CP] Check Pods Manifest.lock */,
 				87D5BBC12727CBB70053E6D2 /* Apollo */,
@@ -5454,18 +5454,18 @@
 				878EE8F4255ADA49000210DE /* PBXTargetDependency */,
 				8703FC14270366DA0062C416 /* PBXTargetDependency */,
 			);
-			name = AlphaWallet;
+			name = EthernityWallet;
 			packageProductDependencies = (
 				8717D37227B2947000FB789D /* WalletConnect */,
 				87FBF2B028056AC200616B7D /* FirebaseCrashlytics */,
 			);
 			productName = etherwallet;
-			productReference = 2912CCF51F6A830700C6CBE3 /* AlphaWallet.app */;
+			productReference = 2912CCF51F6A830700C6CBE3 /* EthernityWallet.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2912CD0A1F6A830700C6CBE3 /* AlphaWalletTests */ = {
+		2912CD0A1F6A830700C6CBE3 /* EthernityWalletTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2912CD221F6A830700C6CBE3 /* Build configuration list for PBXNativeTarget "AlphaWalletTests" */;
+			buildConfigurationList = 2912CD221F6A830700C6CBE3 /* Build configuration list for PBXNativeTarget "EthernityWalletTests" */;
 			buildPhases = (
 				DD4A67DA7DF07547512929B9 /* [CP] Check Pods Manifest.lock */,
 				C8FC0401219E9CC000445E21 /* R.swift */,
@@ -5479,14 +5479,14 @@
 			dependencies = (
 				2912CD0D1F6A830700C6CBE3 /* PBXTargetDependency */,
 			);
-			name = AlphaWalletTests;
+			name = EthernityWalletTests;
 			productName = etherwalletTests;
-			productReference = 2912CD0B1F6A830700C6CBE3 /* AlphaWalletTests.xctest */;
+			productReference = 2912CD0B1F6A830700C6CBE3 /* EthernityWalletTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		8703FBFC270366DA0062C416 /* AlphaWalletSafariExtension */ = {
+		8703FBFC270366DA0062C416 /* EthernityWalletSafariExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8703FC18270366DA0062C416 /* Build configuration list for PBXNativeTarget "AlphaWalletSafariExtension" */;
+			buildConfigurationList = 8703FC18270366DA0062C416 /* Build configuration list for PBXNativeTarget "EthernityWalletSafariExtension" */;
 			buildPhases = (
 				8703FBF9270366DA0062C416 /* Sources */,
 				8703FBFA270366DA0062C416 /* Frameworks */,
@@ -5496,14 +5496,14 @@
 			);
 			dependencies = (
 			);
-			name = AlphaWalletSafariExtension;
+			name = EthernityWalletSafariExtension;
 			productName = AlphaWalletSafariExtension;
-			productReference = 8703FBFD270366DA0062C416 /* AlphaWalletSafariExtension.appex */;
+			productReference = 8703FBFD270366DA0062C416 /* EthernityWalletSafariExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		878EE8EA255ADA49000210DE /* AlphaWalletShare */ = {
+		878EE8EA255ADA49000210DE /* EthernityWalletShare */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 878EE8F9255ADA49000210DE /* Build configuration list for PBXNativeTarget "AlphaWalletShare" */;
+			buildConfigurationList = 878EE8F9255ADA49000210DE /* Build configuration list for PBXNativeTarget "EthernityWalletShare" */;
 			buildPhases = (
 				878EE8E7255ADA49000210DE /* Sources */,
 				878EE8E8255ADA49000210DE /* Frameworks */,
@@ -5513,9 +5513,9 @@
 			);
 			dependencies = (
 			);
-			name = AlphaWalletShare;
+			name = EthernityWalletShare;
 			productName = AlphaWalletShare;
-			productReference = 878EE8EB255ADA49000210DE /* AlphaWalletShare.appex */;
+			productReference = 878EE8EB255ADA49000210DE /* EthernityWalletShare.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -5531,7 +5531,6 @@
 					2912CCF41F6A830700C6CBE3 = {
 						CreatedOnToolsVersion = 9.0;
 						LastSwiftMigration = 1010;
-						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.DataProtection = {
 								enabled = 1;
@@ -5557,11 +5556,10 @@
 					};
 					878EE8EA255ADA49000210DE = {
 						CreatedOnToolsVersion = 11.7;
-						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = 2912CCF01F6A830700C6CBE3 /* Build configuration list for PBXProject "AlphaWallet" */;
+			buildConfigurationList = 2912CCF01F6A830700C6CBE3 /* Build configuration list for PBXProject "EthernityWallet" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -5590,10 +5588,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2912CCF41F6A830700C6CBE3 /* AlphaWallet */,
-				2912CD0A1F6A830700C6CBE3 /* AlphaWalletTests */,
-				878EE8EA255ADA49000210DE /* AlphaWalletShare */,
-				8703FBFC270366DA0062C416 /* AlphaWalletSafariExtension */,
+				2912CCF41F6A830700C6CBE3 /* EthernityWallet */,
+				2912CD0A1F6A830700C6CBE3 /* EthernityWalletTests */,
+				878EE8EA255ADA49000210DE /* EthernityWalletShare */,
+				8703FBFC270366DA0062C416 /* EthernityWalletSafariExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -7034,17 +7032,17 @@
 /* Begin PBXTargetDependency section */
 		2912CD0D1F6A830700C6CBE3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2912CCF41F6A830700C6CBE3 /* AlphaWallet */;
+			target = 2912CCF41F6A830700C6CBE3 /* EthernityWallet */;
 			targetProxy = 2912CD0C1F6A830700C6CBE3 /* PBXContainerItemProxy */;
 		};
 		8703FC14270366DA0062C416 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8703FBFC270366DA0062C416 /* AlphaWalletSafariExtension */;
+			target = 8703FBFC270366DA0062C416 /* EthernityWalletSafariExtension */;
 			targetProxy = 8703FC13270366DA0062C416 /* PBXContainerItemProxy */;
 		};
 		878EE8F4255ADA49000210DE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 878EE8EA255ADA49000210DE /* AlphaWalletShare */;
+			target = 878EE8EA255ADA49000210DE /* EthernityWalletShare */;
 			targetProxy = 878EE8F3255ADA49000210DE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -7255,18 +7253,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CA4F65A76A018D8DFF4A0314 /* Pods-AlphaWallet.debug.xcconfig */;
 			buildSettings = {
-				ALPHAWALLET_INFO_PLIST_FILE = AlphaWallet/Info.plist;
-				ALPHAWALLET_PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.alphawallet;
-				ALPHAWALLET_PRODUCT_NAME = AlphaWallet;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = AlphaWallet/AlphaWallet.entitlements;
+				CODE_SIGN_ENTITLEMENTS = EthernityWallet/EthernityWallet.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 427;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = LRAW5PL536;
+				DEVELOPMENT_TEAM = WGLT5MKCPB;
 				ENABLE_BITCODE = YES;
+				ETHERNITYWALLET_INFO_PLIST_FILE = EthernityWallet/Info.plist;
+				ETHERNITYWALLET_PRODUCT_BUNDLE_IDENTIFIER = io.krytech.wallet;
+				ETHERNITYWALLET_PRODUCT_NAME = EthernityWallet;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)/usr/include/libxml2\"",
@@ -7277,18 +7275,18 @@
 					"\"$(PODS_ROOT)/libsodium/src/libsodium/include/sodium\"",
 					"\"$(PODS_ROOT)/libsodium/src/libsodium/include\"",
 				);
-				INFOPLIST_FILE = "$(ALPHAWALLET_INFO_PLIST_FILE)";
+				INFOPLIST_FILE = "$(ETHERNITYWALLET_INFO_PLIST_FILE)";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.40;
+				MARKETING_VERSION = 0.9;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" -D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = io.krytech.wallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "Ethernity Wallet - Development";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SWIFT_MODULE_NAME)-Swift.h ";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7301,17 +7299,17 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C6EE5EADD8373DB85ADD1966 /* Pods-AlphaWallet.release.xcconfig */;
 			buildSettings = {
-				ALPHAWALLET_INFO_PLIST_FILE = AlphaWallet/Info.plist;
-				ALPHAWALLET_PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.alphawallet;
-				ALPHAWALLET_PRODUCT_NAME = AlphaWallet;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = AlphaWallet/AlphaWallet.entitlements;
+				CODE_SIGN_ENTITLEMENTS = EthernityWallet/EthernityWallet.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 427;
-				DEVELOPMENT_TEAM = LRAW5PL536;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WGLT5MKCPB;
 				ENABLE_BITCODE = YES;
+				ETHERNITYWALLET_INFO_PLIST_FILE = EthernityWallet/Info.plist;
+				ETHERNITYWALLET_PRODUCT_BUNDLE_IDENTIFIER = io.krytech.wallet;
+				ETHERNITYWALLET_PRODUCT_NAME = EthernityWallet;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SDKROOT)/usr/include/libxml2\"",
@@ -7322,17 +7320,17 @@
 					"\"$(PODS_ROOT)/libsodium/src/libsodium/include/sodium\"",
 					"\"$(PODS_ROOT)/libsodium/src/libsodium/include\"",
 				);
-				INFOPLIST_FILE = "$(ALPHAWALLET_INFO_PLIST_FILE)";
+				INFOPLIST_FILE = "$(ETHERNITYWALLET_INFO_PLIST_FILE)";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.40;
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = io.krytech.wallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "Ethernity Wallet - Development";
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SWIFT_MODULE_NAME)-Swift.h ";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7347,8 +7345,9 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = LRAW5PL536;
+				DEVELOPMENT_TEAM = WGLT5MKCPB;
 				INFOPLIST_FILE = AlphaWalletTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -7356,11 +7355,11 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.AlphaWalletTests;
+				PRODUCT_BUNDLE_IDENTIFIER = io.krytech.wallet.AlphaWalletTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AlphaWallet.app/AlphaWallet";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EthernityWallet.app/EthernityWallet";
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Debug;
@@ -7372,7 +7371,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = LRAW5PL536;
+				DEVELOPMENT_TEAM = WGLT5MKCPB;
 				INFOPLIST_FILE = AlphaWalletTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -7380,11 +7379,11 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.AlphaWalletTests;
+				PRODUCT_BUNDLE_IDENTIFIER = io.krytech.wallet.AlphaWalletTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AlphaWallet.app/AlphaWallet";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EthernityWallet.app/EthernityWallet";
 				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Release;
@@ -7395,15 +7394,15 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = AlphaWalletSafariExtension/AlphaWalletSafariExtension.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = EthernityWalletSafariExtension/EthernityWalletSafariExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LRAW5PL536;
+				DEVELOPMENT_TEAM = WGLT5MKCPB;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AlphaWalletSafariExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = AlphaWalletSafariExtension;
+				INFOPLIST_FILE = EthernityWalletSafariExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = EthernityWalletSafariExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -7418,8 +7417,9 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.alphawallet.AlphaWalletSafariExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = io.krytech.wallet.EthernityWalletSafariExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Ethernity Wallet - Safari Extension";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -7433,15 +7433,15 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = AlphaWalletSafariExtension/AlphaWalletSafariExtension.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = EthernityWalletSafariExtension/EthernityWalletSafariExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = LRAW5PL536;
+				DEVELOPMENT_TEAM = WGLT5MKCPB;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AlphaWalletSafariExtension/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = AlphaWalletSafariExtension;
+				INFOPLIST_FILE = EthernityWalletSafariExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = EthernityWalletSafariExtension;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -7455,8 +7455,9 @@
 					"-framework",
 					SafariServices,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.alphawallet.AlphaWalletSafariExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = io.krytech.wallet.EthernityWalletSafariExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Ethernity Wallet - Safari Extension";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -7469,13 +7470,13 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_ENTITLEMENTS = AlphaWalletShare/AlphaWalletShare.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = EthernityWalletShare/EthernityWalletShare.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 368;
-				DEVELOPMENT_TEAM = LRAW5PL536;
-				INFOPLIST_FILE = AlphaWalletShare/Info.plist;
+				DEVELOPMENT_TEAM = WGLT5MKCPB;
+				INFOPLIST_FILE = EthernityWalletShare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7486,8 +7487,9 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = NO;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.alphawallet.AlphaWalletShare;
+				PRODUCT_BUNDLE_IDENTIFIER = io.krytech.wallet.EthernityWalletShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Ethernity Wallet - Development Share";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7500,13 +7502,13 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_ENTITLEMENTS = AlphaWalletShare/AlphaWalletShare.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_ENTITLEMENTS = EthernityWalletShare/EthernityWalletShare.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 368;
-				DEVELOPMENT_TEAM = LRAW5PL536;
-				INFOPLIST_FILE = AlphaWalletShare/Info.plist;
+				DEVELOPMENT_TEAM = WGLT5MKCPB;
+				INFOPLIST_FILE = EthernityWalletShare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7515,8 +7517,9 @@
 				);
 				MARKETING_VERSION = 3.12;
 				MTL_FAST_MATH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.stormbird.alphawallet.AlphaWalletShare;
+				PRODUCT_BUNDLE_IDENTIFIER = io.krytech.wallet.EthernityWalletShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Ethernity Wallet - Development Share";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7527,7 +7530,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2912CCF01F6A830700C6CBE3 /* Build configuration list for PBXProject "AlphaWallet" */ = {
+		2912CCF01F6A830700C6CBE3 /* Build configuration list for PBXProject "EthernityWallet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2912CD1D1F6A830700C6CBE3 /* Debug */,
@@ -7536,7 +7539,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2912CD1F1F6A830700C6CBE3 /* Build configuration list for PBXNativeTarget "AlphaWallet" */ = {
+		2912CD1F1F6A830700C6CBE3 /* Build configuration list for PBXNativeTarget "EthernityWallet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2912CD201F6A830700C6CBE3 /* Debug */,
@@ -7545,7 +7548,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2912CD221F6A830700C6CBE3 /* Build configuration list for PBXNativeTarget "AlphaWalletTests" */ = {
+		2912CD221F6A830700C6CBE3 /* Build configuration list for PBXNativeTarget "EthernityWalletTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2912CD231F6A830700C6CBE3 /* Debug */,
@@ -7554,7 +7557,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8703FC18270366DA0062C416 /* Build configuration list for PBXNativeTarget "AlphaWalletSafariExtension" */ = {
+		8703FC18270366DA0062C416 /* Build configuration list for PBXNativeTarget "EthernityWalletSafariExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8703FC16270366DA0062C416 /* Debug */,
@@ -7563,7 +7566,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		878EE8F9255ADA49000210DE /* Build configuration list for PBXNativeTarget "AlphaWalletShare" */ = {
+		878EE8F9255ADA49000210DE /* Build configuration list for PBXNativeTarget "EthernityWalletShare" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				878EE8F7255ADA49000210DE /* Debug */,

@@ -15,9 +15,9 @@
                   <BuildableReference
                      BuildableIdentifier = "primary"
                      BlueprintIdentifier = "2912CD0A1F6A830700C6CBE3"
-                     BuildableName = "AlphaWalletTests.xctest"
-                     BlueprintName = "AlphaWalletTests"
-                     ReferencedContainer = "container:AlphaWallet.xcodeproj">
+                     BuildableName = "EthernityWalletTests.xctest"
+                     BlueprintName = "EthernityWalletTests"
+                     ReferencedContainer = "container:EthernityWallet.xcodeproj">
                   </BuildableReference>
                </EnvironmentBuildable>
             </ActionContent>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2912CCF41F6A830700C6CBE3"
-               BuildableName = "AlphaWallet.app"
-               BlueprintName = "AlphaWallet"
-               ReferencedContainer = "container:AlphaWallet.xcodeproj">
+               BuildableName = "EthernityWallet.app"
+               BlueprintName = "EthernityWallet"
+               ReferencedContainer = "container:EthernityWallet.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -49,9 +49,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2912CCF41F6A830700C6CBE3"
-            BuildableName = "AlphaWallet.app"
-            BlueprintName = "AlphaWallet"
-            ReferencedContainer = "container:AlphaWallet.xcodeproj">
+            BuildableName = "EthernityWallet.app"
+            BlueprintName = "EthernityWallet"
+            ReferencedContainer = "container:EthernityWallet.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -60,9 +60,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2912CD0A1F6A830700C6CBE3"
-               BuildableName = "AlphaWalletTests.xctest"
-               BlueprintName = "AlphaWalletTests"
-               ReferencedContainer = "container:AlphaWallet.xcodeproj">
+               BuildableName = "EthernityWalletTests.xctest"
+               BlueprintName = "EthernityWalletTests"
+               ReferencedContainer = "container:EthernityWallet.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -82,9 +82,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2912CCF41F6A830700C6CBE3"
-            BuildableName = "AlphaWallet.app"
-            BlueprintName = "AlphaWallet"
-            ReferencedContainer = "container:AlphaWallet.xcodeproj">
+            BuildableName = "EthernityWallet.app"
+            BlueprintName = "EthernityWallet"
+            ReferencedContainer = "container:EthernityWallet.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <EnvironmentVariables>
@@ -114,9 +114,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2912CCF41F6A830700C6CBE3"
-            BuildableName = "AlphaWallet.app"
-            BlueprintName = "AlphaWallet"
-            ReferencedContainer = "container:AlphaWallet.xcodeproj">
+            BuildableName = "EthernityWallet.app"
+            BlueprintName = "EthernityWallet"
+            ReferencedContainer = "container:EthernityWallet.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
