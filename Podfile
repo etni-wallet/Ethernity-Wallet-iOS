@@ -2,7 +2,7 @@ platform :ios, '13.0'
 inhibit_all_warnings!
 source 'https://cdn.cocoapods.org/'
 
-target 'AlphaWallet' do
+target 'EthernityWallet' do
   use_frameworks!
   pod 'BigInt', '~> 3.1'
   pod 'R.swift'
@@ -43,7 +43,7 @@ target 'AlphaWallet' do
   pod 'xcbeautify'
   pod 'FloatingPanel'
 
-  target 'AlphaWalletTests' do
+  target 'EthernityWalletTests' do
       inherit! :search_paths
       # Pods for testing
       pod 'iOSSnapshotTestCase', '6.2.0'
