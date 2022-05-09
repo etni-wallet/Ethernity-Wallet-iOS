@@ -467,10 +467,10 @@ enum Style {
         }
     }
     enum ScrollableSegmentedControl {
-        static let configuration = ScrollableSegmentedControlConfiguration(lineConfiguration: ScrollableSegmentedControlHighlightableLineViewConfiguration(lineHeight: 1.0, highlightHeight: 3.0, lineColor: R.color.darkMode()!, highLightColor: R.color.electricBlueSecondary()!), isProportionalWidth: true, cellSpacing: 0.0, alignmentWhenNotScrollable: .filled, animationDuration: 0.25, animationCurve: .easeInOut)
+        static let configuration = ScrollableSegmentedControlConfiguration(lineConfiguration: ScrollableSegmentedControlHighlightableLineViewConfiguration(lineHeight: 1.0, highlightHeight: 3.0, lineColor: R.color.darkMode()!, highLightColor: R.color.electricBlueLightest()!), isProportionalWidth: true, cellSpacing: 0.0, alignmentWhenNotScrollable: .filled, animationDuration: 0.25, animationCurve: .easeInOut)
     }
     enum ScrollableSegmentedControlCell {
-        static let configuration = ScrollableSegmentedControlCellConfiguration(backgroundColor: .white, highlightedTextColor: R.color.electricBlueSecondary()!, nonHighlightedTextColor: R.color.black()!, highlightedFont: R.font.interSemiBold(size: 17.0)!, nonHighlightedFont: R.font.interMedium(size: 16.0)!, cellPadding: 8.0, textBottomPadding: 12.0)
+        static let configuration = ScrollableSegmentedControlCellConfiguration(backgroundColor: .white, highlightedTextColor: R.color.electricBlueLightest()!, nonHighlightedTextColor: R.color.black()!, highlightedFont: R.font.interSemiBold(size: 17.0)!, nonHighlightedFont: R.font.interMedium(size: 16.0)!, cellPadding: 8.0, textBottomPadding: 12.0)
     }
     enum value {
         static let appreciated: UIColor = R.color.green()!

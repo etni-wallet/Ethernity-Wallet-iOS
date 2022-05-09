@@ -66,12 +66,12 @@ class ImportWalletViewController: UIViewController {
         textField.textField.autocorrectionType = .no
         textField.textField.autocapitalizationType = .none
         textField.returnKeyType = .done
-        textField.isSecureTextEntry = false
+        textField.isSecureTextEntry = true
         textField.textField.clearButtonMode = .whileEditing
         textField.textField.rightView = {
             let button = UIButton(type: .system)
             button.frame = .init(x: 0, y: 0, width: 30, height: 30)
-            button.setImage(R.image.togglePassword()?.withRenderingMode(.alwaysOriginal), for: .normal)
+            button.setImage(R.image.togglePasswordHidden()?.withRenderingMode(.alwaysOriginal), for: .normal)
             button.tintColor = .init(red: 111, green: 111, blue: 111)
             button.addTarget(self, action: #selector(toggleMaskPassword), for: .touchUpInside)
             return button
@@ -562,9 +562,9 @@ class ImportWalletViewController: UIViewController {
         passwordTextField.isSecureTextEntry = !passwordTextField.isSecureTextEntry
         guard let button = passwordTextField.textField.rightView as? UIButton else { return }
         if passwordTextField.isSecureTextEntry {
-            button.tintColor = Colors.appTint
+            button.setImage(R.image.togglePasswordHidden()?.withRenderingMode(.alwaysOriginal), for: .normal)
         } else {
-            button.tintColor = .init(red: 111, green: 111, blue: 111)
+            button.setImage(R.image.togglePassword()?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
     }
 }
