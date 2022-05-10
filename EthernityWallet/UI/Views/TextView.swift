@@ -41,6 +41,24 @@ class TextView: UIControl {
             notifications.post(notification)
         }
     }
+    
+    private var placeholder: String = ""
+    
+    var textViewPlaceholder: String {
+        get {
+            return placeholder
+        }
+        set {
+            placeholder = newValue
+            setPlaceholder()
+        }
+    }
+    private var showPlaceholder: Bool {
+        get {
+            return !placeholder.isEmpty
+        }
+    }
+    
     var inputAccessoryButtonType = InputAccessoryButtonType.none {
         didSet {
             switch inputAccessoryButtonType {
@@ -193,6 +211,13 @@ class TextView: UIControl {
         pasteButton.isHidden = !text.isEmpty
     }
 
+    private func setPlaceholder() {
+        if showPlaceholder {
+            textView.textColor = DataEntry.Color.placeholderText
+            textView.text = textViewPlaceholder
+        }
+    }
+    
     func configureOnce() {
         guard !isConfigured else { return }
         isConfigured = true
@@ -215,6 +240,7 @@ class TextView: UIControl {
         textView.backgroundColor = .clear
         layer.borderColor = errorState.textFieldBorderColor(whileEditing: isFirstResponder).cgColor
         errorState = .none
+        
     }
 
     @objc func pasteAction() {
@@ -250,6 +276,13 @@ extension TextView: UITextViewDelegate {
         backgroundColor = Colors.appWhite
 
         dropShadow(color: borderColor, radius: DataEntry.Metric.shadowRadius)
+        
+        if textView.text == textViewPlaceholder {
+            textView.text = ""
+            textView.textColor = DataEntry.Color.text
+
+        }
+        textView.becomeFirstResponder()
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -259,6 +292,11 @@ extension TextView: UITextViewDelegate {
         backgroundColor = DataEntry.Color.textFieldBackground
 
         dropShadow(color: shouldDropShadow ? borderColor : .clear, radius: DataEntry.Metric.shadowRadius)
+        
+        if textView.text.isEmpty {
+             setPlaceholder()
+        }
+        textView.resignFirstResponder()
     }
 
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

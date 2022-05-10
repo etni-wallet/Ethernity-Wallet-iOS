@@ -104,7 +104,7 @@ protocol ButtonsBarViewType: UIView, ButtonObservationProtocol {
 
 class HorizontalButtonsBar: UIView, ButtonsBarViewType {
     var height: CGFloat { HorizontalButtonsBar.buttonsHeight }
-    static let buttonsHeight = CGFloat(ScreenChecker().isNarrowScreen ? 38 : 48)
+    static let buttonsHeight = CGFloat(ScreenChecker().isNarrowScreen ? 46 : 59)
     //A gap so it doesn't stick to the bottom of devices without a bottom safe area
     static let marginAtBottomScreen = CGFloat(3)
 
@@ -380,7 +380,7 @@ struct ButtonsBarViewModel {
     var disabledButtonTitleColor: UIColor = Colors.appWhite
 
     var buttonCornerRadius: CGFloat {
-        return HorizontalButtonsBar.buttonsHeight / 2.0
+        return 6.0//HorizontalButtonsBar.buttonsHeight / 2.0
     }
 
     var buttonShadowColor: UIColor {

@@ -59,6 +59,10 @@
 "Next" = "Next";
 "OK" = "OK";
 "Password" = "Password";
+"EnterPassword" = "Enter Password";
+"mnemonicPlaceholder" = "Enter Seed Phrase Here";
+"keystoreJSONPlaceholder" = "Enter Keystore JSON";
+"privateKeyPlaceholder" = "Enter Private Key Here";
 "Refresh" = "Refresh";
 "request.addressCopied.title" = "Address copied";
 "request.copyWallet.button.title" = "Copy wallet address";
@@ -192,7 +196,7 @@
 "importWallet.import.invalidMnemonicCount.24" = "Seed phrase has to be 12 or 24 words";
 "importWallet.import.invalidMnemonic" = "Seed phrase is invalid";
 "importWallet.import.fromCloud.title" = "Import from iCloud/Dropbox/Google Drive";
-"importWallet.import.seedPhrase.description" = "If your seed phrase is not in English, please convert it to English first";
+"importWallet.import.seedPhrase.description" = "If your seed phrase is not in English, please convert it to English.";
 "Keystore JSON" = "Keystore JSON";
 "More Details" = "More Details";
 "view in" = "View in %@";

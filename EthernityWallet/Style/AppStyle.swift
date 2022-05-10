@@ -41,16 +41,16 @@ extension UINavigationBarAppearance {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = R.color.white()!
-        appearance.shadowColor = Style.NavigationBar.Separator.color
+        appearance.shadowColor = Colors.appWhite
         appearance.shadowImage = nil
         appearance.setBackIndicatorImage(R.image.backWhite(), transitionMaskImage: R.image.backWhite())
         appearance.titleTextAttributes = [
             .foregroundColor: R.color.black()!,
-            .font: Fonts.semibold(size: 17) as Any
+            .font: Fonts.semibold(size: 24) as Any
         ]
         appearance.largeTitleTextAttributes = [
             .foregroundColor: R.color.black()!,
-            .font: Fonts.bold(size: 36) as Any,
+            .font: Fonts.semibold(size: 36) as Any,
         ]
         //NOTE: Hides back button text
         appearance.backButtonAppearance.normal.titleTextAttributes = [
@@ -107,9 +107,10 @@ struct Colors {
     static let appBackground = UIColor.white
     static let appTint = R.color.azure()!
     static let navigationTitleColor = UIColor.black
-    static let navigationButtonTintColor = R.color.mine()!
+    static let navigationButtonTintColor = UIColor.black
     static let appWhite = UIColor.white
     static let appText = R.color.black()!
+    static let appPlaceholderText = UIColor(hex: "6D6D6D")
     static let appSubtitle = UIColor(red: 117, green: 117, blue: 117)
     static let appHighlightGreen = UIColor(red: 117, green: 185, blue: 67)
     static let appActionButtonGreen = UIColor(red: 105, green: 200, blue: 0)
@@ -127,25 +128,30 @@ struct Colors {
     static let sortByTextColor = UIColor(red: 51, green: 51, blue: 51)
 }
 
+struct EthernityColors {
+    static let darkBlue = UIColor(hex: "030363")
+    static let electricBlueSecondary = UIColor(hex: "0000B7")
+}
+
 struct StyleLayout {
     static let sideMargin: CGFloat = 15
 }
 
 struct Fonts {
     static func light(size: CGFloat) -> UIFont {
-        return UIFont(resource: R.font.sourceSansProLight, size: size)!
+        return UIFont(resource: R.font.interLight, size: size)!
     }
     static func italic(size: CGFloat) -> UIFont {
         return UIFont(resource: R.font.sourceSansProItalic, size: size)!
     }
     static func regular(size: CGFloat) -> UIFont {
-        return UIFont(resource: R.font.sourceSansProRegular, size: size)!
+        return UIFont(resource: R.font.interRegular, size: size)!
     }
     static func semibold(size: CGFloat) -> UIFont {
-        return UIFont(resource: R.font.sourceSansProSemibold, size: size)!
+        return UIFont(resource: R.font.interSemiBold, size: size)!
     }
     static func bold(size: CGFloat) -> UIFont {
-        return UIFont(resource: R.font.sourceSansProBold, size: size)!
+        return UIFont(resource: R.font.interBold, size: size)!
     }
     static let tableHeader = Fonts.semibold(size: 15)
 }
@@ -161,7 +167,7 @@ enum Metrics {
     enum CornerRadius {
         static let popups = CGFloat(20)
         static let box = CGFloat(2)
-        static let textbox = CGFloat(5)
+        static let textbox = CGFloat(6)
         static let button = CGFloat(4)
         static let nftBox = CGFloat(8)
     }
@@ -210,22 +216,23 @@ enum DataEntry {
     }
 
     enum Color {
-        static let border = UIColor(red: 194, green: 194, blue: 194)
+        static let border = UIColor(red: 240, green: 240, blue: 240)
         static let text = Colors.appText
+        static let placeholderText = Colors.appPlaceholderText
         static let label = Colors.appGrayLabel
         static let textFieldStatus = R.color.danger()
         static let icon = Colors.appTint
         static let secondary = Colors.appGrayLabel
         static let textFieldError = R.color.danger()!
         static let textFieldShadowWhileEditing = Colors.appTint
-        static let textFieldBackground = UIColor(hex: "FBFBFB")
-        static let placeholder = UIColor(hex: "919191")
+        static let textFieldBackground = Colors.appWhite
+        static let placeholder = UIColor(hex: "6D6D6D")
         static let ensText = UIColor(red: 117, green: 185, blue: 67)
         static let searchTextFieldBackground = UIColor(red: 243, green: 244, blue: 245)
     }
 
     enum Metric {
-        static let borderThickness = CGFloat(1.0)
+        static let borderThickness = CGFloat(3.0)
         static let cornerRadius = Metrics.CornerRadius.textbox
         static let shadowRadius = CGFloat(2.0)
         static let textFieldInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
@@ -277,11 +284,11 @@ enum DataEntry {
     }
 
     enum Font {
-        static let text = Fonts.regular(size: isNarrowScreen ? 14: 18)
+        static let text = Fonts.regular(size: isNarrowScreen ? 12: 15)
         static let label = Fonts.bold(size: 13)
         static let textFieldTitle = Fonts.regular(size: 13)
         static let textFieldStatus = Fonts.bold(size: 13)
-        static let textField = Fonts.regular(size: isNarrowScreen ? 14: 17)
+        static let textField = Fonts.regular(size: isNarrowScreen ? 12: 15)
         static let accessory = Fonts.bold(size: isNarrowScreen ? 14: 17)
         static let amountTextField = Fonts.regular(size: isNarrowScreen ? 18: 36)
     }
@@ -414,7 +421,7 @@ enum Style {
             }()
         }
         enum Separator {
-            static let color: UIColor = R.color.mercury()!
+            static let color: UIColor = Colors.appWhite
         }
         enum Font {
             static let normal: UIFont = R.font.sourceSansProRegular(size: 13.0)!
@@ -460,10 +467,10 @@ enum Style {
         }
     }
     enum ScrollableSegmentedControl {
-        static let configuration = ScrollableSegmentedControlConfiguration(lineConfiguration: ScrollableSegmentedControlHighlightableLineViewConfiguration(lineHeight: 1.0, highlightHeight: 3.0, lineColor: R.color.mercury()!, highLightColor: R.color.azure()!), isProportionalWidth: true, cellSpacing: 0.0, alignmentWhenNotScrollable: .filled, animationDuration: 0.25, animationCurve: .easeInOut)
+        static let configuration = ScrollableSegmentedControlConfiguration(lineConfiguration: ScrollableSegmentedControlHighlightableLineViewConfiguration(lineHeight: 1.0, highlightHeight: 3.0, lineColor: R.color.darkMode()!, highLightColor: R.color.electricBlueLightest()!), isProportionalWidth: true, cellSpacing: 0.0, alignmentWhenNotScrollable: .filled, animationDuration: 0.25, animationCurve: .easeInOut)
     }
     enum ScrollableSegmentedControlCell {
-        static let configuration = ScrollableSegmentedControlCellConfiguration(backgroundColor: .white, highlightedTextColor: R.color.azure()!, nonHighlightedTextColor: R.color.dove()!, highlightedFont: R.font.sourceSansProSemibold(size: 15.0)!, nonHighlightedFont: R.font.sourceSansProRegular(size: 15.0)!, cellPadding: 8.0, textBottomPadding: 12.0)
+        static let configuration = ScrollableSegmentedControlCellConfiguration(backgroundColor: .white, highlightedTextColor: R.color.electricBlueLightest()!, nonHighlightedTextColor: R.color.black()!, highlightedFont: R.font.interSemiBold(size: 17.0)!, nonHighlightedFont: R.font.interMedium(size: 16.0)!, cellPadding: 8.0, textBottomPadding: 12.0)
     }
     enum value {
         static let appreciated: UIColor = R.color.green()!
