@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Volumes/DRIVE/FREELANCE_2022/ethernity_crypto/Ethernity-Wallet-iOS/EthernityWallet.xcodeproj">
+      location = "group:EthernityWallet.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
