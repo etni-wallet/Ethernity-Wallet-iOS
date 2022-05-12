@@ -12,28 +12,15 @@ class CreateInitialWalletViewController: UIViewController {
     private let keystore: Keystore
     private var viewModel = CreateInitialViewModel()
     private let analyticsCoordinator: AnalyticsCoordinator
-    private let roundedBackground = RoundedBackground()
     private let subtitleLabel = UILabel()
     private let imageView = UIImageView()
-    private let createWalletButtonBar = HorizontalButtonsBar(configuration: .primary(buttons: 1))
+    private let cloudTopImgView = UIImageView()
+    private let cloudDownImgView = UIImageView()
+    private let createWalletButtonBar = HorizontalButtonsBar(configuration: .whiteBackgroundYellowText(buttons: 1))
     private let separator = UIView.spacer(height: 1)
     private let haveWalletLabel = UILabel()
-    private let buttonsBar = HorizontalButtonsBar(configuration: .secondary(buttons: 2))
+    private let buttonsBar = HorizontalButtonsBar(configuration: .primary(buttons: 1))
 
-    private var imageViewDimension: CGFloat {
-        if ScreenChecker().isNarrowScreen {
-            return 60
-        } else {
-            return 90
-        }
-    }
-    private var topMarginOfImageView: CGFloat {
-        if ScreenChecker().isNarrowScreen {
-            return 100
-        } else {
-            return 170
-        }
-    }
 
     weak var delegate: CreateInitialWalletViewControllerDelegate?
 
@@ -42,64 +29,73 @@ class CreateInitialWalletViewController: UIViewController {
         self.analyticsCoordinator = analyticsCoordinator
         super.init(nibName: nil, bundle: nil)
 
-        roundedBackground.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(roundedBackground)
-
         imageView.contentMode = .scaleAspectFit
+        cloudTopImgView.contentMode = .scaleAspectFit
+        cloudDownImgView.contentMode = .scaleAspectFit
 
-        let stackView = [
-            UIView.spacer(height: topMarginOfImageView),
-            imageView,
-            UIView.spacer(height: 10),
-            subtitleLabel,
-            UIView.spacerWidth(flexible: true),
-            createWalletButtonBar,
-            UIView.spacer(height: 25),
-            separator,
-            UIView.spacer(height: 25),
-            haveWalletLabel,
-            UIView.spacer(height: 15),
-        ].asStackView(axis: .vertical)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        roundedBackground.addSubview(stackView)
+        view.addSubview(imageView)
+        view.addSubview(cloudTopImgView)
+        view.addSubview(cloudDownImgView)
+        view.addSubview(subtitleLabel)
+        view.addSubview(buttonsBar)
+        view.addSubview(createWalletButtonBar)
+        
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        cloudTopImgView.translatesAutoresizingMaskIntoConstraints = false
+        cloudDownImgView.translatesAutoresizingMaskIntoConstraints = false
+        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        createWalletButtonBar.translatesAutoresizingMaskIntoConstraints = false
+        buttonsBar.translatesAutoresizingMaskIntoConstraints = false
 
-        let footerBar = UIView()
-        footerBar.translatesAutoresizingMaskIntoConstraints = false
-        footerBar.backgroundColor = .clear
-        roundedBackground.addSubview(footerBar)
+//        let footerBar = UIView()
+//        footerBar.translatesAutoresizingMaskIntoConstraints = false
+//        footerBar.backgroundColor = .clear
+//        roundedBackground.addSubview(footerBar)
 
-        footerBar.addSubview(buttonsBar)
+//        footerBar.addSubview(buttonsBar)
 
         NSLayoutConstraint.activate([
-            imageView.heightAnchor.constraint(equalToConstant: imageViewDimension),
-
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            stackView.topAnchor.constraint(equalTo: view.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: footerBar.topAnchor),
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            cloudTopImgView.bottomAnchor.constraint(equalTo: imageView.topAnchor, constant: -60),
+            cloudTopImgView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            
+            subtitleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 20),
+            subtitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            cloudDownImgView.topAnchor.constraint(equalTo: subtitleLabel.bottomAnchor, constant: 60),
+            cloudDownImgView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 
             createWalletButtonBar.heightAnchor.constraint(equalToConstant: HorizontalButtonsBar.buttonsHeight),
-
-            buttonsBar.leadingAnchor.constraint(equalTo: footerBar.leadingAnchor),
-            buttonsBar.trailingAnchor.constraint(equalTo: footerBar.trailingAnchor),
-            buttonsBar.topAnchor.constraint(equalTo: footerBar.topAnchor),
+            createWalletButtonBar.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60),
+            createWalletButtonBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            createWalletButtonBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            createWalletButtonBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
             buttonsBar.heightAnchor.constraint(equalToConstant: HorizontalButtonsBar.buttonsHeight),
-
-            footerBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            footerBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            footerBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -HorizontalButtonsBar.buttonsHeight - HorizontalButtonsBar.marginAtBottomScreen),
-            footerBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-
-            roundedBackground.createConstraintsWithContainer(view: view),
+            buttonsBar.bottomAnchor.constraint(equalTo: createWalletButtonBar.topAnchor, constant: -16),
+            buttonsBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            buttonsBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        super.viewDidDisappear(animated)
+    }
 
     func configure() {
-        view.backgroundColor = Colors.appBackground
+        view.backgroundColor = EthernityColors.electricBlueLight
 
         subtitleLabel.textAlignment = .center
         subtitleLabel.textColor = viewModel.subtitleColor
@@ -107,6 +103,8 @@ class CreateInitialWalletViewController: UIViewController {
         subtitleLabel.text = viewModel.subtitle
 
         imageView.image = viewModel.imageViewImage
+        cloudTopImgView.image = viewModel.cloudTopImage
+        cloudDownImgView.image = viewModel.cloudDownImage
 
         separator.backgroundColor = viewModel.separatorColor
 
@@ -119,14 +117,13 @@ class CreateInitialWalletViewController: UIViewController {
         let createWalletButton = createWalletButtonBar.buttons[0]
         createWalletButton.setTitle(viewModel.createButtonTitle, for: .normal)
         createWalletButton.addTarget(self, action: #selector(createWallet), for: .touchUpInside)
-
         buttonsBar.configure()
         let watchButton = buttonsBar.buttons[0]
-        watchButton.setTitle(viewModel.watchButtonTitle, for: .normal)
-        watchButton.addTarget(self, action: #selector(watchWallet), for: .touchUpInside)
-        let importButton = buttonsBar.buttons[1]
-        importButton.setTitle(viewModel.importButtonTitle, for: .normal)
-        importButton.addTarget(self, action: #selector(importWallet), for: .touchUpInside)
+        watchButton.setTitle(viewModel.importButtonTitle, for: .normal)
+        watchButton.addTarget(self, action: #selector(importWallet), for: .touchUpInside)
+//        let importButton = buttonsBar.buttons[1]
+//        importButton.setTitle(viewModel.importButtonTitle, for: .normal)
+//        importButton.addTarget(self, action: #selector(importWallet), for: .touchUpInside)
     }
 
     @objc private func createWallet() {
