@@ -1,0 +1,15 @@
+{
+  "images" : [
+    {
+      "filename" : "toggle-password-hidden.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
+  }
+}
