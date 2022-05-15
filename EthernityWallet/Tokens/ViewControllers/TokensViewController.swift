@@ -161,7 +161,7 @@ class TokensViewController: UIViewController {
         return header
     }()
     private var cancellable = Set<AnyCancellable>()
-
+    
     init(sessions: ServerDictionary<WalletSession>,
          account: Wallet,
          tokenCollection: TokenCollection,

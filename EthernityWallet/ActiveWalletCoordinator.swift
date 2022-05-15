@@ -88,8 +88,8 @@ class ActiveWalletCoordinator: NSObject, Coordinator, DappRequestHandlerDelegate
         return PromptBackupCoordinator(keystore: keystore, wallet: wallet, config: config, analyticsCoordinator: analyticsCoordinator)
     }()
 
-    lazy var tabBarController: UITabBarController = {
-        let tabBarController: UITabBarController = .withOverridenBarAppearence()
+    lazy var tabBarController: CustomTabController = {
+        let tabBarController: CustomTabController = .withOverridenBarAppearence()
         tabBarController.delegate = self
 
         return tabBarController
@@ -289,6 +289,7 @@ class ActiveWalletCoordinator: NSObject, Coordinator, DappRequestHandlerDelegate
                 walletBalanceService: walletBalanceService
         )
         coordinator.rootViewController.tabBarItem = UITabBarController.Tabs.tokens.tabBarItem
+        coordinator.rootViewController.tabBarItem.title = nil
         coordinator.delegate = self
         coordinator.start()
 
@@ -372,8 +373,8 @@ class ActiveWalletCoordinator: NSObject, Coordinator, DappRequestHandlerDelegate
             viewControllers.append(transactionCoordinator.navigationController)
         }
 
-        let browserCoordinator = createBrowserCoordinator(sessions: sessionsSubject.value, browserOnly: false, analyticsCoordinator: analyticsCoordinator)
-        viewControllers.append(browserCoordinator.navigationController)
+//        let browserCoordinator = createBrowserCoordinator(sessions: sessionsSubject.value, browserOnly: false, analyticsCoordinator: analyticsCoordinator)
+//        viewControllers.append(browserCoordinator.navigationController)
 
         let settingsCoordinator = createSettingsCoordinator(keystore: keystore, promptBackupCoordinator: promptBackupCoordinator)
         viewControllers.append(settingsCoordinator.navigationController)

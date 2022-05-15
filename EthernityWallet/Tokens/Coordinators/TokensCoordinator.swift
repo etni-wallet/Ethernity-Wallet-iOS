@@ -126,17 +126,21 @@ class TokensCoordinator: Coordinator {
         promptBackupCoordinator.prominentPromptDelegate = self
         setupSingleChainTokenCoordinators()
 
-        let moreBarButton = UIBarButtonItem.moreBarButton(self, selector: #selector(moreButtonSelected))
+        let addBarButton = UIBarButtonItem.addBarButton(self, selector: #selector(moreButtonSelected))
         let qrCodeBarButton = UIBarButtonItem.qrCodeBarButton(self, selector: #selector(scanQRCodeButtonSelected))
-        moreBarButton.imageInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
-        qrCodeBarButton.imageInsets = .init(top: 0, left: 15, bottom: 0, right: -15)
-
-        tokensViewController.navigationItem.rightBarButtonItems = [
-            moreBarButton,
-            qrCodeBarButton
-        ]
-        tokensViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: tokensViewController.blockieImageView)
-        tokensViewController.blockieImageView.addTarget(self, action: #selector(blockieButtonSelected), for: .touchUpInside)
+        //moreBarButton.imageInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
+        qrCodeBarButton.imageInsets = .init(top: 0, left: 0, bottom: 0, right: 15)
+        
+        tokensViewController.navigationItem.rightBarButtonItem = qrCodeBarButton
+        
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "  " + tokensViewController.viewModel.walletDefaultTitle
+        label.font = Fonts.semibold(size: 36)
+        label.textColor = UIColor.black
+        label.textAlignment = .left
+        tokensViewController.navigationItem.leftBarButtonItems = [UIBarButtonItem(customView: label), addBarButton /*UIBarButtonItem(customView: tokensViewController.blockieImageView)*/]
+//        tokensViewController.blockieImageView.addTarget(self, action: #selector(blockieButtonSelected), for: .touchUpInside)
     }
 
     @objc private func blockieButtonSelected(_ sender: UIButton) {
@@ -264,7 +268,7 @@ extension TokensCoordinator: TokensViewControllerDelegate {
     }
 
     func viewWillAppear(in viewController: UIViewController) {
-        getWalletName()
+        //getWalletName()
         getWalletBlockie()
 
         guard !viewWillAppearHandled else { return }

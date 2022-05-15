@@ -79,8 +79,8 @@ extension UITabBarAppearance {
 }
 
 extension UITabBarController {
-    static func withOverridenBarAppearence(appearence tabBarAppearance: UITabBarAppearance = .defaultAppearence) -> UITabBarController {
-        let tabBarController = UITabBarController()
+    static func withOverridenBarAppearence(appearence tabBarAppearance: UITabBarAppearance = .defaultAppearence) -> CustomTabController {
+        let tabBarController = CustomTabController()
         tabBarController.tabBar.isTranslucent = false
         tabBarController.tabBar.tintColor = Colors.appTint
         tabBarController.tabBar.standardAppearance = tabBarAppearance
@@ -105,7 +105,7 @@ struct Colors {
     static let black = UIColor(hex: "313849")
     static let lightBlack = UIColor(hex: "313849")
     static let appBackground = UIColor.white
-    static let appTint = R.color.azure()!
+    static let appTint = R.color.electricBlueLightest()!
     static let navigationTitleColor = UIColor.black
     static let navigationButtonTintColor = UIColor.black
     static let appWhite = UIColor.white
@@ -417,18 +417,18 @@ enum Style {
     enum TabBar {
         enum Background {
             static let color: UIColor = {
-                return UIColor.systemBackground
+                return UIColor(hex: "FFFFFF")
             }()
         }
         enum Separator {
-            static let color: UIColor = Colors.appWhite
+            static let color: UIColor = UIColor(hex: "ECECEC")
         }
         enum Font {
             static let normal: UIFont = R.font.sourceSansProRegular(size: 13.0)!
-            static let selected: UIFont = R.font.sourceSansProSemibold(size: 13.0)!
+            static let selected: UIFont = R.font.sourceSansProSemibold(size: 16.0)!
             enum Color {
-                static let selected: UIColor = R.color.azure()!
-                static let normal: UIColor = R.color.dove()!
+                static let selected: UIColor = R.color.electricBlueLightest()!
+                static let normal: UIColor = UIColor(hex: "B4B4B4")
             }
         }
     }
