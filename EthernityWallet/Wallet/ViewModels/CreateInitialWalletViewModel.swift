@@ -13,7 +13,7 @@ struct CreateInitialViewModel {
     }
 
     var subtitleColor: UIColor {
-        return Colors.appText
+        return Colors.appWhite
     }
 
     var subtitleFont: UIFont {
@@ -25,7 +25,15 @@ struct CreateInitialViewModel {
     }
 
     var imageViewImage: UIImage {
-        return R.image.launch_icon()!
+        return R.image.ethernityLogo()!
+    }
+    
+    var cloudTopImage: UIImage {
+        return R.image.cloudup()!
+    }
+    
+    var cloudDownImage: UIImage {
+        return R.image.cloddown()!
     }
 
     var createButtonTitle: String {

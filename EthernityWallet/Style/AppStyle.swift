@@ -129,8 +129,10 @@ struct Colors {
 }
 
 struct EthernityColors {
+    static let electricBlueLight = UIColor(hex: "0C86FF")
     static let darkBlue = UIColor(hex: "030363")
     static let electricBlueSecondary = UIColor(hex: "0000B7")
+    static let electricYellow = UIColor(hex: "F89430")
 }
 
 struct StyleLayout {
