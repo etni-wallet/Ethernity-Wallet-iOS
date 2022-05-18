@@ -44,6 +44,7 @@ class ShowSeedPhraseViewController: UIViewController {
                 viewModel = .init(words: [])
             }
 
+            viewModel.step = prevViewModel.step
             viewModel.subtitle = prevViewModel.subtitle
             viewModel.buttonTitle = prevViewModel.buttonTitle
 
@@ -85,6 +86,7 @@ class ShowSeedPhraseViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         hidesBottomBarWhenPushed = true
+        navigationItem.title = viewModel.navBarTitle
 
         roundedBackground.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(roundedBackground)
@@ -182,7 +184,7 @@ class ShowSeedPhraseViewController: UIViewController {
         subtitleLabel.font = viewModel.subtitleFont
         //Important for smaller screens
         subtitleLabel.numberOfLines = 0
-        subtitleLabel.text = viewModel.subtitle
+        subtitleLabel.attributedText = viewModel.attributedSubtitle
 
         errorLabel.textColor = viewModel.errorColor
         errorLabel.font = viewModel.errorFont

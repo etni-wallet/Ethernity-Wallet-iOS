@@ -8,12 +8,35 @@ struct VerifySeedPhraseViewModel {
         return Colors.appWhite
     }
 
-    var title: String {
-        return R.string.localizable.walletsVerifySeedPhraseTitle()
+    var attributedTitle: NSAttributedString {
+        
+        let attributeString = NSMutableAttributedString(string: step + title)
+        let style = NSMutableParagraphStyle()
+        style.alignment = .center
+
+        attributeString.addAttributes([
+            .paragraphStyle: style,
+            .font: Screen.Backup.subtitleFont,
+            .foregroundColor: R.color.black()!
+        ], range: NSRange(location: step.count, length: title.count))
+        attributeString.addAttributes([
+            .paragraphStyle: style,
+            .font: Screen.Backup.subtitleFont,
+            .foregroundColor: R.color.electricBlueLightest()!
+        ], range: NSRange(location: 0, length: step.count))
+        
+        return attributeString
+    }
+    
+    var step: String = R.string.localizable.walletsVerifySeedPhraseTitleStepTwo()
+    var title: String = R.string.localizable.walletsVerifySeedPhraseTitle()
+    
+    var navBarTitle: String {
+        return R.string.localizable.backupWalletIntroductionNavTitle()
     }
 
     var seedPhraseTextViewBorderNormalColor: UIColor {
-        return Colors.lightGray
+        return Colors.electricBlueLightest
     }
 
     var seedPhraseTextViewBorderErrorColor: UIColor {
@@ -21,11 +44,11 @@ struct VerifySeedPhraseViewModel {
     }
 
     var seedPhraseTextViewBorderWidth: CGFloat {
-        return 0.5
+        return 3
     }
 
     var seedPhraseTextViewBorderCornerRadius: CGFloat {
-        return 7
+        return 6
     }
 
     var seedPhraseTextViewFont: UIFont {

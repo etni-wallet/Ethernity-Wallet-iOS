@@ -107,6 +107,8 @@ class VerifySeedPhraseViewController: UIViewController {
         self.viewModel = .init()
         self.state = .notDisplayedSeedPhrase
         super.init(nibName: nil, bundle: nil)
+        
+        navigationItem.title = viewModel.navBarTitle
 
         seedPhraseCollectionView.bounces = true
         seedPhraseCollectionView.seedPhraseDelegate = self
@@ -222,7 +224,7 @@ class VerifySeedPhraseViewController: UIViewController {
         subtitleLabel.font = viewModel.subtitleFont
         //Important for smaller screens
         subtitleLabel.numberOfLines = 0
-        subtitleLabel.text = viewModel.title
+        subtitleLabel.attributedText = viewModel.attributedTitle
 
         seedPhraseTextView.keyboardType = .alphabet
         seedPhraseTextView.returnKeyType = .done

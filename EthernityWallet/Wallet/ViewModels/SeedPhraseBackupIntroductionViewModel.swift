@@ -36,7 +36,7 @@ struct SeedPhraseBackupIntroductionViewModel {
     }
     
     var attributedDescription: NSAttributedString {
-        let description = R.string.localizable.walletsShowSeedPhraseSubtitle()
+        let description = R.string.localizable.walletsBackupHdWalletIntroductionDescription()
         let attributeString = NSMutableAttributedString(string: description)
         let style = NSMutableParagraphStyle()
         style.alignment = .center
