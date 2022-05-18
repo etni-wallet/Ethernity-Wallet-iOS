@@ -17,6 +17,8 @@ class BackupCoordinator: Coordinator {
     let navigationController: UINavigationController
     weak var delegate: BackupCoordinatorDelegate?
     var coordinators: [Coordinator] = []
+    
+    private let walletSuccessMessage = R.string.localizable.walletsVerifySeedPhraseWalletBackupSuccessful()
 
     init(navigationController: UINavigationController, keystore: Keystore, account: AlphaWallet.Address, analyticsCoordinator: AnalyticsCoordinator) {
         self.navigationController = navigationController
@@ -141,7 +143,7 @@ class BackupCoordinator: Coordinator {
         finish(result: .success(true))
         //Bit of delay to wait for the UI animation to almost finish
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            SuccessOverlayView.show()
+            SuccessOverlayView.show(message: self.walletSuccessMessage)
         }
     }
 
@@ -162,7 +164,7 @@ class BackupCoordinator: Coordinator {
         finish(result: .success(true))
         //Bit of delay to wait for UI animation to almost finish
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            SuccessOverlayView.show()
+            SuccessOverlayView.show(message: self.walletSuccessMessage)
         }
     }
 }
