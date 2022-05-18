@@ -36,7 +36,7 @@ struct VerifySeedPhraseViewModel {
     }
 
     var seedPhraseTextViewBorderNormalColor: UIColor {
-        return Colors.electricBlueLightest
+        return R.color.electricBlueLightest()!
     }
 
     var seedPhraseTextViewBorderErrorColor: UIColor {
