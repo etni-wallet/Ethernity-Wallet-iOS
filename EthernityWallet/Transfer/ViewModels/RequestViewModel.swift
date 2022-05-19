@@ -31,7 +31,7 @@ struct RequestViewModel {
 	}
 
 	var addressLabelColor: UIColor {
-		return .black
+        return EthernityColors.ethernityLightGrey
 	}
 
 	var copyButtonsFont: UIFont {
@@ -43,11 +43,11 @@ struct RequestViewModel {
 	}
 
 	var addressFont: UIFont {
-		return Fonts.semibold(size: 17)
+		return Fonts.interMedium(size: 16)
 	}
 
 	var addressBackgroundColor: UIColor {
-		return UIColor(red: 237, green: 237, blue: 237)
+		return Colors.appBackground
 	}
 
 	var instructionFont: UIFont {
