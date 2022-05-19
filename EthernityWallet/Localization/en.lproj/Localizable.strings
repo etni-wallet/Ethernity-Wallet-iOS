@@ -371,6 +371,8 @@
 "a.settings.navigation.title" = "Settings";
 "a.advanced.settings.navigation.title" = "Advanced";
 "a.settings.contents.myWalletAddress" = "My Wallet Address";
+"a.settings.contents.myWalletAddress.copyButton" = "Copy Wallet Address";
+"a.settings.contents.myWalletAddress.shareButton" = "Share with Others";
 "a.settings.contents.clearDappBrowserCache" = "Clear Browser cache";
 "a.settings.tools" = "Tools";
 "a.welcome.navigation.title" = "Welcome";
