@@ -109,6 +109,7 @@ struct Colors {
     static let navigationTitleColor = UIColor.black
     static let navigationButtonTintColor = UIColor.black
     static let appWhite = UIColor.white
+    static let walletTabBackground = UIColor(hex: "F4F4F4")
     static let appText = R.color.black()!
     static let appPlaceholderText = UIColor(hex: "6D6D6D")
     static let appSubtitle = UIColor(red: 117, green: 117, blue: 117)
@@ -192,13 +193,13 @@ enum Metrics {
 enum GroupedTable {
     enum Metric {
         static let cellSpacing = CGFloat(5)
-        static let cellSeparatorHeight = CGFloat(1)
+        static let cellSeparatorHeight = CGFloat(0)
     }
 
     enum Color {
         static let title = UIColor(red: 76, green: 76, blue: 76)
-        static let background = R.color.alabaster()!
-        static let cellSeparator = UIColor(red: 233, green: 233, blue: 233)
+        static let background = UIColor.white
+        static let cellSeparator = Colors.walletTabBackground//UIColor(red: 233, green: 233, blue: 233)
     }
 }
 
@@ -329,12 +330,12 @@ enum Screen {
 
     enum TokenCard {
         enum Font {
-            static let title: UIFont = Fonts.regular(size: 20)
-            static let subtitle = Fonts.regular(size: 15)
+            static let title: UIFont = Fonts.regular(size: 17)
+            static let subtitle = Fonts.semibold(size: 17)
             static let blockChainName = Fonts.semibold(size: 12)
-            static let valueChangeLabel = Fonts.regular(size: 15)
+            static let valueChangeLabel = Fonts.semibold(size: 15)
             static let placeholderLabel = Fonts.regular(size: 17)
-            static let valueChangeValue = Fonts.semibold(size: 20)
+            static let valueChangeValue = Fonts.semibold(size: 15)
         }
 
         enum Color {

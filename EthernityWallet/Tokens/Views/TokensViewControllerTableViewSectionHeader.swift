@@ -20,7 +20,7 @@ extension TokensViewController {
                     return
                 }
 
-                subview.backgroundColor = Colors.appWhite
+                subview.backgroundColor = Colors.walletTabBackground
                 subview.translatesAutoresizingMaskIntoConstraints = false
                 contentView.addSubview(subview)
                 contentView.addSubview(bottomSeparator)
@@ -84,7 +84,7 @@ extension TokensViewController {
         override init(reuseIdentifier: String?) {
             super.init(reuseIdentifier: reuseIdentifier)
 
-            contentView.backgroundColor = Colors.appWhite
+            contentView.backgroundColor = Colors.walletTabBackground
             bottomSeparator.isHidden = true
             topSeparator.isHidden = true
 
@@ -137,7 +137,7 @@ extension TokensViewController {
 
             super.init(frame: .zero)
             stackView.translatesAutoresizingMaskIntoConstraints = false
-            backgroundColor = Colors.appWhite
+            backgroundColor = Colors.walletTabBackground
             bottomSeparator.isHidden = isBottomSeparatorHidden
             topSeparator.isHidden = isTopSeparatorHidden
 

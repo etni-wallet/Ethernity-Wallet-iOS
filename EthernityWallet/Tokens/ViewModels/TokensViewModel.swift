@@ -44,7 +44,7 @@ struct CollectiblePairs: Hashable {
 
 extension TokensViewModel {
     enum Section: Equatable {
-        case walletSummary
+        //case walletSummary
         case filters
         case testnetTokens
         case search
@@ -96,9 +96,9 @@ class TokensViewModel {
             }
 
             if count == .zero {
-                initialSections = [.walletSummary, .filters, .search]
+                initialSections = [/*.walletSummary,*/ .filters, .search]
             } else {
-                initialSections = [.walletSummary, .filters, .search, .activeWalletSession(count: count)]
+                initialSections = [/*.walletSummary,*/ .filters, .search, .activeWalletSession(count: count)]
             }
             sections = initialSections + testnetHeaderSections + [varyTokenOrCollectiblePeirsSection]
         }
@@ -108,7 +108,7 @@ class TokensViewModel {
     //NOTE: For case with empty tokens list we want
     func isBottomSeparatorLineHiddenForTestnetHeader(section: Int) -> Bool {
         switch sections[section] {
-        case .walletSummary, .filters, .activeWalletSession, .search, .tokens, .collectiblePairs:
+        case /*.walletSummary,*/ .filters, .activeWalletSession, .search, .tokens, .collectiblePairs:
             return true
         case .testnetTokens:
             if let index = sections.firstIndex(where: { $0 == tokenListSection }) {
@@ -132,7 +132,7 @@ class TokensViewModel {
     }
 
     var backgroundColor: UIColor {
-        return Colors.appWhite
+        return Colors.walletTabBackground
     }
 
     var shouldShowBackupPromptViewHolder: Bool {
@@ -160,8 +160,8 @@ class TokensViewModel {
 
     func heightForHeaderInSection(for section: Int) -> CGFloat {
         switch sections[section] {
-        case .walletSummary:
-            return 80
+//        case .walletSummary:
+//            return 80
         case .filters:
             return DataEntry.Metric.Tokens.Filter.height
         case .activeWalletSession:
@@ -175,7 +175,7 @@ class TokensViewModel {
 
     func numberOfItems(for section: Int) -> Int {
         switch sections[section] {
-        case .search, .testnetTokens, .walletSummary, .filters, .activeWalletSession:
+        case .search, .testnetTokens/*, .walletSummary*/, .filters, .activeWalletSession:
             return 0
         case .tokens, .collectiblePairs:
             switch filter {
@@ -231,7 +231,7 @@ class TokensViewModel {
             case .tokenObject:
                 return Style.Wallet.Row.height
             }
-        case .search, .walletSummary, .filters, .activeWalletSession:
+        case .search/*, .walletSummary*/, .filters, .activeWalletSession:
             return Style.Wallet.Row.height
         case .collectiblePairs:
             return Style.Wallet.Row.collectiblePairsHeight
@@ -314,9 +314,9 @@ fileprivate extension WalletFilter {
         return [
             .all,
             .defi,
-            .governance,
+//            .governance,
             .assets,
-            .collectiblesOnly,
+//            .collectiblesOnly,
         ]
     }
 

@@ -28,6 +28,7 @@ class FungibleTokenViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
+        contentView.layer.cornerRadius = 12
         contentView.addSubview(background)
         background.translatesAutoresizingMaskIntoConstraints = false
         priceChangeLabel.textAlignment = .center
@@ -62,7 +63,7 @@ class FungibleTokenViewCell: UITableViewCell {
         selectionStyle = .none
 
         backgroundColor = viewModel.backgroundColor
-        background.backgroundColor = viewModel.contentsBackgroundColor
+        background.backgroundColor = UIColor.red//viewModel.contentsBackgroundColor
         contentView.backgroundColor = GroupedTable.Color.background
 
         titleLabel.attributedText = viewModel.titleAttributedString
@@ -88,7 +89,7 @@ class FungibleTokenViewCell: UITableViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-
+        contentView.bounds = CGRect(origin: CGPoint(x: self.bounds.origin.x, y: self.bounds.origin.y), size: CGSize(width: (0.91 * self.bounds.size.width), height: self.bounds.size.height))
         priceChangeLabel.layer.cornerRadius = 2.0
     }
 }

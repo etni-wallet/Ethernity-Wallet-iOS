@@ -55,7 +55,7 @@ class TokensViewController: UIViewController {
         tableView.registerHeaderFooterView(GeneralTableViewSectionHeader<ScrollableSegmentedControl>.self)
         tableView.registerHeaderFooterView(GeneralTableViewSectionHeader<AddHideTokensView>.self)
         tableView.registerHeaderFooterView(ActiveWalletSessionView.self)
-        tableView.registerHeaderFooterView(GeneralTableViewSectionHeader<WalletSummaryView>.self)
+        //tableView.registerHeaderFooterView(GeneralTableViewSectionHeader<WalletSummaryView>.self)
         tableView.estimatedRowHeight = DataEntry.Metric.TableView.estimatedRowHeight
         tableView.tableFooterView = UIView.tableFooterToRemoveEmptyCellSeparators()
         tableView.separatorInset = .zero
@@ -230,16 +230,16 @@ class TokensViewController: UIViewController {
                 strongSelf.tableView.reloadData()
             }.store(in: &cancellable)
 
-        let initialWalletSummary = WalletSummary(balances: [walletBalanceService.walletBalance(wallet: account)])
+//        let initialWalletSummary = WalletSummary(balances: [walletBalanceService.walletBalance(wallet: account)])
 
-        let walletSummary = walletBalanceService
-            .walletBalancePublisher(wallet: account)
-            .map { return WalletSummary(balances: [$0]) }
-            .receive(on: RunLoop.main)
-            .prepend(initialWalletSummary)
-            .eraseToAnyPublisher()
-
-        walletSummaryView.configure(viewModel: .init(walletSummary: walletSummary, config: config, alignment: .center))
+//        let walletSummary = walletBalanceService
+//            .walletBalancePublisher(wallet: account)
+//            .map { return WalletSummary(balances: [$0]) }
+//            .receive(on: RunLoop.main)
+//            .prepend(initialWalletSummary)
+//            .eraseToAnyPublisher()
+//
+//        walletSummaryView.configure(viewModel: .init(walletSummary: walletSummary, config: config, alignment: .center))
 
         navigationItem.largeTitleDisplayMode = .never
     }
@@ -250,7 +250,8 @@ class TokensViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.addSubview(tableViewRefreshControl)
-
+        tableView.separatorColor = .clear
+        
         handleTokenCollectionUpdates()
     }
 
@@ -369,11 +370,11 @@ extension TokensViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch viewModel.sections[section] {
-        case .walletSummary:
-            let header: TokensViewController.GeneralTableViewSectionHeader<WalletSummaryView> = tableView.dequeueReusableHeaderFooterView()
-            header.subview = walletSummaryView
-
-            return header
+//        case .walletSummary:
+//            let header: TokensViewController.GeneralTableViewSectionHeader<WalletSummaryView> = tableView.dequeueReusableHeaderFooterView()
+//            header.subview = walletSummaryView
+//
+//            return header
         case .filters:
             let header: TokensViewController.GeneralTableViewSectionHeader<ScrollableSegmentedControl> = tableView.dequeueReusableHeaderFooterView()
             header.subview = tableViewFilterView
@@ -423,7 +424,7 @@ extension TokensViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch viewModel.sections[indexPath.section] {
-        case .search, .testnetTokens, .walletSummary, .filters, .activeWalletSession:
+        case .search, .testnetTokens/*, .walletSummary*/, .filters, .activeWalletSession:
             return UITableViewCell()
         case .tokens:
             switch viewModel.item(for: indexPath.row, section: indexPath.section) {
@@ -487,6 +488,7 @@ extension TokensViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.contentView.layer.masksToBounds = true
         guard let cell = cell as? OpenSeaNonFungibleTokenPairTableCell else { return }
 
         cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
@@ -507,7 +509,7 @@ extension TokensViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         switch viewModel.sections[indexPath.section] {
-        case .collectiblePairs, .testnetTokens, .search, .walletSummary, .filters, .activeWalletSession:
+        case .collectiblePairs, .testnetTokens, .search/*, .walletSummary*/, .filters, .activeWalletSession:
             return nil
         case .tokens:
             return trailingSwipeActionsConfiguration(forRowAt: indexPath)
@@ -685,7 +687,7 @@ fileprivate class DummySearchView: UIView {
         let searchBar: UISearchBar = UISearchBar(frame: .init(x: 0, y: 0, width: 100, height: 50))
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.isUserInteractionEnabled = false
-        UISearchBar.configure(searchBar: searchBar)
+        UISearchBar.configure(searchBar: searchBar, backgroundColor: Colors.walletTabBackground)
 
         return searchBar
     }()
@@ -735,7 +737,7 @@ extension TokensViewController: OpenSeaNonFungibleTokenPairTableCellDelegate {
             let pair = viewModel.collectiblePairs[indexPath.row]
             guard let token: TokenObject = isLeftCardSelected ? pair.left : pair.right else { return }
             delegate?.didSelect(token: token, in: self)
-        case .tokens, .testnetTokens, .activeWalletSession, .filters, .search, .walletSummary:
+        case .tokens, .testnetTokens, .activeWalletSession, .filters, .search/*, .walletSummary*/:
             break
         }
     }
@@ -771,7 +773,7 @@ extension TokensViewController {
     private func configureSearchBarOnce() {
         guard !isSearchBarConfigured else { return }
         isSearchBarConfigured = true
-        UISearchBar.configure(searchBar: searchController.searchBar)
+        UISearchBar.configure(searchBar: searchController.searchBar, backgroundColor: Colors.walletTabBackground)
     }
 }
 
@@ -803,8 +805,8 @@ extension UISearchBar {
         if let textField = searchBar.firstSubview(ofType: UITextField.self) {
             textField.textColor = Colors.appText
             if let imageView = textField.leftView as? UIImageView {
-                imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
-                imageView.tintColor = Colors.appText
+                imageView.image = R.image.search_bar_icon()!.withRenderingMode(.alwaysOriginal)
+                //imageView.tintColor = Colors.appText
             }
         }
         //Hack to hide the horizontal separator below the search bar
@@ -815,5 +817,25 @@ extension UISearchBar {
         searchBar.backgroundImage = UIImage()
         searchBar.placeholder = R.string.localizable.tokensSearchbarPlaceholder()
         searchBar.backgroundColor = backgroundColor
+        searchBar.textField?.textAlignment = .center
+        searchBar.textField?.layer.cornerRadius = 6
+        searchBar.textField?.layer.masksToBounds = true
+        searchBar.textField?.cornerRadius = 6
+        searchBar.cornerRadius = 6
+        searchBar.layer.cornerRadius = 6
+        searchBar.clipsToBounds = true
+        searchBar.setImage(R.image.search_bar_icon()!.withRenderingMode(.alwaysOriginal), for: .search, state: .normal)
+        
+        
+        //let textFieldInsideSearchBar = self.value(forKey: "searchField") as? UITextField
+
+//        //get the sizes
+//        guard let searchBarWidth = searchBar.textField?.frame.width else {return}
+//        let placeholderIconWidth = textFieldInsideSearchBar?.leftView?.frame.width
+//        let placeHolderWidth = textFieldInsideSearchBar?.attributedPlaceholder?.size().width
+//        let offsetIconToPlaceholder: CGFloat = 8
+//        let placeHolderWithIcon = placeholderIconWidth! + offsetIconToPlaceholder
+//        let offset = UIOffset(horizontal: ((searchBarWidth / 2) - (placeHolderWidth! / 2) - placeHolderWithIcon), vertical: 0)
+//        self.setPositionAdjustment(offset, for: .search)
     }
 }
