@@ -102,13 +102,13 @@ class RequestViewController: UIViewController {
         copyAddressButtonBar.translatesAutoresizingMaskIntoConstraints = false
         copyAddressButtonBar.configure()
         let copyAddressEthernityButton = copyAddressButtonBar.buttons[0]
-        copyAddressEthernityButton.setTitle("Copy Wallet Address", for: .normal)
+        copyAddressEthernityButton.setTitle(viewModel.copyWalletButtonTitle, for: .normal)
         copyAddressEthernityButton.addTarget(self, action: #selector(copyAddress), for: .touchUpInside)
         
         shareAdressButtonBar.translatesAutoresizingMaskIntoConstraints = false
         shareAdressButtonBar.configure()
         let shareAdressButton = shareAdressButtonBar.buttons[0]
-        shareAdressButton.setTitle("Share with Others", for: .normal)
+        shareAdressButton.setTitle(viewModel.shareWalletButtonTitle, for: .normal)
         shareAdressButton.addTarget(self, action: #selector(shareWallet), for: .touchUpInside)
         shareAdressButton.borderWidth = 2
         shareAdressButton.borderColor = EthernityColors.electricYellow

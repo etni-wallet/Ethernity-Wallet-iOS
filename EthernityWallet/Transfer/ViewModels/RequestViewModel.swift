@@ -21,6 +21,14 @@ struct RequestViewModel {
 	var copyWalletText: String {
 		return R.string.localizable.requestCopyWalletButtonTitle()
 	}
+    
+    var copyWalletButtonTitle: String {
+        return R.string.localizable.aSettingsContentsMyWalletAddressCopyButton()
+    }
+    
+    var shareWalletButtonTitle: String {
+        return R.string.localizable.aSettingsContentsMyWalletAddressShareButton()
+    }
 
 	var addressCopiedText: String {
 		return R.string.localizable.requestAddressCopiedTitle()
