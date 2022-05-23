@@ -5,15 +5,12 @@ import PromiseKit
 
 protocol SettingsViewControllerDelegate: class, CanOpenURL {
     func settingsViewControllerAdvancedSettingsSelected(in controller: SettingsViewController)
-    func settingsViewControllerChangeWalletSelected(in controller: SettingsViewController)
-    func settingsViewControllerMyWalletAddressSelected(in controller: SettingsViewController)
-    func settingsViewControllerBackupWalletSelected(in controller: SettingsViewController)
     func settingsViewControllerShowSeedPhraseSelected(in controller: SettingsViewController)
     func settingsViewControllerWalletConnectSelected(in controller: SettingsViewController)
     func settingsViewControllerNameWalletSelected(in controller: SettingsViewController)
     func settingsViewControllerBlockscanChatSelected(in controller: SettingsViewController)
     func settingsViewControllerActiveNetworksSelected(in controller: SettingsViewController)
-    func settingsViewControllerHelpSelected(in controller: SettingsViewController)
+    func settingsViewControllerAboutSelected(in controller: SettingsViewController)
 }
 
 class SettingsViewController: UIViewController {
@@ -22,7 +19,6 @@ class SettingsViewController: UIViewController {
     private let keystore: Keystore
     private let account: Wallet
     private let analyticsCoordinator: AnalyticsCoordinator
-    private let promptBackupWalletViewHolder = UIView()
     private lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(SettingTableViewCell.self)
@@ -37,28 +33,9 @@ class SettingsViewController: UIViewController {
         return tableView
     }()
     private var viewModel: SettingsViewModel
+    private let resolver = ContactUsEmailResolver()
 
     weak var delegate: SettingsViewControllerDelegate?
-    var promptBackupWalletView: UIView? {
-        didSet {
-            oldValue?.removeFromSuperview()
-            if let promptBackupWalletView = promptBackupWalletView {
-                promptBackupWalletView.translatesAutoresizingMaskIntoConstraints = false
-                promptBackupWalletViewHolder.addSubview(promptBackupWalletView)
-                NSLayoutConstraint.activate([
-                    promptBackupWalletView.leadingAnchor.constraint(equalTo: promptBackupWalletViewHolder.leadingAnchor, constant: 7),
-                    promptBackupWalletView.trailingAnchor.constraint(equalTo: promptBackupWalletViewHolder.trailingAnchor, constant: -7),
-                    promptBackupWalletView.topAnchor.constraint(equalTo: promptBackupWalletViewHolder.topAnchor, constant: 7),
-                    promptBackupWalletView.bottomAnchor.constraint(equalTo: promptBackupWalletViewHolder.bottomAnchor, constant: 0),
-                ])
-                tabBarItem.badgeValue = "1"
-                showPromptBackupWalletViewAsTableHeaderView()
-            } else {
-                hidePromptBackupWalletView()
-                tabBarItem.badgeValue = nil
-            }
-        }
-    }
 
     init(config: Config, keystore: Keystore, account: Wallet, analyticsCoordinator: AnalyticsCoordinator) {
         self.config = config
@@ -82,14 +59,14 @@ class SettingsViewController: UIViewController {
         view.backgroundColor = GroupedTable.Color.background
         navigationItem.largeTitleDisplayMode = .automatic
         tableView.backgroundColor = GroupedTable.Color.background
-
-        if promptBackupWalletView == nil {
-            hidePromptBackupWalletView()
-        }
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        DispatchQueue.main.async { [weak self] in
+            self?.navigationController?.navigationBar.sizeToFit()
+        }
         reflectCurrentWalletSecurityLevel()
     }
 
@@ -101,17 +78,6 @@ class SettingsViewController: UIViewController {
         } else {
             tabBarItem.badgeValue = nil
         }
-    }
-
-    private func showPromptBackupWalletViewAsTableHeaderView() {
-        let size = promptBackupWalletViewHolder.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-        promptBackupWalletViewHolder.bounds.size.height = size.height
-
-        tableView.tableHeaderView = promptBackupWalletViewHolder
-    }
-
-    private func hidePromptBackupWalletView() {
-        tableView.tableHeaderView = nil
     }
 
     private func reflectCurrentWalletSecurityLevel() {
@@ -186,10 +152,10 @@ extension SettingsViewController: SwitchTableViewCellDelegate {
                 } else {
                     lock.deletePasscode()
                 }
-            case .notifications, .selectActiveNetworks, .advanced:
+            case .selectActiveNetworks:
                 break
             }
-        case .help, .tokenStandard, .version, .wallet:
+        case .community:
             break
         }
     }
@@ -214,45 +180,24 @@ extension SettingsViewController: UITableViewDataSource {
                 let cell: SwitchTableViewCell = tableView.dequeueReusableCell(for: indexPath)
                 cell.configure(viewModel: .init(
                     titleText: viewModel.passcodeTitle,
-                    icon: R.image.biometrics()!,
+                    icon: R.image.faceId()!,
                     value: lock.isPasscodeSet)
                 )
                 cell.delegate = self
 
                 return cell
-            case .notifications, .selectActiveNetworks, .advanced:
+            case .selectActiveNetworks:
                 let cell: SettingTableViewCell = tableView.dequeueReusableCell(for: indexPath)
                 cell.configure(viewModel: .init(settingsSystemRow: row))
 
                 return cell
             }
-        case .help:
+        case .community(let rows):
+            let row = rows[indexPath.row]
             let cell: SettingTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            cell.configure(viewModel: .init(titleText: R.string.localizable.settingsSupportTitle(), icon: R.image.support()!))
+            cell.configure(viewModel: .init(settingsCommunityRow: row))
 
             return cell
-        case .wallet(let rows):
-            let cell: SettingTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            let row = rows[indexPath.row]
-            switch row {
-            case .changeWallet:
-                configureChangeWalletCellWithResolvedENS(row, indexPath: indexPath, cell: cell)
-
-                return cell
-            case .backup:
-                cell.configure(viewModel: .init(settingsWalletRow: row))
-                let walletSecurityLevel = PromptBackupCoordinator(keystore: keystore, wallet: account, config: .init(), analyticsCoordinator: analyticsCoordinator).securityLevel
-                cell.accessoryView = walletSecurityLevel.flatMap { WalletSecurityLevelIndicator(level: $0) }
-                cell.accessoryType = .disclosureIndicator
-
-                return cell
-            case .showMyWallet, .showSeedPhrase, .walletConnect, .nameWallet, .blockscanChat:
-                cell.configure(viewModel: .init(settingsWalletRow: row))
-
-                return cell
-            }
-        case .tokenStandard, .version:
-            return UITableViewCell()
         }
     }
 }
@@ -261,7 +206,7 @@ extension SettingsViewController: UITableViewDelegate {
 
     //Hide the footer
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        .leastNormalMagnitude
+        return 60
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -269,63 +214,91 @@ extension SettingsViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView: SettingViewHeader = SettingViewHeader()
-        let viewModel = SettingViewHeaderViewModel(section: self.viewModel.sections[section])
-        headerView.configure(viewModel: viewModel)
+        switch viewModel.sections[section] {
+        case .system:
+            return nil
+        default:
+            let headerView: SettingViewHeader = SettingViewHeader()
+            let viewModel = SettingViewHeaderViewModel(section: self.viewModel.sections[section])
+            headerView.configure(viewModel: viewModel)
 
-        return headerView
+            return headerView
+        }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch viewModel.sections[indexPath.section] {
-        case .wallet(let rows):
-            switch rows[indexPath.row] {
-            case .backup:
-                delegate?.settingsViewControllerBackupWalletSelected(in: self)
-            case .changeWallet:
-                delegate?.settingsViewControllerChangeWalletSelected(in: self)
-            case .showMyWallet:
-                delegate?.settingsViewControllerMyWalletAddressSelected(in: self)
-            case .showSeedPhrase:
-                delegate?.settingsViewControllerShowSeedPhraseSelected(in: self)
-            case .walletConnect:
-                delegate?.settingsViewControllerWalletConnectSelected(in: self)
-            case .nameWallet:
-                delegate?.settingsViewControllerNameWalletSelected(in: self)
-            case .blockscanChat:
-                delegate?.settingsViewControllerBlockscanChatSelected(in: self)
-            }
         case .system(let rows):
             switch rows[indexPath.row] {
-            case .advanced:
-                delegate?.settingsViewControllerAdvancedSettingsSelected(in: self)
-            case .notifications, .passcode:
+            case .passcode:
                 break
             case .selectActiveNetworks:
                 delegate?.settingsViewControllerActiveNetworksSelected(in: self)
             }
-        case .help:
-            delegate?.settingsViewControllerHelpSelected(in: self)
-        case .tokenStandard:
-            self.delegate?.didPressOpenWebPage(TokenScript.tokenScriptSite, in: self)
-        case .version:
-            break
+        case .community(let rows):
+            switch rows[indexPath.row] {
+            case .faq:
+                logAccessFaq()
+                delegate?.settingsViewControllerAboutSelected(in: self)
+            case .discord:
+                logAccessDiscord()
+                openURL(.discord)
+            case .telegramCustomer:
+                logAccessTelegramCustomerSupport()
+                openURL(.telegramCustomer)
+            case .twitter:
+                logAccessTwitter()
+                openURL(.twitter)
+            case .facebook:
+                logAccessFacebook()
+                openURL(.facebook)
+            case .email:
+                let attachments = Features.default.isAvailable(.isAttachingLogFilesToSupportEmailEnabled) ? DDLogger.logFilesAttachments : []
+                resolver.present(from: self, attachments: attachments)
+            }
         }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let height = tableView.rowHeight
-        switch viewModel.sections[indexPath.section] {
-        case .wallet(let rows):
-            let row = rows[indexPath.row]
-            switch row {
-            case .changeWallet:
-                return Style.TableView.ChangeWalletCell.height
-            default:
-                return height
-            }
-        default:
-            return height
+        return tableView.rowHeight
+    }
+    
+    private func openURL(_ provider: URLServiceProvider) {
+        if let deepLinkURL = provider.deepLinkURL, UIApplication.shared.canOpenURL(deepLinkURL) {
+            UIApplication.shared.open(deepLinkURL, options: [:], completionHandler: .none)
+        } else {
+            delegate?.didPressOpenWebPage(provider.remoteURL, in: self)
         }
+    }
+}
+
+// MARK: Analytics
+extension SettingsViewController {
+    private func logAccessFaq() {
+        analyticsCoordinator.log(navigation: Analytics.Navigation.faq)
+    }
+
+    private func logAccessDiscord() {
+        analyticsCoordinator.log(navigation: Analytics.Navigation.discord)
+    }
+
+    private func logAccessTelegramCustomerSupport() {
+        analyticsCoordinator.log(navigation: Analytics.Navigation.telegramCustomerSupport)
+    }
+
+    private func logAccessTwitter() {
+        analyticsCoordinator.log(navigation: Analytics.Navigation.twitter)
+    }
+
+    private func logAccessReddit() {
+        analyticsCoordinator.log(navigation: Analytics.Navigation.reddit)
+    }
+
+    private func logAccessFacebook() {
+        analyticsCoordinator.log(navigation: Analytics.Navigation.facebook)
+    }
+
+    private func logAccessGithub() {
+        analyticsCoordinator.log(navigation: Analytics.Navigation.github)
     }
 }

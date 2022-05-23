@@ -37,13 +37,7 @@ extension SettingViewHeaderViewModel {
     init(section: SettingsSection) {
         titleText = section.title
         switch section {
-        case .tokenStandard(let value), .version(let value):
-            detailsText = value
-            titleTextFont = Fonts.regular(size: 15)
-            if case .tokenStandard = section {
-                showTopSeparator = false
-            }
-        case .wallet, .system, .help:
+        case .system, .community:
             titleTextFont = Fonts.semibold(size: 15)
         }
     }
