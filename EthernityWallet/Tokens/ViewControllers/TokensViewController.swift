@@ -12,6 +12,7 @@ protocol TokensViewControllerDelegate: AnyObject {
     func didTapOpenConsole(in viewController: UIViewController)
     func walletConnectSelected(in viewController: UIViewController)
     func whereAreMyTokensSelected(in viewController: UIViewController)
+    func didPressAddHideTokens(viewModel: TokensViewModel)
 }
 
 class TokensViewController: UIViewController {
@@ -70,12 +71,24 @@ class TokensViewController: UIViewController {
         return control
     }()
     private (set) lazy var blockieImageView: BlockieImageView = BlockieImageView(size: .init(width: 24, height: 24))
+    private var addHideButton: UIButton {
+        let button  = UIButton()
+        let imageButton = R.image.searchbar_add_hide_token()
+        button.setImage(imageButton, for: .normal)
+        button.backgroundColor = UIColor.white
+        button.cornerRadius = 6
+        button.contentEdgeInsets = .init(top:10, left: 10, bottom: 4, right: 4)
+        button.addTarget(self, action: #selector(addHideToken), for: .touchUpInside)
+        
+        return button
+    }
+    
     private let searchController: UISearchController
     private lazy var searchBar: DummySearchView = {
         return DummySearchView(closure: { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.enterSearchMode()
-        })
+        }, button: addHideButton)
     }()
 
     private var consoleButton: UIButton {
@@ -187,8 +200,6 @@ class TokensViewController: UIViewController {
         searchController.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
 
-        view.backgroundColor = viewModel.backgroundColor
-
         tableViewFilterView.addTarget(self, action: #selector(didTapSegment(_:)), for: .touchUpInside)
         tableViewFilterView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -282,6 +293,10 @@ class TokensViewController: UIViewController {
     @objc func openConsole() {
         delegate?.didTapOpenConsole(in: self)
     }
+    
+    @objc func addHideToken(){
+        delegate?.didPressAddHideTokens(viewModel: self.viewModel)
+    }
 
     func fetch() {
         tokenCollection.fetch()
@@ -307,7 +322,7 @@ class TokensViewController: UIViewController {
 
     func refreshView(viewModel: TokensViewModel) {
         view.backgroundColor = viewModel.backgroundColor
-        tableView.backgroundColor = viewModel.backgroundColor
+        tableView.backgroundColor = viewModel.walletTableBackground
     }
 
     private func handleTokenCollectionUpdates() {
@@ -687,7 +702,7 @@ fileprivate class DummySearchView: UIView {
         let searchBar: UISearchBar = UISearchBar(frame: .init(x: 0, y: 0, width: 100, height: 50))
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.isUserInteractionEnabled = false
-        UISearchBar.configure(searchBar: searchBar, backgroundColor: Colors.walletTabBackground)
+        UISearchBar.configure(searchBar: searchBar, backgroundColor: Colors.walletTableBackground)
 
         return searchBar
     }()
@@ -700,16 +715,32 @@ fileprivate class DummySearchView: UIView {
 
         return view
     }()
+    
+    private var button: UIButton?
 
-    init(closure: @escaping () -> Void) {
+    init(closure: @escaping () -> Void, button : UIButton) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
 
-        addSubview(searchBar)
+        self.button = button
+        
+        let stackView = [
+            searchBar,
+            self.button!
+        ].asStackView(axis: .horizontal, /*spacing: 5,*/ alignment: .center)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        addSubview(stackView)
         addSubview(overlayView)
 
-        NSLayoutConstraint.activate(searchBar.anchorsConstraint(to: self) + overlayView.anchorsConstraint(to: self))
-
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
+            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+            stackView.topAnchor.constraint(equalTo: self.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            //stackView.anchorsConstraint(to: self),
+            overlayView.anchorsConstraint(to: searchBar)])
+        
         UITapGestureRecognizer(addToView: overlayView, closure: closure)
     }
 
@@ -760,7 +791,7 @@ extension TokensViewController {
     private func setupFilteringWithKeyword() {
         navigationItem.hidesSearchBarWhenScrolling = false
         wireUpSearchController()
-        TokensViewController.functional.fixTableViewBackgroundColor(tableView: tableView, backgroundColor: viewModel.backgroundColor)
+        TokensViewController.functional.fixTableViewBackgroundColor(tableView: tableView, backgroundColor: viewModel.walletTableBackground)
         doNotDimTableViewToReuseTableForFilteringResult()
         makeSwitchToAnotherTabWorkWhileFiltering()
     }
@@ -773,7 +804,7 @@ extension TokensViewController {
     private func configureSearchBarOnce() {
         guard !isSearchBarConfigured else { return }
         isSearchBarConfigured = true
-        UISearchBar.configure(searchBar: searchController.searchBar, backgroundColor: Colors.walletTabBackground)
+        UISearchBar.configure(searchBar: searchController.searchBar, backgroundColor: Colors.walletTableBackground)
     }
 }
 

@@ -132,7 +132,11 @@ class TokensViewModel {
     }
 
     var backgroundColor: UIColor {
-        return Colors.walletTabBackground
+        return Colors.appBackground
+    }
+    
+    var walletTableBackground: UIColor {
+        return Colors.walletTableBackground
     }
 
     var shouldShowBackupPromptViewHolder: Bool {

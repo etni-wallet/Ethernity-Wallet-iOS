@@ -12,9 +12,9 @@ class ServerTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         let stackView = [
-            .spacer(height: 20),
+            .spacer(height: 10),
             nameLabel,
-            .spacer(height: 20),
+            .spacer(height: 10),
         ].asStackView(axis: .vertical)
         stackView.translatesAutoresizingMaskIntoConstraints = false
 

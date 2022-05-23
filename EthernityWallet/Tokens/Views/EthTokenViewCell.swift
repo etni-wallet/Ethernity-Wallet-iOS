@@ -159,5 +159,7 @@ class EthTokenViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         contentView.bounds = CGRect(origin: CGPoint(x: self.bounds.origin.x, y: self.bounds.origin.y), size: CGSize(width: (0.91 * self.bounds.size.width), height: self.bounds.size.height))
+        
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
     }
 }

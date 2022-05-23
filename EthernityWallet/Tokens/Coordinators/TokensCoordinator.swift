@@ -337,7 +337,7 @@ extension TokensCoordinator: TokensViewControllerDelegate {
         navigationController.pushViewController(viewController, animated: true)
     }
 
-    private func didPressAddHideTokens(viewModel: TokensViewModel) {
+    func didPressAddHideTokens(viewModel: TokensViewModel) {
         let coordinator: AddHideTokensCoordinator = .init(
             tokens: viewModel.tokens,
             assetDefinitionStore: assetDefinitionStore,

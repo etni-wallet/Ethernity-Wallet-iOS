@@ -40,7 +40,7 @@ extension UINavigationBarAppearance {
     static var defaultAppearence: UINavigationBarAppearance {
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = R.color.white()!
+        appearance.backgroundColor = Colors.appWhite
         appearance.shadowColor = Colors.appWhite
         appearance.shadowImage = nil
         appearance.setBackIndicatorImage(R.image.backWhite(), transitionMaskImage: R.image.backWhite())
@@ -109,7 +109,7 @@ struct Colors {
     static let navigationTitleColor = UIColor.black
     static let navigationButtonTintColor = UIColor.black
     static let appWhite = UIColor.white
-    static let walletTabBackground = UIColor(hex: "F4F4F4")
+    static let walletTableBackground = UIColor(hex: "F4F4F4")
     static let appText = R.color.black()!
     static let appPlaceholderText = UIColor(hex: "6D6D6D")
     static let appSubtitle = UIColor(red: 117, green: 117, blue: 117)
@@ -199,7 +199,7 @@ enum GroupedTable {
     enum Color {
         static let title = UIColor(red: 76, green: 76, blue: 76)
         static let background = UIColor.white
-        static let cellSeparator = Colors.walletTabBackground//UIColor(red: 233, green: 233, blue: 233)
+        static let cellSeparator = Colors.walletTableBackground//UIColor(red: 233, green: 233, blue: 233)
     }
 }
 

@@ -102,7 +102,7 @@ struct TokenListServerTableViewCellViewModel: ServerTableViewCellViewModelType {
     }
 
     var accessoryType: UITableViewCell.AccessoryType = LocaleViewCell.selectionAccessoryType.unselected
-    var backgroundColor: UIColor = Colors.walletTabBackground
+    var backgroundColor: UIColor = Colors.walletTableBackground
     var serverFont: UIFont = Fonts.regular(size: 14)
     var serverColor: UIColor = UIColor(hex: "717176")
     var serverName: String {
