@@ -17,9 +17,11 @@ class SeedPhraseBackupIntroductionViewController: UIViewController {
     let descriptionLabel1 = UILabel()
     let buttonsBar = HorizontalButtonsBar(configuration: .primary(buttons: 1))
 
-    private var imageViewDimension: CGFloat {
-        return ScreenChecker.size(big: 250, medium: 250, small: 220)
+    private var imageViewDimension: CGSize {
+        return CGSize(width: 158.0, height: 135.0)
     }
+    
+    private var imageViewCenterYOffset = ScreenChecker().isNarrowScreen ? -30.0 : -60.0
 
     weak var delegate: SeedPhraseBackupIntroductionViewControllerDelegate?
 
@@ -28,37 +30,42 @@ class SeedPhraseBackupIntroductionViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
 
         hidesBottomBarWhenPushed = true
+        navigationItem.title = viewModel.navBarTitle
 
         roundedBackground.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(roundedBackground)
 
         imageView.contentMode = .scaleAspectFit
 
-        let stackView = [
-            UIView.spacer(height: ScreenChecker.size(big: 32, medium: 22, small: 18)),
-            subtitleLabel,
-            UIView.spacer(height: ScreenChecker.size(big: 24, medium: 20, small: 18)),
-            imageView,
-            UIView.spacer(height: ScreenChecker.size(big: 17, medium: 15, small: 10)),
-            descriptionLabel1,
-            ].asStackView(axis: .vertical)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        roundedBackground.addSubview(stackView)
+        subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        descriptionLabel1.translatesAutoresizingMaskIntoConstraints = false
+        
+        roundedBackground.addSubview(subtitleLabel)
+        roundedBackground.addSubview(imageView)
+        roundedBackground.addSubview(descriptionLabel1)
 
         let footerBar = UIView()
         footerBar.translatesAutoresizingMaskIntoConstraints = false
-        footerBar.backgroundColor = .clear
+        roundedBackground.backgroundColor = .clear
         roundedBackground.addSubview(footerBar)
 
         footerBar.addSubview(buttonsBar)
 
         NSLayoutConstraint.activate([
-            imageView.heightAnchor.constraint(equalToConstant: imageViewDimension),
+            subtitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40.0),
+            subtitleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16.0),
+            subtitleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16.0),
+            
+            imageView.heightAnchor.constraint(equalToConstant: imageViewDimension.height),
+            imageView.widthAnchor.constraint(equalToConstant: imageViewDimension.width),
+            imageView.centerXAnchor.constraint(equalTo: roundedBackground.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: roundedBackground.centerYAnchor, constant: imageViewCenterYOffset),
 
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            stackView.topAnchor.constraint(equalTo: view.topAnchor),
-            stackView.bottomAnchor.constraint(lessThanOrEqualTo: footerBar.topAnchor),
+            
+            descriptionLabel1.bottomAnchor.constraint(equalTo: footerBar.topAnchor, constant: -64),
+            descriptionLabel1.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 42),
+            descriptionLabel1.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -42),
 
             buttonsBar.leadingAnchor.constraint(equalTo: footerBar.leadingAnchor),
             buttonsBar.trailingAnchor.constraint(equalTo: footerBar.trailingAnchor),
@@ -68,7 +75,7 @@ class SeedPhraseBackupIntroductionViewController: UIViewController {
             footerBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             footerBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).set(priority: .defaultHigh),
-            footerBar.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -Style.insets.safeBottom).set(priority: .required),
+            footerBar.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -Style.insets.safeBottom - 64).set(priority: .required),
             footerBar.topAnchor.constraint(equalTo: buttonsBar.topAnchor),
 
         ] + roundedBackground.anchorsConstraint(to: view))
@@ -99,7 +106,7 @@ class SeedPhraseBackupIntroductionViewController: UIViewController {
     func configure() {
         view.backgroundColor = Colors.appBackground
 
-        subtitleLabel.numberOfLines = 0
+        subtitleLabel.numberOfLines = 1
         subtitleLabel.attributedText = viewModel.attributedSubtitle
 
         imageView.image = viewModel.imageViewImage

@@ -1,5 +1,5 @@
 // Copyright © 2019 Stormbird PTE. LTD.
-
+ 
 import Foundation
 import UIKit
 
@@ -19,10 +19,13 @@ class SeedPhraseCell: UICollectionViewCell {
         let horizontalMargin = CGFloat(20)
         let verticalMargin = CGFloat(10)
         NSLayoutConstraint.activate([
-            sequenceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
-            sequenceLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 2),
+            sequenceLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 13),
+            sequenceLabel.centerYAnchor.constraint(equalTo: label.centerYAnchor),
 
-            label.anchorsConstraint(to: contentView, edgeInsets: .init(top: verticalMargin, left: horizontalMargin, bottom: verticalMargin, right: horizontalMargin)),
+            label.topAnchor.constraint(equalTo: contentView.topAnchor, constant: verticalMargin),
+            label.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -verticalMargin),
+            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -horizontalMargin),
+            label.leadingAnchor.constraint(equalTo: sequenceLabel.trailingAnchor, constant: 13),
         ])
     }
 
@@ -31,7 +34,7 @@ class SeedPhraseCell: UICollectionViewCell {
     }
 
     func configure(viewModel: SeedPhraseCellViewModel) {
-        cornerRadius = 7
+        cornerRadius = 3
 
         if viewModel.sequence != nil {
             sequenceLabel.font = viewModel.sequenceFont
@@ -40,6 +43,9 @@ class SeedPhraseCell: UICollectionViewCell {
         } else {
             sequenceLabel.text = ""
         }
+        
+        borderWidth = viewModel.borderWidth
+        borderColor = viewModel.borderColor
 
         label.textAlignment = .center
         label.font = viewModel.font

@@ -46,11 +46,11 @@ extension UINavigationBarAppearance {
         appearance.setBackIndicatorImage(R.image.backWhite(), transitionMaskImage: R.image.backWhite())
         appearance.titleTextAttributes = [
             .foregroundColor: R.color.black()!,
-            .font: Fonts.semibold(size: 24) as Any
+            .font: Fonts.semibold(size: 20) as Any
         ]
         appearance.largeTitleTextAttributes = [
             .foregroundColor: R.color.black()!,
-            .font: Fonts.semibold(size: 36) as Any,
+            .font: Fonts.semibold(size: 32) as Any,
         ]
         //NOTE: Hides back button text
         appearance.backButtonAppearance.normal.titleTextAttributes = [
@@ -309,7 +309,7 @@ enum Screen {
     }
 
     enum Backup {
-        static let subtitleFont = ScreenChecker().isNarrowScreen ? Fonts.regular(size: 22) : Fonts.regular(size: 28)
+        static let subtitleFont = ScreenChecker().isNarrowScreen ? Fonts.regular(size: 15) : Fonts.regular(size: 17)
         static let subtitleColor = Colors.darkGray
         static let descriptionFont = Fonts.regular(size: ScreenChecker.size(big: 17, medium: 15, small: 15))
         static let descriptionBoldFont = Fonts.bold(size: ScreenChecker.size(big: 17, medium: 15, small: 15))
