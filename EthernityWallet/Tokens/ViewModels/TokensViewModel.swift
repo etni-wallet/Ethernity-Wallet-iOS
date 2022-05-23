@@ -49,6 +49,7 @@ extension TokensViewModel {
         case testnetTokens
         case search
         case tokens
+        case transactions
         case collectiblePairs
         case activeWalletSession(count: Int)
     }
@@ -57,7 +58,7 @@ extension TokensViewModel {
 //Must be a class, and not a struct, otherwise changing `filter` will silently create a copy of TokensViewModel when user taps to change the filter in the UI and break filtering
 class TokensViewModel {
     //Must be computed because localization can be overridden by user dynamically
-    static var segmentedControlTitles: [String] { WalletFilter.orderedTabs.map { $0.title } }
+    static var segmentedControlTitles: [String] { WalletFilter.orderedTabs.map { $0.title.uppercased() } }
 
     private let tokensFilter: TokensFilter
     var tokens: [TokenObject]
@@ -78,6 +79,8 @@ class TokensViewModel {
             switch filter {
             case .all, .defi, .governance, .keyword, .assets, .type:
                 return .tokens
+            case .transactions :
+                return .transactions
             case .collectiblesOnly:
                 return .collectiblePairs
             }
@@ -108,7 +111,7 @@ class TokensViewModel {
     //NOTE: For case with empty tokens list we want
     func isBottomSeparatorLineHiddenForTestnetHeader(section: Int) -> Bool {
         switch sections[section] {
-        case /*.walletSummary,*/ .filters, .activeWalletSession, .search, .tokens, .collectiblePairs:
+        case /*.walletSummary,*/ .filters, .activeWalletSession, .search, .tokens, .transactions, .collectiblePairs:
             return true
         case .testnetTokens:
             if let index = sections.firstIndex(where: { $0 == tokenListSection }) {
@@ -144,7 +147,7 @@ class TokensViewModel {
         switch filter {
         case .all, .keyword:
             return true
-        case .assets, .collectiblesOnly, .type, .defi, .governance:
+        case .assets, .transactions, .collectiblesOnly, .type, .defi, .governance:
             return false
         }
     }
@@ -155,7 +158,7 @@ class TokensViewModel {
 
     var shouldShowCollectiblesCollectionView: Bool {
         switch filter {
-        case .all, .defi, .governance, .assets, .keyword, .type:
+        case .all, .defi, .governance, .assets, .transactions, .keyword, .type:
             return false
         case .collectiblesOnly:
             return hasContent
@@ -174,6 +177,8 @@ class TokensViewModel {
             return DataEntry.Metric.AddHideToken.Header.height
         case .tokens, .collectiblePairs:
             return 0.01
+        case .transactions:
+            return 0.01
         }
     }
 
@@ -181,10 +186,12 @@ class TokensViewModel {
         switch sections[section] {
         case .search, .testnetTokens/*, .walletSummary*/, .filters, .activeWalletSession:
             return 0
-        case .tokens, .collectiblePairs:
+        case .tokens, .transactions, .collectiblePairs:
             switch filter {
             case .all, .defi, .governance, .keyword, .assets, .type:
                 return filteredTokens.count
+            case .transactions:
+                return 0
             case .collectiblesOnly:
                 return collectiblePairs.count
             }
@@ -228,7 +235,7 @@ class TokensViewModel {
 
     func cellHeight(for indexPath: IndexPath) -> CGFloat {
         switch sections[indexPath.section] {
-        case .tokens, .testnetTokens:
+        case .tokens, .transactions, .testnetTokens:
             switch item(for: indexPath.row, section: indexPath.section) {
             case .rpcServer:
                 return Style.Wallet.Header.height
@@ -250,6 +257,8 @@ class TokensViewModel {
             return TokensViewModel.functional.groupTokenObjectsWithServers(tokens: tokens)
         case .collectiblesOnly:
             return tokens.map { .tokenObject($0) }
+        case .transactions:
+            return []
         }
     }
 
@@ -316,10 +325,11 @@ fileprivate extension TokenObjectOrRpcServerPair {
 fileprivate extension WalletFilter {
     static var orderedTabs: [WalletFilter] {
         return [
-            .all,
-            .defi,
+//            .all,
+//            .defi,
 //            .governance,
             .assets,
+            .transactions,
 //            .collectiblesOnly,
         ]
     }
@@ -338,6 +348,8 @@ fileprivate extension WalletFilter {
             return R.string.localizable.aWalletContentsFilterGovernanceTitle()
         case .assets:
             return R.string.localizable.aWalletContentsFilterAssetsOnlyTitle()
+        case .transactions:
+            return R.string.localizable.aWalletContentsFilterTransactionsOnlyTitle()
         case .collectiblesOnly:
             return R.string.localizable.aWalletContentsFilterCollectiblesOnlyTitle()
         case .keyword, .type:

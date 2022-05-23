@@ -139,8 +139,8 @@ class TokensCoordinator: Coordinator {
         label.font = Fonts.semibold(size: 36)
         label.textColor = UIColor.black
         label.textAlignment = .left
-        tokensViewController.navigationItem.leftBarButtonItems = [UIBarButtonItem(customView: label), addBarButton /*UIBarButtonItem(customView: tokensViewController.blockieImageView)*/]
-//        tokensViewController.blockieImageView.addTarget(self, action: #selector(blockieButtonSelected), for: .touchUpInside)
+        tokensViewController.navigationItem.leftBarButtonItems = [UIBarButtonItem(customView: tokensViewController.blockieImageView), UIBarButtonItem(customView: label), addBarButton]
+        tokensViewController.blockieImageView.addTarget(self, action: #selector(blockieButtonSelected), for: .touchUpInside)
     }
 
     @objc private func blockieButtonSelected(_ sender: UIButton) {

@@ -35,6 +35,8 @@ class TokensFilter {
     func filterTokens(tokens: [TokenObject], filter: WalletFilter) -> [TokenObject] {
         let filteredTokens: [TokenObject]
         switch filter {
+        case .transactions:
+            return []
         case .all:
             filteredTokens = tokens
         case .type(let types):
@@ -95,7 +97,7 @@ class TokensFilter {
         switch filter {
         case .all:
             break //no-op
-        case .type, .defi, .governance, .assets, .collectiblesOnly:
+        case .type, .defi, .governance, .assets, .transactions, .collectiblesOnly:
             filteredTokens = []
         case .keyword(let keyword):
             let lowercasedKeyword = keyword.trimmed.lowercased()

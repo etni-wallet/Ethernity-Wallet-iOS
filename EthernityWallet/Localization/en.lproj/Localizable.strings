@@ -345,6 +345,7 @@
 "a.wallet.contents.filter.all.title" = "All";
 "a.wallet.contents.filter.currencyOnly.title" = "Currencies";
 "a.wallet.contents.filter.assetsOnly.title" = "Assets";
+"a.wallet.contents.filter.transactionsOnly.title" = "Transactions";
 "a.wallet.contents.filter.defi.title" = "DeFi";
 "a.wallet.contents.filter.governance.title" = "Governance";
 "a.wallet.contents.filter.collectiblesOnly.title" = "Collectibles";

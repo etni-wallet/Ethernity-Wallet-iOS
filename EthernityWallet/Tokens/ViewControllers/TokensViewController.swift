@@ -38,6 +38,21 @@ class TokensViewController: UIViewController {
         control.setSelection(cellIndex: 0, animated: false)
         return control
     }()
+    
+    private let segmentedControl : UISegmentedControl = {
+        let segmentedControl = UISegmentedControl (items: TokensViewModel.segmentedControlTitles)
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.selectedSegmentTintColor = UIColor(hex: "0C86FF")
+        segmentedControl.layer.backgroundColor = UIColor.white.cgColor
+        segmentedControl.backgroundColor = UIColor.white
+        segmentedControl.tintColor = UIColor.white
+        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.white, NSAttributedString.Key.font: Fonts.regular(size: 14)], for: .selected)
+        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor(hex: "6D6D6D"), NSAttributedString.Key.font: Fonts.regular(size: 13)], for: .normal)
+        
+        return segmentedControl
+    }()
+    
+    private var filtersSegmentedControl : CustomSegmentedControl?
     private let emptyTableView: EmptyTableView = {
         let view = EmptyTableView(title: "", image: R.image.activities_empty_list()!, heightAdjustment: 0)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +68,7 @@ class TokensViewController: UIViewController {
         tableView.register(ServerTableViewCell.self)
         tableView.register(OpenSeaNonFungibleTokenPairTableCell.self)
 
-        tableView.registerHeaderFooterView(GeneralTableViewSectionHeader<ScrollableSegmentedControl>.self)
+        tableView.registerHeaderFooterView(GeneralTableViewSectionHeader<CustomSegmentedControl>.self)
         tableView.registerHeaderFooterView(GeneralTableViewSectionHeader<AddHideTokensView>.self)
         tableView.registerHeaderFooterView(ActiveWalletSessionView.self)
         //tableView.registerHeaderFooterView(GeneralTableViewSectionHeader<WalletSummaryView>.self)
@@ -197,6 +212,7 @@ class TokensViewController: UIViewController {
 
         super.init(nibName: nil, bundle: nil)
 
+        
         searchController.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
 
@@ -204,7 +220,10 @@ class TokensViewController: UIViewController {
         tableViewFilterView.translatesAutoresizingMaskIntoConstraints = false
 
         consoleButton.addTarget(self, action: #selector(openConsole), for: .touchUpInside)
-
+        segmentedControl.addTarget(self, action: #selector(self.segmentedValueChanged(_:)), for: .valueChanged)
+        
+        filtersSegmentedControl = CustomSegmentedControl(subview: segmentedControl)
+        
         view.addSubview(tableView)
 
         bottomConstraint = tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -362,6 +381,21 @@ class TokensViewController: UIViewController {
             }
         }
     }
+    
+    @objc func segmentedValueChanged(_ sender:UISegmentedControl!)
+    {
+        let selectedIndex = UInt(sender.selectedSegmentIndex)
+        let controlSelection = ControlSelection.selected(selectedIndex)
+        guard let filter = viewModel.convertSegmentedControlSelectionToFilter(controlSelection) else { return }
+        apply(filter: filter, withSegmentAtSelection: controlSelection)
+        
+        if filter == .assets {
+            searchBar.buttonIsHidden(isHidden: false)
+        }
+        else {
+            searchBar.buttonIsHidden(isHidden: true)
+        }
+    }
 }
 
 extension TokensViewController: UITableViewDelegate {
@@ -391,8 +425,8 @@ extension TokensViewController: UITableViewDelegate {
 //
 //            return header
         case .filters:
-            let header: TokensViewController.GeneralTableViewSectionHeader<ScrollableSegmentedControl> = tableView.dequeueReusableHeaderFooterView()
-            header.subview = tableViewFilterView
+            let header: TokensViewController.GeneralTableViewSectionHeader<CustomSegmentedControl> = tableView.dequeueReusableHeaderFooterView()
+            header.subview = filtersSegmentedControl
             header.useSeparatorLine = false
 
             return header
@@ -411,7 +445,7 @@ extension TokensViewController: UITableViewDelegate {
             return header
         case .search:
             return searchBarHeader
-        case .tokens, .collectiblePairs:
+        case .tokens, .collectiblePairs, .transactions:
             return nil
         }
     }
@@ -495,6 +529,9 @@ extension TokensViewController: UITableViewDataSource {
             cell.configure(viewModel: .init(leftViewModel: left, rightViewModel: right))
 
             return cell
+            
+        case .transactions:
+            return UITableViewCell()
         }
     }
 
@@ -512,7 +549,7 @@ extension TokensViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let rowCount = viewModel.numberOfItems(for: section)
         let mode = viewModel.sections[section]
-        if mode == .tokens || mode == .collectiblePairs {
+        if mode == .tokens || mode == .collectiblePairs || mode == .transactions{
             handleTokensCountChange(rows: rowCount)
         }
         return rowCount
@@ -528,6 +565,8 @@ extension TokensViewController: UITableViewDataSource {
             return nil
         case .tokens:
             return trailingSwipeActionsConfiguration(forRowAt: indexPath)
+        case .transactions:
+            return nil
         }
     }
 
@@ -570,6 +609,8 @@ extension TokensViewController: UITableViewDataSource {
         switch viewModel.filter {
         case .assets:
             title = R.string.localizable.emptyTableViewWalletTitle(R.string.localizable.aWalletContentsFilterAssetsOnlyTitle())
+        case .transactions:
+            title = "No transactions yet. \nSend and receive payments to get started"
         case .collectiblesOnly:
             title = R.string.localizable.emptyTableViewWalletTitle(R.string.localizable.aWalletContentsFilterCollectiblesOnlyTitle())
         case .defi:
@@ -630,7 +671,11 @@ extension TokensViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             //Important to update the segmented control (and hence add the segmented control back to the table) after they have been re-added to the table header through the table reload. Otherwise adding to the table header will break the animation for segmented control
             if let selection = selection, case let ControlSelection.selected(index) = selection {
-                self.tableViewFilterView.setSelection(cellIndex: Int(index))
+                //self.tableViewFilterView.setSelection(cellIndex: Int(index))
+                self.segmentedControl.selectedSegmentIndex = Int(index)
+                if filter == .assets {
+                    self.searchBar.buttonIsHidden(isHidden: false)
+                }
             }
         }
         //Exit search if user tapped on the wallet filter. Careful to not trigger an infinite recursion between changing the filter by "category" and search keywords which are all based on filters
@@ -638,7 +683,7 @@ extension TokensViewController {
             //do nothing
         } else {
             switch filter {
-            case .all, .defi, .governance, .assets, .collectiblesOnly, .type:
+            case .all, .defi, .governance, .assets, .transactions, .collectiblesOnly, .type:
                 searchController.isActive = false
             case .keyword:
                 break
@@ -674,7 +719,7 @@ extension TokensViewController: UISearchResultsUpdating {
         shouldHidePromptBackupWalletViewHolderBecauseSearchIsActive = searchController.isActive
         guard searchController.isActive else {
             switch viewModel.filter {
-            case .all, .defi, .governance, .assets, .collectiblesOnly, .type:
+            case .all, .defi, .governance, .assets, .transactions, .collectiblesOnly, .type:
                 break
             case .keyword:
                 //Handle when user taps Cancel button to stop search
@@ -692,7 +737,28 @@ extension TokensViewController: UISearchResultsUpdating {
     }
 
     private func setDefaultFilter() {
-        apply(filter: .all, withSegmentAtSelection: .selected(0))
+        apply(filter: .assets, withSegmentAtSelection: .selected(0))
+    }
+}
+
+fileprivate class CustomSegmentedControl : UIView, ReusableTableHeaderViewType {
+    
+    init(subview: UIView) {
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = false
+        subview.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(subview)
+        
+        NSLayoutConstraint.activate([
+            subview.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 14),
+            subview.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -14),
+            subview.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
+            subview.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8)
+            ])
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -743,6 +809,10 @@ fileprivate class DummySearchView: UIView {
         
         UITapGestureRecognizer(addToView: overlayView, closure: closure)
     }
+    
+    func buttonIsHidden(isHidden: Bool) {
+        self.button?.isHidden = isHidden
+    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -768,7 +838,7 @@ extension TokensViewController: OpenSeaNonFungibleTokenPairTableCellDelegate {
             let pair = viewModel.collectiblePairs[indexPath.row]
             guard let token: TokenObject = isLeftCardSelected ? pair.left : pair.right else { return }
             delegate?.didSelect(token: token, in: self)
-        case .tokens, .testnetTokens, .activeWalletSession, .filters, .search/*, .walletSummary*/:
+        case .tokens, .transactions, .testnetTokens, .activeWalletSession, .filters, .search/*, .walletSummary*/:
             break
         }
     }

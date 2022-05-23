@@ -8,6 +8,7 @@ enum WalletFilter: Equatable {
     case defi
     case governance
     case assets
+    case transactions
 	case collectiblesOnly
 	case keyword(String)
 }
