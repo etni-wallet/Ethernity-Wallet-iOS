@@ -7,17 +7,26 @@ struct SeedPhraseCellViewModel {
     let word: String
     let isSelected: Bool
     let index: Int?
+    let isSelectable: Bool
 
     var backgroundColor: UIColor {
-        return UIColor(red: 234, green: 234, blue: 234)
+        return isSelectable ? UIColor.white : UIColor(red: 249, green: 249, blue: 249)
     }
 
     var selectedBackgroundColor: UIColor {
-        return UIColor(red: 249, green: 249, blue: 249)
+        return UIColor(red: 12, green: 134, blue: 255)
     }
 
     var textColor: UIColor {
-        return UIColor(red: 42, green: 42, blue: 42)
+        return isSelectable ? UIColor(red: 12, green: 134, blue: 255) : UIColor(red: 109, green: 109, blue: 109)
+    }
+    
+    var borderWidth: CGFloat {
+        return isSelectable ? 1.5 : 0.0
+    }
+    
+    var borderColor: UIColor {
+        return isSelectable ? UIColor(red: 12, green: 134, blue: 255) : .clear
     }
 
     var selectedTextColor: UIColor {
@@ -37,7 +46,7 @@ struct SeedPhraseCellViewModel {
     }
 
     var sequenceColor: UIColor {
-        return UIColor(red: 200, green: 200, blue: 200)
+        return UIColor(red: 109, green: 109, blue: 109)
     }
 
     var sequence: String? {

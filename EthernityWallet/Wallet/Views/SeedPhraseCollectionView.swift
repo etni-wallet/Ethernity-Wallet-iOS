@@ -53,7 +53,7 @@ extension SeedPhraseCollectionView: UICollectionViewDataSource {
         let index = indexPath.item
         let word = viewModel.seedPhraseWord(atIndex: index)
         let isSelected = viewModel.isWordSelected(atIndex: index)
-        cell.configure(viewModel: .init(word: word, isSelected: isSelected, index: viewModel.shouldShowSequenceNumber ? index : nil))
+        cell.configure(viewModel: .init(word: word, isSelected: isSelected, index: viewModel.shouldShowSequenceNumber ? index : nil, isSelectable: viewModel.isSelectable))
         return cell
     }
 }
