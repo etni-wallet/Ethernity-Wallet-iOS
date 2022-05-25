@@ -1097,6 +1097,8 @@
 		E42226C4283B8F4000A3EB68 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42226C3283B8F4000A3EB68 /* AboutViewController.swift */; };
 		E42226C6283BBAE200A3EB68 /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42226C5283BBAE200A3EB68 /* AboutViewModel.swift */; };
 		E4BB9F4E282116AF00077CEF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4BB9F4D282116AF00077CEF /* GoogleService-Info.plist */; };
+		E4C76306283E7E4000B89797 /* RedirectAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C76305283E7E4000B89797 /* RedirectAlertViewController.swift */; };
+		E4C76308283E92BF00B89797 /* RedirectAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C76307283E92BF00B89797 /* RedirectAlertViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2241,6 +2243,8 @@
 		E42226C3283B8F4000A3EB68 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		E42226C5283BBAE200A3EB68 /* AboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
 		E4BB9F4D282116AF00077CEF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E4C76305283E7E4000B89797 /* RedirectAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectAlertViewController.swift; sourceTree = "<group>"; };
+		E4C76307283E92BF00B89797 /* RedirectAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectAlertViewModel.swift; sourceTree = "<group>"; };
 		EAC6758527A096EC009C3344 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = fi; path = fi.lproj/privacyPolicy.html; sourceTree = "<group>"; };
 		EAC6758627A096EC009C3344 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = fi; path = fi.lproj/termsOfService.html; sourceTree = "<group>"; };
 		EAC6758727A096EC009C3344 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = fi; path = fi.lproj/howDoIGetMyMoneyInfo.html; sourceTree = "<group>"; };
@@ -3044,6 +3048,7 @@
 				5E7C7F970B01399530F62569 /* ToolsViewModel.swift */,
 				87D7D66027D654A000202861 /* CheckTransactionStateViewModel.swift */,
 				E42226C5283BBAE200A3EB68 /* AboutViewModel.swift */,
+				E4C76307283E92BF00B89797 /* RedirectAlertViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -3539,6 +3544,7 @@
 				87442BD727D615B500EA2209 /* CheckTransactionStateViewController.swift */,
 				5E7C7AB8844E5D88BD6B2F2A /* ToolsViewController.swift */,
 				E42226C3283B8F4000A3EB68 /* AboutViewController.swift */,
+				E4C76305283E7E4000B89797 /* RedirectAlertViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -6096,6 +6102,7 @@
 				737D1675202BDCB400B42DDE /* UINavigationController.swift in Sources */,
 				8717D37627B415C500FB789D /* SingleServerWalletConnectSession.swift in Sources */,
 				AA4E531820425A9500143A09 /* Date.swift in Sources */,
+				E4C76306283E7E4000B89797 /* RedirectAlertViewController.swift in Sources */,
 				296105931FA2AA2100292494 /* UnsignedTransaction.swift in Sources */,
 				296105951FA2DEF000292494 /* TransactionDirection.swift in Sources */,
 				291ED08B1F6F5D2100E7E93A /* Bundle.swift in Sources */,
@@ -6895,6 +6902,7 @@
 				5E7C7DEE91E5A1B4A41826EB /* ActivityRowModel.swift in Sources */,
 				8717DA37273A714E002D3D66 /* WalletConnectServerProvider.swift in Sources */,
 				5E7C7D7D1531464B489871EA /* NonFungibleFromTokenUri.swift in Sources */,
+				E4C76308283E92BF00B89797 /* RedirectAlertViewModel.swift in Sources */,
 				5E7C730CA247D13ECBCB94ED /* NonFungibleFromJson.swift in Sources */,
 				5E7C71AE26F2201CFAC81C99 /* NonFungibleContract.swift in Sources */,
 				8712A37F26F315190009C376 /* EditPriceAlertViewController.swift in Sources */,

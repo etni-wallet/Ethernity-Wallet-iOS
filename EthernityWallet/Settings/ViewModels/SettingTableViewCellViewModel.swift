@@ -31,6 +31,10 @@ struct SettingTableViewCellViewModel {
     var subTitleTextColor: UIColor {
         return R.color.dove()!
     }
+    
+    var chevronTintColor: UIColor {
+        return R.color.electricBlueLightest()!
+    }
 }
 
 extension SettingTableViewCellViewModel {

@@ -11,6 +11,7 @@ protocol SettingsViewControllerDelegate: class, CanOpenURL {
     func settingsViewControllerBlockscanChatSelected(in controller: SettingsViewController)
     func settingsViewControllerActiveNetworksSelected(in controller: SettingsViewController)
     func settingsViewControllerAboutSelected(in controller: SettingsViewController)
+    func settingsViewControllerShouldShowRedirectAlert(in controller: SettingsViewController, for urlServiceProvider: URLServiceProvider)
 }
 
 class SettingsViewController: UIViewController {
@@ -242,16 +243,16 @@ extension SettingsViewController: UITableViewDelegate {
                 delegate?.settingsViewControllerAboutSelected(in: self)
             case .discord:
                 logAccessDiscord()
-                openURL(.discord)
+                delegate?.settingsViewControllerShouldShowRedirectAlert(in: self, for: .discord)
             case .telegramCustomer:
                 logAccessTelegramCustomerSupport()
-                openURL(.telegramCustomer)
+                delegate?.settingsViewControllerShouldShowRedirectAlert(in: self, for: .telegramCustomer)
             case .twitter:
                 logAccessTwitter()
-                openURL(.twitter)
+                delegate?.settingsViewControllerShouldShowRedirectAlert(in: self, for: .twitter)
             case .facebook:
                 logAccessFacebook()
-                openURL(.facebook)
+                delegate?.settingsViewControllerShouldShowRedirectAlert(in: self, for: .facebook)
             case .email:
                 let attachments = Features.default.isAvailable(.isAttachingLogFilesToSupportEmailEnabled) ? DDLogger.logFilesAttachments : []
                 resolver.present(from: self, attachments: attachments)
@@ -300,5 +301,15 @@ extension SettingsViewController {
 
     private func logAccessGithub() {
         analyticsCoordinator.log(navigation: Analytics.Navigation.github)
+    }
+}
+
+extension SettingsViewController: RedirectAlertViewControllerDelegate {
+    func redirectAlertViewController(redirectAlertViewController: RedirectAlertViewController, didTapCancelButton cancelButton: UIButton) {
+        
+    }
+    
+    func redirectAlertViewController(redirectAlertViewController: RedirectAlertViewController, didTapAllowButton allowButton: UIButton, forServiceProvider serviceProvider: URLServiceProvider) {
+        openURL(serviceProvider)
     }
 }

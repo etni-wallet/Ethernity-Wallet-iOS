@@ -400,7 +400,7 @@ enum Style {
     }
     enum AccessoryView {
         static var chevron: UIImageView {
-            let imageView = UIImageView(image: R.image.iconsSystemArrowRight())
+            let imageView = UIImageView(image: R.image.iconsSystemArrowRight()?.withTintColor(R.color.electricBlueLightest()!))
             NSLayoutConstraint.activate([
                 imageView.widthAnchor.constraint(equalToConstant: 24.0),
                 imageView.heightAnchor.constraint(equalToConstant: 24.0)

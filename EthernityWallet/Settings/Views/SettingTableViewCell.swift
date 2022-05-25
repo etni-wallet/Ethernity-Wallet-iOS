@@ -54,5 +54,6 @@ class SettingTableViewCell: UITableViewCell {
         titleLabel.textColor = viewModel.titleTextColor
         iconImageView.image = viewModel.icon
         accessoryView = Style.AccessoryView.chevron
+        accessoryView?.tintColor = viewModel.chevronTintColor
     }
 }

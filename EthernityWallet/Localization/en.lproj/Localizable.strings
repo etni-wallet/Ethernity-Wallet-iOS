@@ -857,6 +857,9 @@
 "settings.about.title" = "About %@";
 "settings.about.app.description" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Rhoncus egestas tempus, fermentum at at imperdiet quisque erat. Et lectus nascetur nunc feugiat est egestas enim. Est diam tortor enim, et elementum at elit commodo augue.";
 "settings.about.copyrights" = "Copyright %@ Ethernity Cloud Ltd.";
+"settings.redirect.url.modal.title" = "You will be redirected to the following app:";
+"settings.redirect.url.modal.cancel" = "Cancel";
+"settings.redirect.url.modal.ok" = "Allow";
 
 // Ethernity Wallet
 "backup.wallet.introduction.nav.title" = "Backup Wallet";

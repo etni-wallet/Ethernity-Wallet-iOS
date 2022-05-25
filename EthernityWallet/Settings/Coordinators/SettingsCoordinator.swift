@@ -96,6 +96,16 @@ extension SettingsCoordinator: RenameWalletViewControllerDelegate {
 
 extension SettingsCoordinator: SettingsViewControllerDelegate {
     
+    func settingsViewControllerShouldShowRedirectAlert(in controller: SettingsViewController, for urlServiceProvider: URLServiceProvider) {
+        let redirectAlertViewModel = RedirectAlertViewModel(urlServiceProvider: urlServiceProvider)
+        let viewController = RedirectAlertViewController(viewModel: redirectAlertViewModel)
+        viewController.delegate = controller
+        viewController.modalPresentationStyle = .overFullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        
+        navigationController.present(viewController, animated: true, completion: nil)
+    }
+    
     func settingsViewControllerAboutSelected(in controller: SettingsViewController) {
         let viewController = AboutViewController()
         viewController.navigationItem.largeTitleDisplayMode = .never
