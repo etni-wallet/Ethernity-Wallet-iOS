@@ -85,9 +85,17 @@ extension Data {
     func toQRCode() -> UIImage? {
         if let filter = CIFilter(name: "CIQRCodeGenerator") {
             filter.setValue(self, forKey: "inputMessage")
+//            filter.tintElectric()
             let transform = CGAffineTransform(scaleX: 7, y: 7)
-            if let output = filter.outputImage?.transformed(by: transform) {
-                return UIImage(ciImage: output)
+//            filter.outputImage?.tinted(using: Colors.red)
+            if let output = filter.outputImage?.transformed(by: transform).tinted(using: EthernityColors.electricBlueLight) {
+                
+                let logo = UIImage(named: "qrIcon")
+                guard let logo = logo?.cgImage else {
+                    return UIImage(ciImage: output)
+                }
+                
+                return UIImage(ciImage: output.combined(with: CIImage(cgImage: logo))!)
             }
         }
         return nil

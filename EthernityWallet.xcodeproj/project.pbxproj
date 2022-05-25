@@ -1098,6 +1098,7 @@
 		E42226C6283BBAE200A3EB68 /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42226C5283BBAE200A3EB68 /* AboutViewModel.swift */; };
 		E4BB9F4E282116AF00077CEF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4BB9F4D282116AF00077CEF /* GoogleService-Info.plist */; };
 		E4C76306283E7E4000B89797 /* RedirectAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C76305283E7E4000B89797 /* RedirectAlertViewController.swift */; };
+		E96D9122283E45AD00EB90A6 /* CIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D9121283E45AD00EB90A6 /* CIImageExtension.swift */; };
 		E4C76308283E92BF00B89797 /* RedirectAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C76307283E92BF00B89797 /* RedirectAlertViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -2244,6 +2245,7 @@
 		E42226C5283BBAE200A3EB68 /* AboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
 		E4BB9F4D282116AF00077CEF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E4C76305283E7E4000B89797 /* RedirectAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectAlertViewController.swift; sourceTree = "<group>"; };
+		E96D9121283E45AD00EB90A6 /* CIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIImageExtension.swift; sourceTree = "<group>"; };
 		E4C76307283E92BF00B89797 /* RedirectAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectAlertViewModel.swift; sourceTree = "<group>"; };
 		EAC6758527A096EC009C3344 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = fi; path = fi.lproj/privacyPolicy.html; sourceTree = "<group>"; };
 		EAC6758627A096EC009C3344 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = fi; path = fi.lproj/termsOfService.html; sourceTree = "<group>"; };
@@ -3117,6 +3119,7 @@
 				874015BE270DBB4800B3515F /* MimeType+Extension.swift */,
 				87D84748274533F500EDBA80 /* UIImageView+Extension.swift */,
 				02FEA8EE280FE1B7006C3CA9 /* NSLayoutConstraintExtension.swift */,
+				E96D9121283E45AD00EB90A6 /* CIImageExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -6841,6 +6844,7 @@
 				5E7C7273B231AD10F5DD80B1 /* ActivitiesViewModel.swift in Sources */,
 				5E7C702C2DAB1DF984193D14 /* EventActivity.swift in Sources */,
 				5E7C77F628AF6B67A1C29748 /* EventsActivityDataStore.swift in Sources */,
+				E96D9122283E45AD00EB90A6 /* CIImageExtension.swift in Sources */,
 				5E7C7C869A09FD09DCE77EE6 /* ActivityCellViewModel.swift in Sources */,
 				5E7C7D0A8197BF7725619D87 /* TransactionRowCellViewModel.swift in Sources */,
 				5E7C7BDE0060F5C350AFD34B /* ActivityViewController.swift in Sources */,

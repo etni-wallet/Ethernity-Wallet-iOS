@@ -133,6 +133,7 @@ struct EthernityColors {
     static let darkBlue = UIColor(hex: "030363")
     static let electricBlueSecondary = UIColor(hex: "0000B7")
     static let electricYellow = UIColor(hex: "F89430")
+    static let ethernityLightGrey = UIColor(hex: "6D6D6D")
 }
 
 struct StyleLayout {
@@ -154,6 +155,9 @@ struct Fonts {
     }
     static func bold(size: CGFloat) -> UIFont {
         return UIFont(resource: R.font.interBold, size: size)!
+    }
+    static func interMedium(size: CGFloat) -> UIFont {
+        return UIFont(resource: R.font.interMedium, size: size)!
     }
     static let tableHeader = Fonts.semibold(size: 15)
 }
