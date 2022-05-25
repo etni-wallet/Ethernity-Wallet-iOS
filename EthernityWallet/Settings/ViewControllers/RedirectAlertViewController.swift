@@ -20,8 +20,8 @@ class RedirectAlertViewController: UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            button.heightAnchor.constraint(equalToConstant: 44),
-            button.widthAnchor.constraint(equalToConstant: 100)
+            button.heightAnchor.constraint(equalToConstant: ScreenChecker().isNarrowScreen ? 32 : 40),
+            button.widthAnchor.constraint(equalToConstant: ScreenChecker().isNarrowScreen ? 80 : 90)
         ])
         return button
         
@@ -32,8 +32,8 @@ class RedirectAlertViewController: UIViewController {
         button.titleEdgeInsets.left = 16
         button.titleEdgeInsets.right = 16
         NSLayoutConstraint.activate([
-            button.heightAnchor.constraint(equalToConstant: 44),
-            button.widthAnchor.constraint(equalToConstant: 100)
+            button.heightAnchor.constraint(equalToConstant: ScreenChecker().isNarrowScreen ? 32 : 40),
+            button.widthAnchor.constraint(equalToConstant: ScreenChecker().isNarrowScreen ? 80 : 90)
         ])
         return button
         
@@ -131,6 +131,9 @@ class RedirectAlertViewController: UIViewController {
             blurView.heightAnchor.constraint(equalTo: self.view.heightAnchor),
             blurView.widthAnchor.constraint(equalTo: self.view.widthAnchor),
         ])
+        
+        let gestureRecognizer = UITapGestureRecognizer(target: self,action: #selector(cancelPressed(sender:)))
+        blurView.addGestureRecognizer(gestureRecognizer)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -150,3 +153,4 @@ class RedirectAlertViewController: UIViewController {
     }
     
 }
+
