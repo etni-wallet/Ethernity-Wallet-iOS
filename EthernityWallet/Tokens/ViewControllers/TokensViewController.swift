@@ -190,6 +190,15 @@ class TokensViewController: UIViewController {
     }()
     private var cancellable = Set<AnyCancellable>()
     
+    var thePageVC: MyPageViewController!
+    
+    let myContainerView: UIView = {
+        let v = UIView()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.backgroundColor = .gray
+        return v
+    }()
+    
     init(sessions: ServerDictionary<WalletSession>,
          account: Wallet,
          tokenCollection: TokenCollection,
@@ -224,13 +233,46 @@ class TokensViewController: UIViewController {
         
         filtersSegmentedControl = CustomSegmentedControl(subview: segmentedControl)
         
+        thePageVC = MyPageViewController()
+        //thePageVC = UIColor(hex: "F89430")
+        addChild(thePageVC)
+
+        // we need to re-size the page view controller's view to fit our container view
+        thePageVC.view.translatesAutoresizingMaskIntoConstraints = false
+
+        // add the page VC's view to our container view
+        view.addSubview(myContainerView)
+
+        NSLayoutConstraint.activate([
+            myContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            myContainerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            myContainerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            myContainerView.heightAnchor.constraint(equalToConstant: 200.0),
+            ])
+        
+        // we need to re-size the page view controller's view to fit our container view
+        thePageVC.view.translatesAutoresizingMaskIntoConstraints = false
+
+        // add the page VC's view to our container view
+        myContainerView.addSubview(thePageVC.view)
+
+        // constrain it to all 4 sides
+        NSLayoutConstraint.activate([
+            thePageVC.view.topAnchor.constraint(equalTo: myContainerView.topAnchor, constant: 0.0),
+            thePageVC.view.bottomAnchor.constraint(equalTo: myContainerView.bottomAnchor, constant: 0.0),
+            thePageVC.view.leadingAnchor.constraint(equalTo: myContainerView.leadingAnchor, constant: 0.0),
+            thePageVC.view.trailingAnchor.constraint(equalTo: myContainerView.trailingAnchor, constant: 0.0),
+            ])
+
+        thePageVC.didMove(toParent: self)
+        
         view.addSubview(tableView)
 
         bottomConstraint = tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         keyboardChecker.constraints = [bottomConstraint]
 
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.topAnchor.constraint(equalTo: myContainerView.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             bottomConstraint

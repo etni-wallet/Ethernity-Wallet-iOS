@@ -22,14 +22,15 @@ class NonFungibleTokenViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
+        contentView.layer.cornerRadius = 12
         contentView.addSubview(background)
         background.translatesAutoresizingMaskIntoConstraints = false
-
+        tickersAmountLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        tickersAmountLabel.setContentHuggingPriority(.required, for: .horizontal)
+        
         let col0 = tokenIconImageView
         let col1 = [
-            titleLabel,
-            [tickersAmountLabel, UIView.spacerWidth(flexible: true), blockChainTagLabel].asStackView(spacing: 15)
-        ].asStackView(axis: .vertical, spacing: 5)
+            titleLabel, UIView.spacerWidth(flexible: true), tickersAmountLabel].asStackView(spacing: 5)
         let stackView = [col0, col1].asStackView(spacing: 12, alignment: .center)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         background.addSubview(stackView)
@@ -48,7 +49,7 @@ class NonFungibleTokenViewCell: UITableViewCell {
 
     func configure(viewModel: NonFungibleTokenViewCellViewModel) {
         selectionStyle = .none
-        backgroundColor = viewModel.backgroundColor
+        backgroundColor = UIColor.clear
 
         background.backgroundColor = viewModel.contentsBackgroundColor
 
@@ -64,5 +65,12 @@ class NonFungibleTokenViewCell: UITableViewCell {
         }
         tokenIconImageView.subscribable = viewModel.iconImage
         blockChainTagLabel.configure(viewModel: viewModel.blockChainTagViewModel)
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.bounds = CGRect(origin: CGPoint(x: self.bounds.origin.x, y: self.bounds.origin.y), size: CGSize(width: (0.91 * self.bounds.size.width), height: self.bounds.size.height))
+        
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
     }
 }
