@@ -46,11 +46,11 @@ extension UINavigationBarAppearance {
         appearance.setBackIndicatorImage(R.image.backWhite(), transitionMaskImage: R.image.backWhite())
         appearance.titleTextAttributes = [
             .foregroundColor: R.color.black()!,
-            .font: Fonts.semibold(size: 24) as Any
+            .font: Fonts.semibold(size: 20) as Any
         ]
         appearance.largeTitleTextAttributes = [
             .foregroundColor: R.color.black()!,
-            .font: Fonts.semibold(size: 36) as Any,
+            .font: Fonts.semibold(size: 32) as Any,
         ]
         //NOTE: Hides back button text
         appearance.backButtonAppearance.normal.titleTextAttributes = [
@@ -130,8 +130,11 @@ struct Colors {
 }
 
 struct EthernityColors {
+    static let electricBlueLight = UIColor(hex: "0C86FF")
     static let darkBlue = UIColor(hex: "030363")
     static let electricBlueSecondary = UIColor(hex: "0000B7")
+    static let electricYellow = UIColor(hex: "F89430")
+    static let ethernityLightGrey = UIColor(hex: "6D6D6D")
 }
 
 struct StyleLayout {
@@ -153,6 +156,9 @@ struct Fonts {
     }
     static func bold(size: CGFloat) -> UIFont {
         return UIFont(resource: R.font.interBold, size: size)!
+    }
+    static func interMedium(size: CGFloat) -> UIFont {
+        return UIFont(resource: R.font.interMedium, size: size)!
     }
     static let tableHeader = Fonts.semibold(size: 15)
 }
@@ -308,7 +314,7 @@ enum Screen {
     }
 
     enum Backup {
-        static let subtitleFont = ScreenChecker().isNarrowScreen ? Fonts.regular(size: 22) : Fonts.regular(size: 28)
+        static let subtitleFont = ScreenChecker().isNarrowScreen ? Fonts.regular(size: 15) : Fonts.regular(size: 17)
         static let subtitleColor = Colors.darkGray
         static let descriptionFont = Fonts.regular(size: ScreenChecker.size(big: 17, medium: 15, small: 15))
         static let descriptionBoldFont = Fonts.bold(size: ScreenChecker.size(big: 17, medium: 15, small: 15))

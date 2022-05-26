@@ -8,6 +8,7 @@ enum HorizontalButtonsBarConfiguration {
     case combined(buttons: Int)
     case primary(buttons: Int)
     case secondary(buttons: Int)
+    case whiteBackgroundYellowText(buttons: Int)
     case custom(types: [ButtonsBarButtonType])
 
     static let maxCombinedButtons: Int = 2
@@ -29,6 +30,9 @@ enum HorizontalButtonsBarConfiguration {
             } else {
                 return [ButtonsBarButtonType](buttonsToShow.prefix(buttons))
             }
+        case .whiteBackgroundYellowText(let buttons):
+            let buttonsToShow: [ButtonsBarButtonType] = [.whiteBackgroundYellowText]
+            return [ButtonsBarButtonType](buttonsToShow.prefix(buttons))
         case .empty:
             return []
         }
@@ -42,6 +46,8 @@ enum HorizontalButtonsBarConfiguration {
             return false
         case .combined(let buttons):
             return buttons >= HorizontalButtonsBarConfiguration.maxCombinedButtons && index >= HorizontalButtonsBarConfiguration.maxCombinedButtons
+        case .whiteBackgroundYellowText:
+            return false
         case .empty:
             return false
         }
@@ -57,6 +63,8 @@ enum HorizontalButtonsBarConfiguration {
             return buttons > HorizontalButtonsBarConfiguration.maxCombinedButtons
         case .empty:
             return false
+        case .whiteBackgroundYellowText:
+            return false
         }
     }
 }
@@ -65,6 +73,7 @@ enum ButtonsBarButtonType {
     case primary
     case secondary
     case system
+    case whiteBackgroundYellowText
 }
 
 class BarButton: TransitionButton {
@@ -277,6 +286,8 @@ class HorizontalButtonsBar: UIView, ButtonsBarViewType {
                 setup(viewModel: .secondaryButton, view: combined.1)
             case .system:
                 setup(viewModel: .systemButton, view: combined.1)
+            case .whiteBackgroundYellowText:
+                setup(viewModel: .whiteBackgroundYellowText, view: combined.1)
             }
         }
 
@@ -355,6 +366,10 @@ struct ButtonsBarViewModel {
         buttonTitleColor: ButtonsBarStyle.Colors.secondaryTextActive,
         disabledButtonTitleColor: ButtonsBarStyle.Colors.secondaryTextInactive,
         buttonBorderColor: ButtonsBarStyle.Colors.secondaryBorderActive
+    )
+    
+    static let whiteBackgroundYellowText = ButtonsBarViewModel(
+        buttonBackgroundColor: Colors.appWhite, highlightedButtonBackgroundColor: Colors.appWhite, disabledButtonBackgroundColor: Colors.appWhite, disabledButtonBorderColor: Colors.appWhite, buttonTitleColor: EthernityColors.electricYellow, highlightedButtonTitleColor: EthernityColors.electricYellow, disabledButtonTitleColor: EthernityColors.electricYellow, buttonFont: Fonts.regular(size: ScreenChecker().isNarrowScreen ? 16 : 20), buttonBorderColor: Colors.appWhite, buttonBorderWidth: 0.0
     )
 
     static let systemButton = ButtonsBarViewModel(

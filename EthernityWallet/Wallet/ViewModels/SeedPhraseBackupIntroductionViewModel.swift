@@ -10,10 +10,14 @@ struct SeedPhraseBackupIntroductionViewModel {
 
     var title: String {
         return R.string.localizable.walletsBackupHdWalletIntroductionButtonTitle()
-    } 
+    }
+    
+    var navBarTitle: String {
+        return R.string.localizable.backupWalletIntroductionNavTitle()
+    }
 
     var imageViewImage: UIImage {
-        return R.image.hdIntroduction()!
+        return R.image.backupWalletIntroIcon()!
     }
     
     var attributedSubtitle: NSAttributedString {
@@ -21,7 +25,6 @@ struct SeedPhraseBackupIntroductionViewModel {
         let attributeString = NSMutableAttributedString(string: subtitle)
         let style = NSMutableParagraphStyle()
         style.alignment = .center
-        style.lineSpacing = ScreenChecker.size(big: 18, medium: 14, small: 7)
 
         attributeString.addAttributes([
             .paragraphStyle: style,
@@ -33,7 +36,7 @@ struct SeedPhraseBackupIntroductionViewModel {
     }
     
     var attributedDescription: NSAttributedString {
-        let description = R.string.localizable.walletsShowSeedPhraseSubtitle()
+        let description = R.string.localizable.walletsBackupHdWalletIntroductionDescription()
         let attributeString = NSMutableAttributedString(string: description)
         let style = NSMutableParagraphStyle()
         style.alignment = .center

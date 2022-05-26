@@ -15,7 +15,8 @@ class RequestViewController: UIViewController {
 	private let scrollView = UIScrollView()
 	private let copyEnsButton = UIButton(type: .system)
 	private let copyAddressButton = UIButton(type: .system)
-
+    private let copyAddressButtonBar = HorizontalButtonsBar(configuration: .primary(buttons: 1))
+    private let shareAdressButtonBar = HorizontalButtonsBar(configuration: .whiteBackgroundYellowText(buttons: 1))
 	private lazy var instructionLabel: UILabel = {
 		let label = UILabel()
 		label.textColor = viewModel.labelColor
@@ -27,6 +28,9 @@ class RequestViewController: UIViewController {
 
 	private lazy var imageView: UIImageView = {
 		let imageView = UIImageView()
+        imageView.borderWidth = 12
+        imageView.layer.cornerRadius = 12
+        imageView.borderColor = EthernityColors.electricBlueLight
 		return imageView
 	}()
 
@@ -95,7 +99,22 @@ class RequestViewController: UIViewController {
 		copyAddressButton.addTarget(self, action: #selector(copyAddress), for: .touchUpInside)
 		copyAddressButton.setContentHuggingPriority(.required, for: .horizontal)
 
-		let addressStackView = [.spacerWidth(7), addressLabel, .spacerWidth(10), copyAddressButton, .spacerWidth(7)].asStackView(axis: .horizontal)
+        copyAddressButtonBar.translatesAutoresizingMaskIntoConstraints = false
+        copyAddressButtonBar.configure()
+        let copyAddressEthernityButton = copyAddressButtonBar.buttons[0]
+        copyAddressEthernityButton.setTitle(viewModel.copyWalletButtonTitle, for: .normal)
+        copyAddressEthernityButton.addTarget(self, action: #selector(copyAddress), for: .touchUpInside)
+        
+        shareAdressButtonBar.translatesAutoresizingMaskIntoConstraints = false
+        shareAdressButtonBar.configure()
+        let shareAdressButton = shareAdressButtonBar.buttons[0]
+        shareAdressButton.setTitle(viewModel.shareWalletButtonTitle, for: .normal)
+        shareAdressButton.addTarget(self, action: #selector(shareWallet), for: .touchUpInside)
+        shareAdressButton.borderWidth = 2
+        shareAdressButton.borderColor = EthernityColors.electricYellow
+        
+        
+		let addressStackView = [addressLabel].asStackView(axis: .horizontal)
 		addressStackView.addSubview(forBackgroundColor: viewModel.addressBackgroundColor)
 		addressStackView.translatesAutoresizingMaskIntoConstraints = false
 		addressContainerView.addSubview(addressStackView)
@@ -104,8 +123,6 @@ class RequestViewController: UIViewController {
 		roundedBackground.addSubview(scrollView)
 
 		let stackView = [
-			.spacer(height: ScreenChecker().isNarrowScreen ? 20 : 30),
-			instructionLabel,
 			.spacer(height: ScreenChecker().isNarrowScreen ? 20 : 50),
 			imageView,
 		].asStackView(axis: .vertical, alignment: .center)
@@ -115,9 +132,11 @@ class RequestViewController: UIViewController {
 		ensContainerView.translatesAutoresizingMaskIntoConstraints = false
 		roundedBackground.addSubview(ensContainerView)
 
-        addressContainerView.translatesAutoresizingMaskIntoConstraints = false
-		roundedBackground.addSubview(addressContainerView)
+        addressStackView.translatesAutoresizingMaskIntoConstraints = false
+		roundedBackground.addSubview(addressStackView)
 
+        roundedBackground.addSubview(copyAddressButtonBar)
+        roundedBackground.addSubview(shareAdressButtonBar)
 		let qrCodeDimensions: CGFloat
 		if ScreenChecker().isNarrowScreen {
 			qrCodeDimensions = 230
@@ -127,7 +146,7 @@ class RequestViewController: UIViewController {
 		NSLayoutConstraint.activate([
 			//Leading/trailing anchor needed to make label fit when on narrow iPhones
 			ensStackView.anchorsConstraint(to: ensContainerView, edgeInsets: .init(top: 14, left: 20, bottom: 14, right: 20)),
-			addressStackView.anchorsConstraint(to: addressContainerView, edgeInsets: .init(top: 14, left: 20, bottom: 14, right: 20)),
+			addressStackView.anchorsConstraint(to: addressStackView, edgeInsets: .init(top: 14, left: 20, bottom: 14, right: 20)),
 
 			imageView.widthAnchor.constraint(equalToConstant: qrCodeDimensions),
 			imageView.heightAnchor.constraint(equalToConstant: qrCodeDimensions),
@@ -145,12 +164,24 @@ class RequestViewController: UIViewController {
             copyAddressButton.widthAnchor.constraint(equalToConstant: 30),
 
             ensContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-			ensContainerView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 40),
+			ensContainerView.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 0),
 
-			addressContainerView.topAnchor.constraint(equalTo: ensContainerView.bottomAnchor, constant: ScreenChecker().isNarrowScreen ? 10 : 20),
-			addressContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-			addressContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            addressStackView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: ScreenChecker().isNarrowScreen ? 10 : 20),
+            addressStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            addressStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
 
+            copyAddressButtonBar.heightAnchor.constraint(equalToConstant: HorizontalButtonsBar.buttonsHeight),
+            copyAddressButtonBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            copyAddressButtonBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            copyAddressButtonBar.bottomAnchor.constraint(equalTo: shareAdressButtonBar.topAnchor, constant: -16),
+            
+            shareAdressButtonBar.heightAnchor.constraint(equalToConstant: HorizontalButtonsBar.buttonsHeight),
+            shareAdressButtonBar.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60),
+            shareAdressButtonBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            shareAdressButtonBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            shareAdressButtonBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            
 			roundedBackground.createConstraintsWithContainer(view: view),
 		])
 
@@ -212,6 +243,14 @@ class RequestViewController: UIViewController {
 			}
 		}
 	}
+    
+    @objc private func shareWallet() {
+        let text = viewModel.myAddressText
+        let textShare = [ text ]
+        let activityViewController = UIActivityViewController(activityItems: textShare , applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
+    }
 
 	@objc func copyAddress() {
 		UIPasteboard.general.string = viewModel.myAddressText
