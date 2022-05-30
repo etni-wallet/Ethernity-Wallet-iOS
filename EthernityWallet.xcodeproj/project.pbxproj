@@ -1060,6 +1060,7 @@
 		A08DCD642822A1EA006B093E /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A08DCD592822A1EA006B093E /* Inter-ExtraLight.ttf */; };
 		A08DCD652822A1EA006B093E /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A08DCD5A2822A1EA006B093E /* Inter-SemiBold.ttf */; };
 		A08DCD662822A1EA006B093E /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A08DCD5B2822A1EA006B093E /* Inter-Bold.ttf */; };
+		A0ADF0422844116400A2754B /* ButtonsPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0ADF0412844116400A2754B /* ButtonsPageViewController.swift */; };
 		AA26C61F20412A1E00318B9B /* TokensCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA26C61D20412A1D00318B9B /* TokensCardViewController.swift */; };
 		AA26C62320412A4100318B9B /* UIViewInspectableEnhancements.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA26C62120412A4100318B9B /* UIViewInspectableEnhancements.swift */; };
 		AA26C62420412A4100318B9B /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA26C62220412A4100318B9B /* Double.swift */; };
@@ -2200,6 +2201,7 @@
 		A08DCD592822A1EA006B093E /* Inter-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-ExtraLight.ttf"; sourceTree = "<group>"; };
 		A08DCD5A2822A1EA006B093E /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-SemiBold.ttf"; sourceTree = "<group>"; };
 		A08DCD5B2822A1EA006B093E /* Inter-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Inter-Bold.ttf"; sourceTree = "<group>"; };
+		A0ADF0412844116400A2754B /* ButtonsPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonsPageViewController.swift; sourceTree = "<group>"; };
 		AA26C61D20412A1D00318B9B /* TokensCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensCardViewController.swift; sourceTree = "<group>"; };
 		AA26C62120412A4100318B9B /* UIViewInspectableEnhancements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewInspectableEnhancements.swift; sourceTree = "<group>"; };
 		AA26C62220412A4100318B9B /* Double.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
@@ -2963,6 +2965,7 @@
 				5E7C7EC53B2B5DFAAC7965EC /* TokenViewController.swift */,
 				5E7C741DF75781BBB24CE6D0 /* TokenInstanceActionViewController.swift */,
 				874DED1624C1BB0E006C8FCE /* SelectTokenViewController.swift */,
+				A0ADF0412844116400A2754B /* ButtonsPageViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -6929,6 +6932,7 @@
 				5E7C79E124DB52FB927CECE8 /* SendPrivateTransactionsProvider.swift in Sources */,
 				5E7C784BA700ED0E4878D0E0 /* UiTweaks.swift in Sources */,
 				5E7C75BA61A6F4D300D1DA3E /* WhatsNew.swift in Sources */,
+				A0ADF0422844116400A2754B /* ButtonsPageViewController.swift in Sources */,
 				5E7C73A66AD0CF28767CC142 /* WhatsNewListingCoordinator.swift in Sources */,
 				5E7C793EEF16E1689FE62543 /* WhatsNewListingViewController.swift in Sources */,
 				5E7C7FF312AB61DBEBD86C94 /* WhatsNewViewModels.swift in Sources */,
