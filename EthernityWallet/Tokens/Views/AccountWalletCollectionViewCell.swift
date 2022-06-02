@@ -54,8 +54,8 @@ class AccountWalletCollectionViewCell: UICollectionViewCell {
     }()
     private let moreButton: UIButton = {
         let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(R.image.moreIcon()!, for: .normal)
-        button.setTitle("-", for: .normal)
         return button
     }()
     
@@ -94,14 +94,19 @@ class AccountWalletCollectionViewCell: UICollectionViewCell {
 //            sendButton.topAnchor.constraint(equalTo: walletAddress.bottomAnchor, constant: 40),
             sendButton.leadingAnchor.constraint(equalTo: mainAccount.leadingAnchor),
             sendButton.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -12.0),
+//            sendButton.heightAnchor.constraint(equalToConstant: 41.0),
             
             receiveButton.centerYAnchor.constraint(equalTo: sendButton.centerYAnchor),
             receiveButton.leadingAnchor.constraint(equalTo: sendButton.trailingAnchor, constant: 18.0),
+//            receiveButton.heightAnchor.constraint(equalToConstant: 41.0),
             
             moreButton.centerYAnchor.constraint(equalTo: sendButton.centerYAnchor),
             moreButton.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -28.0)
             
         ])
+        
+        background.constraintsAffectingLayout(for: .vertical)
+        background.constraintsAffectingLayout(for: .horizontal)
         
         moreButton.addTarget(self, action: #selector(moreButtonTapped(sender:)), for: .touchUpInside)
         
@@ -180,7 +185,7 @@ fileprivate class WalletAddressCustomView: UIControl, WalletAddressCustomViewDis
             walletAddressLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -3.0),
             walletAddressLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 7.0),
             
-            copyImageView.leadingAnchor.constraint(equalTo: walletAddressLabel.leadingAnchor, constant: 10.0),
+            copyImageView.leadingAnchor.constraint(equalTo: walletAddressLabel.trailingAnchor, constant: 10.0),
             copyImageView.centerYAnchor.constraint(equalTo: walletAddressLabel.centerYAnchor),
             copyImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8.0)
         ])

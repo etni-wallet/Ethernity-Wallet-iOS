@@ -59,7 +59,6 @@ class SendReceiveButton: UIControl {
     init(type: SendReceiveButtonType) {
         self.type = type
         super.init(frame: .zero)
-        translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .clear
         addSubview(background)
         
@@ -78,6 +77,12 @@ class SendReceiveButton: UIControl {
             iconImgView.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -10.0)
         ])
         
+        configureView()
+    }
+    
+    private func configureView() {
+        titleLabel.text = type.title
+        iconImgView.image = type.icon
     }
     
     override func sendActions(for controlEvents: UIControl.Event) {

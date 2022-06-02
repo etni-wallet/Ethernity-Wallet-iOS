@@ -36,10 +36,12 @@ class TokensViewController: UIViewController {
         layout.scrollDirection = .horizontal
         layout.minimumInteritemSpacing = 1
         layout.minimumLineSpacing = 1
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 40, height: 200)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.decelerationRate = .fast
         collectionView.isPagingEnabled = false
+        collectionView.showsHorizontalScrollIndicator = false
         collectionView.register(AccountWalletCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -205,6 +207,9 @@ class TokensViewController: UIViewController {
             walletsCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             walletsCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             walletsCollectionView.heightAnchor.constraint(equalToConstant: 300.0),
+            
+            pageControl.topAnchor.constraint(equalTo: walletsCollectionView.bottomAnchor),
+            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
         
@@ -214,7 +219,7 @@ class TokensViewController: UIViewController {
         keyboardChecker.constraints = [bottomConstraint]
 
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: walletsCollectionView.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: pageControl.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             bottomConstraint
@@ -925,14 +930,17 @@ extension TokensViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         let numberOfItems = 1
-        pageControl.numberOfPages = numberOfItems
+
         
         return numberOfItems
     }
 
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        let numberOfItems = 3
+        pageControl.numberOfPages = numberOfItems
+        
+        return numberOfItems
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -948,14 +956,14 @@ extension TokensViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 1, bottom: 0, right: 1)
+        return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-
-        return CGSize(width: UIScreen.main.bounds.width, height: 300)
-    }
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//
+//
+//        return CGSize(width: UIScreen.main.bounds.width, height: 300)
+//    }
 }
 
 class SnappingCollectionViewLayout: UICollectionViewFlowLayout {
@@ -982,17 +990,17 @@ class SnappingCollectionViewLayout: UICollectionViewFlowLayout {
 }
 
 //extension TokensViewController {
-//    
+//
 //    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
 //        let visibleCenterPositionOfScrollView = Float(walletsCollectionView.contentOffset.x + (self.walletsCollectionView.bounds.size.width / 2))
 //        var closestCellIndex = -1
 //        var closestDistance: Float = .greatestFiniteMagnitude
-//        
+//
 //        for i in 0..<walletsCollectionView.visibleCells.count {
 //            let cell = walletsCollectionView.visibleCells[i]
 //            let cellWidth = cell.bounds.size.width
 //            let cellCenter = Float(cell.frame.origin.x + cellWidth / 2)
-//            
+//
 //            // Now calculate closest cell
 //            let distance: Float = fabsf(visibleCenterPositionOfScrollView - cellCenter)
 //            if distance < closestDistance {
@@ -1000,15 +1008,11 @@ class SnappingCollectionViewLayout: UICollectionViewFlowLayout {
 //                closestCellIndex = walletsCollectionView.indexPath(for: cell)!.row
 //            }
 //        }
-//        
+//
 //        if closestCellIndex != -1 {
 //            let indexPath =  IndexPath(row: closestCellIndex, section: 0)
-//            guard indexPath.row != 2 else {
-//                
-//                walletsCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-//                return
-//            }
-//            
+//
+//
 //            self.walletsCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
 //            self.walletsCollectionView.isUserInteractionEnabled = false
 //        }
