@@ -5,6 +5,8 @@ import Result
 import PromiseKit
 import Combine
 
+private let reuseIdentifier = "AccountWalletCollectionViewCell"
+
 protocol TokensViewControllerDelegate: AnyObject {
     func viewWillAppear(in viewController: UIViewController)
     func didSelect(token: TokenObject, in viewController: UIViewController)
@@ -28,6 +30,30 @@ class TokensViewController: UIViewController {
     }
     private let sessions: ServerDictionary<WalletSession>
     private let account: Wallet
+
+    private let walletsCollectionView: UICollectionView = {
+        let layout: UICollectionViewFlowLayout = SnappingCollectionViewLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 1
+        layout.minimumLineSpacing = 1
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.decelerationRate = .fast
+        collectionView.isPagingEnabled = false
+        collectionView.register(AccountWalletCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return collectionView
+    }()
+    private var pageControl: UIPageControl = {
+        let pc = UIPageControl()
+        pc.translatesAutoresizingMaskIntoConstraints = false
+        pc.pageIndicatorTintColor = .gray
+        pc.currentPageIndicatorTintColor = EthernityColors.electricYellow
+        
+        return pc
+    }()
+    
     lazy private var tableViewFilterView: ScrollableSegmentedControl = {
         let cellConfiguration = Style.ScrollableSegmentedControlCell.configuration
         let controlConfiguration = Style.ScrollableSegmentedControl.configuration
@@ -36,6 +62,7 @@ class TokensViewController: UIViewController {
         }
         let control = ScrollableSegmentedControl(cells: cells, configuration: controlConfiguration)
         control.setSelection(cellIndex: 0, animated: false)
+        control.translatesAutoresizingMaskIntoConstraints = false
         return control
     }()
     
@@ -106,16 +133,7 @@ class TokensViewController: UIViewController {
         }, button: addHideButton)
     }()
 
-    private var consoleButton: UIButton {
-        return tableViewHeader.consoleButton
-    }
-    private var promptBackupWalletViewHolder: UIView {
-        return tableViewHeader.promptBackupWalletViewHolder
-    }
-    private var shouldHidePromptBackupWalletViewHolderBecauseSearchIsActive = false
-    private var tableViewHeader = {
-        return TableViewHeader(consoleButton: UIButton(type: .system), promptBackupWalletViewHolder: UIView())
-    }()
+
     private var isSearchBarConfigured = false
     private var bottomConstraint: NSLayoutConstraint!
     private lazy var keyboardChecker = KeyboardChecker(self, resetHeightDefaultValue: 0, ignoreBottomSafeArea: true)
@@ -129,58 +147,8 @@ class TokensViewController: UIViewController {
         return view
     }()
 
-    var isConsoleButtonHidden: Bool {
-        get {
-            return consoleButton.isHidden
-        }
-        set {
-            guard newValue != isConsoleButtonHidden else { return }
-            consoleButton.isHidden = newValue
-            adjustTableViewHeaderHeightToFitContents()
-        }
-    }
-    var isPromptBackupWalletViewHolderHidden: Bool {
-        get {
-            return promptBackupWalletViewHolder.isHidden
-        }
-        set {
-            guard newValue != isPromptBackupWalletViewHolderHidden else { return }
-            promptBackupWalletViewHolder.isHidden = newValue
-            adjustTableViewHeaderHeightToFitContents()
-        }
-    }
-
     weak var delegate: TokensViewControllerDelegate?
-    //TODO The name "bad" isn't correct. Because it includes "conflicts" too
-    var listOfBadTokenScriptFiles: [TokenScriptFileIndices.FileName] = .init() {
-        didSet {
-            if listOfBadTokenScriptFiles.isEmpty {
-                isConsoleButtonHidden = true
-            } else {
-                consoleButton.titleLabel?.font = Fonts.light(size: 22)
-                consoleButton.setTitleColor(Colors.black, for: .normal)
-                consoleButton.setTitle(R.string.localizable.tokenScriptShowErrors(), for: .normal)
-                consoleButton.bounds.size.height = 44
-                consoleButton.isHidden = false
-            }
-        }
-    }
-    var promptBackupWalletView: UIView? {
-        didSet {
-            oldValue?.removeFromSuperview()
-            if let promptBackupWalletView = promptBackupWalletView {
-                promptBackupWalletView.translatesAutoresizingMaskIntoConstraints = false
-                promptBackupWalletViewHolder.addSubview(promptBackupWalletView)
-                NSLayoutConstraint.activate([
-                    promptBackupWalletView.anchorsConstraint(to: promptBackupWalletViewHolder, edgeInsets: .init(top: 7, left: 7, bottom: 4, right: 7)),
-                ])
 
-                isPromptBackupWalletViewHolderHidden = shouldHidePromptBackupWalletViewHolderBecauseSearchIsActive
-            } else {
-                isPromptBackupWalletViewHolderHidden = true
-            }
-        }
-    }
     private var walletSummaryView = WalletSummaryView(edgeInsets: .init(top: 10, left: 0, bottom: 0, right: 0), spacing: 0)
     private lazy var searchBarHeader: TokensViewController.ContainerView<DummySearchView> = {
         let header: TokensViewController.ContainerView<DummySearchView> = .init(subview: searchBar)
@@ -189,15 +157,6 @@ class TokensViewController: UIViewController {
         return header
     }()
     private var cancellable = Set<AnyCancellable>()
-    
-    var thePageVC: MyPageViewController!
-    
-    let myContainerView: UIView = {
-        let v = UIView()
-        v.translatesAutoresizingMaskIntoConstraints = false
-        v.backgroundColor = .gray
-        return v
-    }()
     
     init(sessions: ServerDictionary<WalletSession>,
          account: Wallet,
@@ -228,43 +187,26 @@ class TokensViewController: UIViewController {
         tableViewFilterView.addTarget(self, action: #selector(didTapSegment(_:)), for: .touchUpInside)
         tableViewFilterView.translatesAutoresizingMaskIntoConstraints = false
 
-        consoleButton.addTarget(self, action: #selector(openConsole), for: .touchUpInside)
         segmentedControl.addTarget(self, action: #selector(self.segmentedValueChanged(_:)), for: .valueChanged)
         
         filtersSegmentedControl = CustomSegmentedControl(subview: segmentedControl)
+
         
-        thePageVC = MyPageViewController()
-        //thePageVC = UIColor(hex: "F89430")
-        addChild(thePageVC)
-
-        // we need to re-size the page view controller's view to fit our container view
-        thePageVC.view.translatesAutoresizingMaskIntoConstraints = false
-
-        // add the page VC's view to our container view
-        view.addSubview(myContainerView)
-
-        NSLayoutConstraint.activate([
-            myContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            myContainerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            myContainerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
-            myContainerView.heightAnchor.constraint(equalToConstant: 200.0),
-            ])
+        view.addSubview(walletsCollectionView)
+        view.addSubview(pageControl)
         
-        // we need to re-size the page view controller's view to fit our container view
-        thePageVC.view.translatesAutoresizingMaskIntoConstraints = false
-
-        // add the page VC's view to our container view
-        myContainerView.addSubview(thePageVC.view)
-
-        // constrain it to all 4 sides
+        walletsCollectionView.delegate = self
+        walletsCollectionView.dataSource = self
+        
+        // Do any additional setup after loading the view.
+        
         NSLayoutConstraint.activate([
-            thePageVC.view.topAnchor.constraint(equalTo: myContainerView.topAnchor, constant: 0.0),
-            thePageVC.view.bottomAnchor.constraint(equalTo: myContainerView.bottomAnchor, constant: 0.0),
-            thePageVC.view.leadingAnchor.constraint(equalTo: myContainerView.leadingAnchor, constant: 0.0),
-            thePageVC.view.trailingAnchor.constraint(equalTo: myContainerView.trailingAnchor, constant: 0.0),
-            ])
-
-        thePageVC.didMove(toParent: self)
+            walletsCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            walletsCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            walletsCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            walletsCollectionView.heightAnchor.constraint(equalToConstant: 300.0),
+        ])
+        
         
         view.addSubview(tableView)
 
@@ -272,11 +214,12 @@ class TokensViewController: UIViewController {
         keyboardChecker.constraints = [bottomConstraint]
 
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: myContainerView.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: walletsCollectionView.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             bottomConstraint
         ])
+        
 
         tableView.addSubview(emptyTableView)
         let heightConstraint = emptyTableView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor, constant: 0)
@@ -350,10 +293,6 @@ class TokensViewController: UIViewController {
         tableViewRefreshControl.beginRefreshing()
         fetch()
     }
-
-    @objc func openConsole() {
-        delegate?.didTapOpenConsole(in: self)
-    }
     
     @objc func addHideToken(){
         delegate?.didPressAddHideTokens(viewModel: self.viewModel)
@@ -373,7 +312,6 @@ class TokensViewController: UIViewController {
     }
 
     private func reload() {
-        isPromptBackupWalletViewHolderHidden = !(viewModel.shouldShowBackupPromptViewHolder && !promptBackupWalletViewHolder.subviews.isEmpty) || shouldHidePromptBackupWalletViewHolderBecauseSearchIsActive
         reloadTableData()
     }
 
@@ -399,12 +337,6 @@ class TokensViewController: UIViewController {
                     strongSelf.tableViewRefreshControl.endRefreshing()
                 }
             }.store(in: &cancellable)
-    }
-
-    private func adjustTableViewHeaderHeightToFitContents() {
-        let size = tableViewHeader.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-        tableViewHeader.bounds.size.height = size.height
-        tableView.tableHeaderView = tableViewHeader
     }
 
     @objc private func enterSearchMode() {
@@ -500,6 +432,11 @@ extension TokensViewController: UITableViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollView.contentOffset.y == 0 ? hideNavigationBarTopSeparatorLineInScrollEdgeAppearance() : showNavigationBarTopSeparatorLineInScrollEdgeAppearance()
+        
+//        pageControl.currentPage = Int(
+//            (walletsCollectionView.contentOffset.x / walletsCollectionView.frame.width)
+//                .rounded(.toNearestOrAwayFromZero)
+//            )
     }
 
 }
@@ -758,7 +695,6 @@ extension TokensViewController: UISearchResultsUpdating {
     }
 
     private func processSearchWithKeywords() {
-        shouldHidePromptBackupWalletViewHolderBecauseSearchIsActive = searchController.isActive
         guard searchController.isActive else {
             switch viewModel.filter {
             case .all, .defi, .governance, .assets, .transactions, .collectiblesOnly, .type:
@@ -982,3 +918,99 @@ extension UISearchBar {
 //        self.setPositionAdjustment(offset, for: .search)
     }
 }
+
+
+extension TokensViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    // MARK: UICollectionViewDataSource
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        let numberOfItems = 1
+        pageControl.numberOfPages = numberOfItems
+        
+        return numberOfItems
+    }
+
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 3
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+    
+        // Configure the cell
+    
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 1, bottom: 0, right: 1)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+
+        return CGSize(width: UIScreen.main.bounds.width, height: 300)
+    }
+}
+
+class SnappingCollectionViewLayout: UICollectionViewFlowLayout {
+
+    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+        guard let collectionView = collectionView else { return super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity) }
+
+        var offsetAdjustment = CGFloat.greatestFiniteMagnitude
+        let horizontalOffset = proposedContentOffset.x + collectionView.contentInset.left
+
+        let targetRect = CGRect(x: proposedContentOffset.x, y: 0, width: collectionView.bounds.size.width, height: collectionView.bounds.size.height)
+
+        let layoutAttributesArray = super.layoutAttributesForElements(in: targetRect)
+
+        layoutAttributesArray?.forEach({ (layoutAttributes) in
+            let itemOffset = layoutAttributes.frame.origin.x
+            if fabsf(Float(itemOffset - horizontalOffset)) < fabsf(Float(offsetAdjustment)) {
+                offsetAdjustment = itemOffset - horizontalOffset
+            }
+        })
+
+        return CGPoint(x: proposedContentOffset.x + offsetAdjustment, y: proposedContentOffset.y)
+    }
+}
+
+//extension TokensViewController {
+//    
+//    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+//        let visibleCenterPositionOfScrollView = Float(walletsCollectionView.contentOffset.x + (self.walletsCollectionView.bounds.size.width / 2))
+//        var closestCellIndex = -1
+//        var closestDistance: Float = .greatestFiniteMagnitude
+//        
+//        for i in 0..<walletsCollectionView.visibleCells.count {
+//            let cell = walletsCollectionView.visibleCells[i]
+//            let cellWidth = cell.bounds.size.width
+//            let cellCenter = Float(cell.frame.origin.x + cellWidth / 2)
+//            
+//            // Now calculate closest cell
+//            let distance: Float = fabsf(visibleCenterPositionOfScrollView - cellCenter)
+//            if distance < closestDistance {
+//                closestDistance = distance
+//                closestCellIndex = walletsCollectionView.indexPath(for: cell)!.row
+//            }
+//        }
+//        
+//        if closestCellIndex != -1 {
+//            let indexPath =  IndexPath(row: closestCellIndex, section: 0)
+//            guard indexPath.row != 2 else {
+//                
+//                walletsCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+//                return
+//            }
+//            
+//            self.walletsCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+//            self.walletsCollectionView.isUserInteractionEnabled = false
+//        }
+//    }
+//}

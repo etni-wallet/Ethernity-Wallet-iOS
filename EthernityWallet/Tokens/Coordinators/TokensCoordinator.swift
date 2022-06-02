@@ -219,7 +219,7 @@ class TokensCoordinator: Coordinator {
     }
 
     func listOfBadTokenScriptFilesChanged(fileNames: [TokenScriptFileIndices.FileName]) {
-        tokensViewController.listOfBadTokenScriptFiles = fileNames
+//        tokensViewController.listOfBadTokenScriptFiles = fileNames
     }
 
     func launchUniversalScanner(fromSource source: Analytics.ScanQRCodeSource) {
@@ -618,7 +618,7 @@ extension TokensCoordinator: PromptBackupCoordinatorProminentPromptDelegate {
     }
 
     func updatePrompt(inCoordinator coordinator: PromptBackupCoordinator) {
-        tokensViewController.promptBackupWalletView = coordinator.prominentPromptView
+//        tokensViewController.promptBackupWalletView = coordinator.prominentPromptView
     }
 }
 

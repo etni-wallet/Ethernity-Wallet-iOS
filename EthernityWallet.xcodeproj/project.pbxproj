@@ -1099,6 +1099,8 @@
 		CCA4FE381FD428B300749AE4 /* JailbreakChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE371FD428B300749AE4 /* JailbreakChecker.swift */; };
 		CCA4FE3A1FD42B4100749AE4 /* FakeJailbreakChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA4FE391FD42B4100749AE4 /* FakeJailbreakChecker.swift */; };
 		CCCD74FD1FD2D38D004A087D /* CheckDeviceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCD74FC1FD2D38D004A087D /* CheckDeviceCoordinator.swift */; };
+		E4033BD02848110600772FFF /* AccountWalletCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4033BCF2848110600772FFF /* AccountWalletCollectionViewCell.swift */; };
+		E4033BD22848280800772FFF /* SendReceiveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4033BD12848280800772FFF /* SendReceiveButton.swift */; };
 		E4BB9F4E282116AF00077CEF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4BB9F4D282116AF00077CEF /* GoogleService-Info.plist */; };
 		E96D9122283E45AD00EB90A6 /* CIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D9121283E45AD00EB90A6 /* CIImageExtension.swift */; };
 /* End PBXBuildFile section */
@@ -2247,6 +2249,8 @@
 		CCA4FE371FD428B300749AE4 /* JailbreakChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JailbreakChecker.swift; sourceTree = "<group>"; };
 		CCA4FE391FD42B4100749AE4 /* FakeJailbreakChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeJailbreakChecker.swift; sourceTree = "<group>"; };
 		CCCD74FC1FD2D38D004A087D /* CheckDeviceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDeviceCoordinator.swift; sourceTree = "<group>"; };
+		E4033BCF2848110600772FFF /* AccountWalletCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountWalletCollectionViewCell.swift; sourceTree = "<group>"; };
+		E4033BD12848280800772FFF /* SendReceiveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendReceiveButton.swift; sourceTree = "<group>"; };
 		E4BB9F4D282116AF00077CEF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E96D9121283E45AD00EB90A6 /* CIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIImageExtension.swift; sourceTree = "<group>"; };
 		EAC6758527A096EC009C3344 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = fi; path = fi.lproj/privacyPolicy.html; sourceTree = "<group>"; };
@@ -2954,6 +2958,8 @@
 				87F4D41F26C26C6E00EFB9BC /* EmptyFilteringResultView.swift */,
 				87741F1727709073007F4604 /* TestnetTokenInfoView.swift */,
 				5E7C7EA7AD39A9F6703189FD /* ActiveWalletSessionView.swift */,
+				E4033BCF2848110600772FFF /* AccountWalletCollectionViewCell.swift */,
+				E4033BD12848280800772FFF /* SendReceiveButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -6302,6 +6308,7 @@
 				291A1B651F974E8600ADEC80 /* WalletEntryPoint.swift in Sources */,
 				8736214D264D3B0000AAF794 /* XYMarkerView.swift in Sources */,
 				29D03F1D1F712183006E548C /* Button.swift in Sources */,
+				E4033BD02848110600772FFF /* AccountWalletCollectionViewCell.swift in Sources */,
 				CCCD74FD1FD2D38D004A087D /* CheckDeviceCoordinator.swift in Sources */,
 				8762002E266E15310059B05A /* PopularTokenViewCellViewModel.swift in Sources */,
 				87D163A4242CD811002662D2 /* AddHideTokensCoordinator.swift in Sources */,
@@ -6520,6 +6527,7 @@
 				5E7C729D43F311810652B1D5 /* UIActivityViewController.swift in Sources */,
 				87E2555624F52EAA00F025F7 /* GasSpeedTableViewHeaderViewModel.swift in Sources */,
 				5E7C7BC8F2E31F4E2BA534D9 /* Ether.swift in Sources */,
+				E4033BD22848280800772FFF /* SendReceiveButton.swift in Sources */,
 				87620028266E14A80059B05A /* PopularTokenViewCell.swift in Sources */,
 				5E7C70CF1C732CE07D074A8B /* BookmarksStore.swift in Sources */,
 				87FFEF5127EE00CB0024FCEC /* TransactionNotificationService.swift in Sources */,

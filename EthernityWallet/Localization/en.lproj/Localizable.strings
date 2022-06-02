@@ -859,3 +859,5 @@
 
 // Ethernity Wallet
 "backup.wallet.introduction.nav.title" = "Backup Wallet";
+"wallets.flow.send.button.title" = "Send";
+"wallets.flow.receive.button.title" = "Receive";
