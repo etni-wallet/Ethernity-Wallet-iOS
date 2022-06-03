@@ -43,7 +43,7 @@ extension UINavigationBarAppearance {
         appearance.backgroundColor = R.color.white()!
         appearance.shadowColor = Colors.appWhite
         appearance.shadowImage = nil
-        appearance.setBackIndicatorImage(R.image.backWhite(), transitionMaskImage: R.image.backWhite())
+        appearance.setBackIndicatorImage(R.image.ethNavBarBackArrow(), transitionMaskImage: R.image.ethNavBarBackArrow())
         appearance.titleTextAttributes = [
             .foregroundColor: R.color.black()!,
             .font: Fonts.semibold(size: 20) as Any
@@ -121,7 +121,7 @@ struct Colors {
     static let appRed = UIColor(red: 204, green: 71, blue: 65)
     static let apprecationRed = UIColor(hex: "ff3b30")
     static let apprecationGreen = Colors.appHighlightGreen
-    static let appGrayLabel = UIColor(red: 155, green: 155, blue: 155)
+    static let appGrayLabel = UIColor(hex: "101010")
     static let settingsSubtitle = UIColor(red: 141, green: 141, blue: 141)
     static let qrCodeRectBorders = UIColor(red: 216, green: 216, blue: 216)
     static let loadingIndicatorBorder = UIColor(red: 237, green: 237, blue: 237)
@@ -159,7 +159,7 @@ struct Fonts {
     static func interMedium(size: CGFloat) -> UIFont {
         return UIFont(resource: R.font.interMedium, size: size)!
     }
-    static let tableHeader = Fonts.semibold(size: 15)
+    static let tableHeader = Fonts.semibold(size: 18)
 }
 
 extension UISegmentedControl {
@@ -203,7 +203,7 @@ enum GroupedTable {
 
     enum Color {
         static let title = UIColor(red: 76, green: 76, blue: 76)
-        static let background = R.color.alabaster()!
+        static let background = UIColor.white
         static let cellSeparator = UIColor(red: 233, green: 233, blue: 233)
     }
 }

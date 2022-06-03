@@ -19,7 +19,7 @@ class EnabledServersViewController: UIViewController {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none
         tableView.backgroundColor = GroupedTable.Color.background
         tableView.tableFooterView = UIView.tableFooterToRemoveEmptyCellSeparators()
         tableView.register(ServerImageTableViewCell.self)
@@ -167,7 +167,7 @@ extension EnabledServersViewController: UITableViewDelegate, UITableViewDataSour
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80.0
+        return 70.0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
