@@ -10,14 +10,9 @@ import UIKit
 class SettingTableViewCell: UITableViewCell {
     private let iconImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.clipsToBounds = true
-
-        NSLayoutConstraint.activate([
-            imageView.widthAnchor.constraint(equalToConstant: 40),
-            imageView.heightAnchor.constraint(equalToConstant: 40),
-        ])
 
         return imageView
     }()
@@ -25,24 +20,6 @@ class SettingTableViewCell: UITableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.setContentHuggingPriority(.required, for: .vertical)
-        label.setContentCompressionResistancePriority(.required, for: .vertical)
-        label.setContentHuggingPriority(.required, for: .horizontal)
-        label.setContentCompressionResistancePriority(.required, for: .horizontal)
-        label.clipsToBounds = false
-
-        return label
-    }()
-
-    private let subTitleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.setContentHuggingPriority(.required, for: .vertical)
-        label.setContentCompressionResistancePriority(.required, for: .vertical)
-        label.setContentHuggingPriority(.required, for: .horizontal)
-        label.setContentCompressionResistancePriority(.required, for: .horizontal)
-
-        label.clipsToBounds = false
 
         return label
     }()
@@ -51,21 +28,15 @@ class SettingTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
 
-        let col1 = [
-            titleLabel,
-            subTitleLabel
-        ].asStackView(axis: .vertical, spacing: 0)
-
-        let stackView = [
-            iconImageView, col1
-        ].asStackView(axis: .horizontal, spacing: 16, alignment: .center)
-
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-
-        contentView.addSubview(stackView)
+        contentView.addSubview(iconImageView)
+        contentView.addSubview(titleLabel)
 
         NSLayoutConstraint.activate([
-            stackView.anchorsConstraint(to: contentView, edgeInsets: .init(top: 10, left: 16, bottom: 10, right: 10))
+            iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 23),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 16),
         ])
     }
 
@@ -82,10 +53,7 @@ class SettingTableViewCell: UITableViewCell {
         titleLabel.font = viewModel.titleFont
         titleLabel.textColor = viewModel.titleTextColor
         iconImageView.image = viewModel.icon
-        subTitleLabel.text = viewModel.subTitleText
-        subTitleLabel.isHidden = viewModel.subTitleHidden
-        subTitleLabel.font = viewModel.subTitleFont
-        subTitleLabel.textColor = viewModel.subTitleTextColor
         accessoryView = Style.AccessoryView.chevron
+        accessoryView?.tintColor = viewModel.chevronTintColor
     }
 }

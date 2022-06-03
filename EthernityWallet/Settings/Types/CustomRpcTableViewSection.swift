@@ -57,6 +57,8 @@ class CustomRpcTableViewSection: NSObject, TableViewSection {
         cell.detailTextLabel?.text = "ChainID: \(selectedRow.chainID)"
         cell.tintColor = Style.RPCServerTableView.Cell.tint.color
         cell.accessoryType = isMarked(chainID: selectedRow.chainID) ? .checkmark : .none
+        cell.separatorInset = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 60)
+        
         return cell
     }
 

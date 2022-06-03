@@ -504,6 +504,6 @@ extension NewTokenViewController: TextFieldDelegate {
 
 extension TextField {
     static func layoutSubviews(for textField: TextField) -> [UIView] {
-        [textField.label, .spacer(height: 4), textField, .spacer(height: 4), textField.statusLabel, .spacer(height: 24)]
+        [textField.label, .spacer(height: 10), textField, .spacer(height: 4), textField.statusLabel, .spacer(height: 24)]
     }
 }

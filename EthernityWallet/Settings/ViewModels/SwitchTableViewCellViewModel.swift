@@ -17,6 +17,6 @@ struct SwitchTableViewCellViewModel {
     }
 
     var titleTextColor: UIColor {
-        return Colors.black
+        return R.color.electricBlueLightest()!
     }
 }
