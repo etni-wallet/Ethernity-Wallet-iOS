@@ -44,10 +44,11 @@ class SaveCustomRpcBrowseViewController: UIViewController {
         tableViewController.tableView.dataSource = dataController
         tableViewController.tableView.translatesAutoresizingMaskIntoConstraints = false
         tableViewController.tableView.delegate = dataController
-        tableViewController.tableView.separatorStyle = .none
+        tableViewController.tableView.separatorStyle = .singleLine
         tableViewController.tableView.backgroundColor = GroupedTable.Color.background
         tableViewController.tableView.tableFooterView = UIView.tableFooterToRemoveEmptyCellSeparators()
         tableViewController.tableView.isEditing = false
+        tableViewController.tableView.separatorInset = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 60)
         return tableViewController
     }()
 

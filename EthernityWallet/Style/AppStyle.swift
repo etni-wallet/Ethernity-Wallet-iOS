@@ -450,7 +450,7 @@ enum Style {
         }
     }
     enum RPCServerTableView {
-        static let HeaderHeight: CGFloat = 50.0
+        static let HeaderHeight: CGFloat = 60.0
         enum Cell {
             enum text {
                 static let color: UIColor = R.color.black()!

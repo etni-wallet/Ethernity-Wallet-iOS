@@ -14,22 +14,22 @@ struct SettingViewHeaderViewModel {
     var showTopSeparator: Bool = true
 
     var titleTextColor: UIColor {
-        return R.color.dove()!
+        return UIColor(hex: "101010")
     }
 
     var detailsTextColor: UIColor {
-        return R.color.dove()!
+        return UIColor(hex: "101010")
     }
     var detailsTextFont: UIFont {
         return Fonts.regular(size: 13)
     }
 
     var backgroundColor: UIColor {
-        return R.color.alabaster()!
+        return .white
     }
 
     var separatorColor: UIColor {
-        return R.color.mercury()!
+        return .white
     }
 }
 
@@ -38,7 +38,7 @@ extension SettingViewHeaderViewModel {
         titleText = section.title
         switch section {
         case .system, .community:
-            titleTextFont = Fonts.semibold(size: 15)
+            titleTextFont = Fonts.semibold(size: 17)
         }
     }
 }

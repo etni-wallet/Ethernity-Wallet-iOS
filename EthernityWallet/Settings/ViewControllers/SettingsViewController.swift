@@ -30,7 +30,7 @@ class SettingsViewController: UIViewController {
         tableView.delegate = self
         tableView.estimatedRowHeight = Metrics.anArbitraryRowHeightSoAutoSizingCellsWorkIniOS10
         tableView.tableFooterView = UIView.tableFooterToRemoveEmptyCellSeparators()
-
+        tableView.separatorColor = .clear
         return tableView
     }()
     private var viewModel: SettingsViewModel
@@ -173,6 +173,7 @@ extension SettingsViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         switch viewModel.sections[indexPath.section] {
         case .system(let rows):
             let row = rows[indexPath.row]
@@ -184,20 +185,37 @@ extension SettingsViewController: UITableViewDataSource {
                     icon: R.image.faceId()!,
                     value: lock.isPasscodeSet)
                 )
+                
                 cell.delegate = self
-
+                cell.separatorInset = UIEdgeInsets(top: 0, left: 70, bottom: 0, right: 20)
+                let bottomBorder = CALayer()
+                bottomBorder.backgroundColor = UIColor(hex: "F0F0F0").cgColor
+                bottomBorder.frame = CGRect(x: 68.0, y: 60-1, width: cell.contentView.frame.size.width - 70 - 20 , height: 1.0)
+                cell.contentView.layer.addSublayer(bottomBorder)
+                
                 return cell
+                
             case .selectActiveNetworks:
                 let cell: SettingTableViewCell = tableView.dequeueReusableCell(for: indexPath)
                 cell.configure(viewModel: .init(settingsSystemRow: row))
-
+                cell.separatorInset = UIEdgeInsets(top: 0, left: 70, bottom: 0, right: 20)
+                let bottomBorder = CALayer()
+                bottomBorder.backgroundColor = UIColor(hex: "F0F0F0").cgColor
+                bottomBorder.frame = CGRect(x: 68.0, y: 60 - 1, width: cell.contentView.frame.size.width - 70 - 20 , height: 1.0)
+                cell.contentView.layer.addSublayer(bottomBorder)
+                
                 return cell
             }
         case .community(let rows):
             let row = rows[indexPath.row]
             let cell: SettingTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             cell.configure(viewModel: .init(settingsCommunityRow: row))
-
+            cell.separatorInset = UIEdgeInsets(top: 0, left: 70, bottom: 0, right: 20)
+            let bottomBorder = CALayer()
+            bottomBorder.backgroundColor = UIColor(hex: "F0F0F0").cgColor
+            bottomBorder.frame = CGRect(x: 68.0, y: 60 - 1, width: cell.contentView.frame.size.width - 70 - 20 , height: 1.0)
+            cell.contentView.layer.addSublayer(bottomBorder)
+            
             return cell
         }
     }
@@ -261,7 +279,7 @@ extension SettingsViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return tableView.rowHeight
+        return 60//tableView.rowHeight
     }
     
     private func openURL(_ provider: URLServiceProvider) {
