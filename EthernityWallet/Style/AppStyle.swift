@@ -291,7 +291,7 @@ enum DataEntry {
 
     enum Font {
         static let text = Fonts.regular(size: isNarrowScreen ? 12: 15)
-        static let label = Fonts.bold(size: 13)
+        static let label = Fonts.bold(size: 14)
         static let textFieldTitle = Fonts.regular(size: 13)
         static let textFieldStatus = Fonts.bold(size: 13)
         static let textField = Fonts.regular(size: isNarrowScreen ? 12: 15)
@@ -446,7 +446,7 @@ enum Style {
     
     enum NavigationBar {
         enum Separator {
-            static let color: UIColor = R.color.mercury()!
+            static let color: UIColor = .white
         }
     }
     enum RPCServerTableView {

@@ -136,12 +136,21 @@ class AddressTextField: UIControl {
     }
 
     weak var delegate: AddressTextFieldDelegate?
+    
+    private var hideClearAndPasteButtons: Bool!
 
-    init(edgeInsets: UIEdgeInsets = DataEntry.Metric.AddressTextField.insets) {
+    init(edgeInsets: UIEdgeInsets = DataEntry.Metric.AddressTextField.insets, hideClearAndPasteButtons: Bool = false) {
         super.init(frame: .zero)
-        pasteButton.addTarget(self, action: #selector(pasteAction), for: .touchUpInside)
-        clearButton.addTarget(self, action: #selector(clearAction), for: .touchUpInside)
-
+        self.hideClearAndPasteButtons = hideClearAndPasteButtons
+        if !hideClearAndPasteButtons {
+            pasteButton.addTarget(self, action: #selector(pasteAction), for: .touchUpInside)
+            clearButton.addTarget(self, action: #selector(clearAction), for: .touchUpInside)
+        }
+        else {
+            pasteButton.isHidden = true
+            clearButton.isHidden = true
+        }
+        
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.delegate = self
         textField.leftViewMode = .always
@@ -221,6 +230,7 @@ class AddressTextField: UIControl {
     }
 
     private func updateClearAndPasteButtons(_ text: String) {
+        if hideClearAndPasteButtons { return }
         clearButton.isHidden = text.isEmpty
         pasteButton.isHidden = !text.isEmpty
     }
@@ -249,7 +259,10 @@ class AddressTextField: UIControl {
         textField.rightView = makeTargetAddressRightView()
         textField.layer.borderColor = DataEntry.Color.border.cgColor
         textField.layer.borderWidth = DataEntry.Metric.borderThickness
-        textField.placeholder = R.string.localizable.addressEnsLabelMessage()
+        textField.attributedPlaceholder = NSAttributedString(
+            string: R.string.localizable.addressEnsLabelMessage(),
+            attributes: [NSAttributedString.Key.foregroundColor: UIColor(hex: "6D6D6D")]
+        )
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
 
