@@ -25,7 +25,8 @@ class AddHideTokensViewController: UIViewController {
         tableView.isEditing = true
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none
+        tableView.separatorColor = .clear
         tableView.estimatedRowHeight = DataEntry.Metric.TableView.estimatedRowHeight
         tableView.translatesAutoresizingMaskIntoConstraints = false
 
@@ -289,16 +290,16 @@ extension AddHideTokensViewController: UITableViewDelegate {
         switch viewModel.sections[section] {
         case .sortingFilters:
             let header = TokensViewController.ContainerView(subview: tokenFilterView)
-            header.useSeparatorLine = true
+            header.useSeparatorLine = false
             return header
-        case .availableNewTokens, .popularTokens, .hiddenTokens, .displayedTokens:
+        case .availableNewTokens, /*.popularTokens,*/ .hiddenTokens, .displayedTokens:
             let viewModel: AddHideTokenSectionHeaderViewModel = .init(titleText: self.viewModel.titleForSection(section))
             return AddHideTokensViewController.functional.headerView(for: section, viewModel: viewModel)
         }
     }
 
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 75
     }
 
     //Hide the footer

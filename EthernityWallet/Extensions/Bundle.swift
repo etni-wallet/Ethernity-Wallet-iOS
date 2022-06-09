@@ -19,6 +19,10 @@ extension Bundle {
         let buildNumber = Bundle.main.buildNumber ?? ""
         return "\(versionNumber) (\(buildNumber))"
     }
+    
+    var appName: String? {
+        return infoDictionary?["CFBundleDisplayName"] as? String
+    }
 }
 
 var isDebug: Bool {

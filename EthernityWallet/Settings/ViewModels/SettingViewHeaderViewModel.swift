@@ -14,22 +14,22 @@ struct SettingViewHeaderViewModel {
     var showTopSeparator: Bool = true
 
     var titleTextColor: UIColor {
-        return R.color.dove()!
+        return UIColor(hex: "101010")
     }
 
     var detailsTextColor: UIColor {
-        return R.color.dove()!
+        return UIColor(hex: "101010")
     }
     var detailsTextFont: UIFont {
         return Fonts.regular(size: 13)
     }
 
     var backgroundColor: UIColor {
-        return R.color.alabaster()!
+        return .white
     }
 
     var separatorColor: UIColor {
-        return R.color.mercury()!
+        return .white
     }
 }
 
@@ -37,14 +37,8 @@ extension SettingViewHeaderViewModel {
     init(section: SettingsSection) {
         titleText = section.title
         switch section {
-        case .tokenStandard(let value), .version(let value):
-            detailsText = value
-            titleTextFont = Fonts.regular(size: 15)
-            if case .tokenStandard = section {
-                showTopSeparator = false
-            }
-        case .wallet, .system, .help:
-            titleTextFont = Fonts.semibold(size: 15)
+        case .system, .community:
+            titleTextFont = Fonts.semibold(size: 17)
         }
     }
 }

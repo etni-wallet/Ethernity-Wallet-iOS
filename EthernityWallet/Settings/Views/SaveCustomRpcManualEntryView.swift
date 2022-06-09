@@ -23,7 +23,7 @@ class SaveCustomRpcManualEntryView: UIView {
     var chainNameTextField: TextField = {
         let textField = defaultTextField(
             .default,
-            placeHolder: R.string.localizable.addrpcServerNetworkNameTitle(),
+            placeHolder: "" /* R.string.localizable.addrpcServerNetworkNameTitle()*/,
             label: R.string.localizable.addrpcServerNetworkNameTitle())
         return textField
     }()
@@ -31,7 +31,7 @@ class SaveCustomRpcManualEntryView: UIView {
     var rpcEndPointTextField: TextField = {
         let textField = defaultTextField(
             .URL,
-            placeHolder: R.string.localizable.addrpcServerRpcUrlPlaceholder(),
+            placeHolder: "" /*R.string.localizable.addrpcServerRpcUrlPlaceholder()*/,
             label: R.string.localizable.addrpcServerRpcUrlTitle())
         return textField
     }()
@@ -39,7 +39,7 @@ class SaveCustomRpcManualEntryView: UIView {
     var chainIDTextField: TextField = {
         let textField = defaultTextField(
             .numberPad,
-            placeHolder: R.string.localizable.chainID(),
+            placeHolder: ""/*R.string.localizable.chainID()*/,
             label: R.string.localizable.chainID())
         return textField
     }()
@@ -47,7 +47,7 @@ class SaveCustomRpcManualEntryView: UIView {
     var symbolTextField: TextField = {
         let textField = defaultTextField(
             .default,
-            placeHolder: R.string.localizable.symbol(),
+            placeHolder: "" /*R.string.localizable.symbol()*/,
             label: R.string.localizable.symbol())
         return textField
     }()
@@ -55,7 +55,7 @@ class SaveCustomRpcManualEntryView: UIView {
     var explorerEndpointTextField: TextField = {
         let textField = defaultTextField(
             .URL,
-            placeHolder: R.string.localizable.addrpcServerBlockExplorerUrlPlaceholder(),
+            placeHolder: "" /* R.string.localizable.addrpcServerBlockExplorerUrlPlaceholder()*/,
             label: R.string.localizable.addrpcServerBlockExplorerUrlTitle())
         textField.returnKeyType = .done
         return textField

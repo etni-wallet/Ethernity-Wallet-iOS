@@ -48,12 +48,14 @@ class SaveCustomRpcBrowseViewController: UIViewController {
         tableViewController.tableView.backgroundColor = GroupedTable.Color.background
         tableViewController.tableView.tableFooterView = UIView.tableFooterToRemoveEmptyCellSeparators()
         tableViewController.tableView.isEditing = false
+        tableViewController.tableView.separatorInset = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 60)
         return tableViewController
     }()
 
     private lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.textField?.textAlignment = .center
         return searchBar
     }()
 

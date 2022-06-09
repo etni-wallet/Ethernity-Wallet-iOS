@@ -44,14 +44,10 @@ struct SettingsViewModel {
 
     func numberOfSections(in section: Int) -> Int {
         switch sections[section] {
-        case .wallet(let rows):
-            return rows.count
-        case .help:
-            return 1
         case .system(let rows):
             return rows.count
-        case .version, .tokenStandard:
-            return 0
+        case .community(let rows):
+            return rows.count
         }
     }
 }
@@ -62,23 +58,11 @@ extension SettingsViewModel {
 
 extension SettingsViewModel.functional {
     fileprivate static func computeSections(account: Wallet, keystore: Keystore, blockscanChatUnreadCount: Int?) -> [SettingsSection] {
-        let walletRows: [SettingsWalletRow]
-        if account.allowBackup {
-            if keystore.isHdWallet(wallet: account) {
-                walletRows = [.showMyWallet, .changeWallet, .backup, .showSeedPhrase, .nameWallet, .walletConnect, .blockscanChat(blockscanChatUnreadCount: blockscanChatUnreadCount)]
-            } else {
-                walletRows = [.showMyWallet, .changeWallet, .backup, .nameWallet, .walletConnect, .blockscanChat(blockscanChatUnreadCount: blockscanChatUnreadCount)]
-            }
-        } else {
-            walletRows = [.showMyWallet, .changeWallet, .nameWallet, .walletConnect, .blockscanChat(blockscanChatUnreadCount: blockscanChatUnreadCount)]
-        }
-        let systemRows: [SettingsSystemRow] = [.passcode, .selectActiveNetworks, .advanced]
+        let systemRows: [SettingsSystemRow] = [.passcode, .selectActiveNetworks]
+        let communityRows: [SettingsComnmunityRow] = [.telegramCustomer, .discord, .facebook, .twitter, .email, .faq]
         return [
-            .wallet(rows: walletRows),
             .system(rows: systemRows),
-            .help,
-            .version(value: Bundle.main.fullVersion),
-            .tokenStandard(value: "\(TokenScript.supportedTokenScriptNamespaceVersion)")
+            .community(rows: communityRows),
         ]
     }
 }
@@ -136,70 +120,107 @@ enum SettingsWalletRow {
 }
 
 enum SettingsSystemRow: CaseIterable {
-    case notifications
     case passcode
     case selectActiveNetworks
-    case advanced
 
     var title: String {
         switch self {
-        case .notifications:
-            return R.string.localizable.settingsNotificationsTitle()
         case .passcode:
             return R.string.localizable.settingsPasscodeTitle()
         case .selectActiveNetworks:
             return R.string.localizable.settingsSelectActiveNetworksTitle()
-        case .advanced:
-            return R.string.localizable.advanced()
         }
     }
 
     var icon: UIImage {
         switch self {
-        case .notifications:
-            return R.image.notificationsCircle()!
         case .passcode:
-            return R.image.biometrics()!
+            return R.image.faceId()!
         case .selectActiveNetworks:
-            return R.image.networksCircle()!
-        case .advanced:
-            return R.image.developerMode()!
+            return R.image.activeNetworks()!
         }
     }
 }
 
 enum SettingsSection {
-    case wallet(rows: [SettingsWalletRow])
     case system(rows: [SettingsSystemRow])
-    case help
-    case version(value: String)
-    case tokenStandard(value: String)
+    case community(rows: [SettingsComnmunityRow])
 
     var title: String {
         switch self {
-        case .wallet:
-            return R.string.localizable.settingsSectionWalletTitle().uppercased()
         case .system:
             return R.string.localizable.settingsSectionSystemTitle().uppercased()
-        case .help:
-            return R.string.localizable.settingsSectionHelpTitle().uppercased()
-        case .version:
-            return R.string.localizable.settingsVersionLabelTitle()
-        case .tokenStandard:
-            return R.string.localizable.settingsTokenScriptStandardTitle()
+        case .community:
+            return R.string.localizable.settingsSectionCommunityTitle().uppercased()
         }
     }
 
     var numberOfRows: Int {
         switch self {
-        case .wallet(let rows):
-            return rows.count
-        case .help:
-            return 1
         case .system(let rows):
             return rows.count
-        case .version, .tokenStandard:
-            return 0
+        case .community(let rows):
+            return rows.count
+        }
+    }
+}
+
+enum SettingsComnmunityRow {
+    case discord
+    case telegramCustomer
+    case twitter
+    case facebook
+    case faq
+    case email
+
+    var urlProvider: URLServiceProvider? {
+        switch self {
+        case .discord:
+            return URLServiceProvider.discord
+        case .telegramCustomer:
+            return URLServiceProvider.telegramCustomer
+        case .twitter:
+            return URLServiceProvider.twitter
+        case .facebook:
+            return URLServiceProvider.facebook
+        case .faq:
+            return URLServiceProvider.faq
+        case .email:
+            return nil
+        }
+    }
+
+    var title: String {
+        switch self {
+        case .discord:
+            return URLServiceProvider.discord.title
+        case .telegramCustomer:
+            return URLServiceProvider.telegramCustomer.title
+        case .twitter:
+            return URLServiceProvider.twitter.title
+        case .facebook:
+            return URLServiceProvider.facebook.title
+        case .faq:
+            return URLServiceProvider.faq.title
+        case .email:
+            return R.string.localizable.supportEmailTitle()
+        }
+    }
+
+    var image: UIImage? {
+        switch self {
+        case .email:
+            return R.image.emailCommunity()
+        case .discord:
+            return URLServiceProvider.discord.image
+        case .telegramCustomer:
+            return URLServiceProvider.telegramCustomer.image
+        case .twitter:
+            return URLServiceProvider.twitter.image
+        case .facebook:
+            return URLServiceProvider.facebook.image
+        case .faq:
+            return R.image.aboutCommunity()
         }
     }
 }

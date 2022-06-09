@@ -75,7 +75,7 @@ extension UIBarButtonItem {
     }
 
     static func backBarButton(_ target: AnyObject, selector: Selector) -> UIBarButtonItem {
-        return .init(image: R.image.backWhite(), style: .plain, target: target, action: selector)
+        return .init(image: R.image.ethNavBarBackArrow(), style: .plain, target: target, action: selector)
     }
 
     static func addButton(_ target: AnyObject, selector: Selector) -> UIBarButtonItem {
@@ -103,7 +103,7 @@ extension UIBarButtonItem {
     }
 
     static func backBarButton(selectionClosure: @escaping (UIBarButtonItem) -> Void) -> UIBarButtonItem {
-        let barButton = UIBarButtonItem(image: R.image.backWhite(), style: .plain, target: nil, action: nil)
+        let barButton = UIBarButtonItem(image: R.image.ethNavBarBackArrow(), style: .plain, target: nil, action: nil)
         barButton.selectionClosure = selectionClosure
 
         return barButton

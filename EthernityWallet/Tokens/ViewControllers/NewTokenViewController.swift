@@ -66,7 +66,7 @@ class NewTokenViewController: UIViewController {
             updateSaveButtonBasedOnTokenTypeDetected()
         }
     }
-    private let addressTextField = AddressTextField()
+    private let addressTextField = AddressTextField(hideClearAndPasteButtons: true)
     private let symbolTextField = TextField()
     private let decimalsTextField = TextField()
     private let balanceTextField = TextField()
@@ -85,7 +85,7 @@ class NewTokenViewController: UIViewController {
         addressTextField.label,
         .spacer(height: 4),
         addressTextField.defaultLayout(),
-        .spacer(height: 4),
+        //.spacer(height: 4),
     ]
 
     init(server: RPCServerOrAuto, initialState: NewTokenInitialState) {
@@ -100,7 +100,8 @@ class NewTokenViewController: UIViewController {
 
         hidesBottomBarWhenPushed = true
 
-        changeServerButton.setTitleColor(Colors.navigationButtonTintColor, for: .normal)
+        changeServerButton.setTitleColor(UIColor(hex: "0C86FF"), for: .normal)
+        changeServerButton.titleLabel?.font = R.font.interRegular(size: 18)
         changeServerButton.addTarget(self, action: #selector(changeServerAction), for: .touchUpInside)
         navigationItem.rightBarButtonItem = .init(customView: changeServerButton)
 
@@ -504,6 +505,6 @@ extension NewTokenViewController: TextFieldDelegate {
 
 extension TextField {
     static func layoutSubviews(for textField: TextField) -> [UIView] {
-        [textField.label, .spacer(height: 4), textField, .spacer(height: 4), textField.statusLabel, .spacer(height: 24)]
+        [textField.label, .spacer(height: 10), textField, .spacer(height: 4), textField.statusLabel, .spacer(height: 24)]
     }
 }

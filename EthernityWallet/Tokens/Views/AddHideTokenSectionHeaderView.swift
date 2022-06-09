@@ -43,11 +43,11 @@ private class AddHideTokenSectionHeaderView: UIView {
         super.init(frame: .zero)
 
         let stackView = [
-            topSeparator,
+            //topSeparator,
             .spacer(height: 20, backgroundColor: .clear),
             [.spacerWidth(16), titleLabel, .spacerWidth(16)].asStackView(axis: .horizontal),
             .spacer(height: 20, backgroundColor: .clear),
-            bottomSperator
+            //bottomSperator
         ].asStackView(axis: .vertical)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stackView)
