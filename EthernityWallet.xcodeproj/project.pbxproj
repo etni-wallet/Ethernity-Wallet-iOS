@@ -1103,6 +1103,9 @@
 		E42226C4283B8F4000A3EB68 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42226C3283B8F4000A3EB68 /* AboutViewController.swift */; };
 		E42226C6283BBAE200A3EB68 /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42226C5283BBAE200A3EB68 /* AboutViewModel.swift */; };
 		E4BB9F4E282116AF00077CEF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4BB9F4D282116AF00077CEF /* GoogleService-Info.plist */; };
+		E96D911A283AEE3E00EB90A6 /* EducationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D9119283AEE3E00EB90A6 /* EducationViewController.swift */; };
+		E96D911C283AEEBE00EB90A6 /* EducationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D911B283AEEBE00EB90A6 /* EducationViewModel.swift */; };
+		E96D911F283B08DA00EB90A6 /* RoundedBlueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D911E283B08DA00EB90A6 /* RoundedBlueCell.swift */; };
 		E4C76306283E7E4000B89797 /* RedirectAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C76305283E7E4000B89797 /* RedirectAlertViewController.swift */; };
 		E96D9122283E45AD00EB90A6 /* CIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D9121283E45AD00EB90A6 /* CIImageExtension.swift */; };
 		E4C76308283E92BF00B89797 /* RedirectAlertViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4C76307283E92BF00B89797 /* RedirectAlertViewModel.swift */; };
@@ -2256,6 +2259,9 @@
 		E42226C3283B8F4000A3EB68 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		E42226C5283BBAE200A3EB68 /* AboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
 		E4BB9F4D282116AF00077CEF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E96D9119283AEE3E00EB90A6 /* EducationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationViewController.swift; sourceTree = "<group>"; };
+		E96D911B283AEEBE00EB90A6 /* EducationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationViewModel.swift; sourceTree = "<group>"; };
+		E96D911E283B08DA00EB90A6 /* RoundedBlueCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBlueCell.swift; sourceTree = "<group>"; };
 		E4C76305283E7E4000B89797 /* RedirectAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectAlertViewController.swift; sourceTree = "<group>"; };
 		E96D9121283E45AD00EB90A6 /* CIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIImageExtension.swift; sourceTree = "<group>"; };
 		E4C76307283E92BF00B89797 /* RedirectAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectAlertViewModel.swift; sourceTree = "<group>"; };
@@ -2435,6 +2441,7 @@
 			isa = PBXGroup;
 			children = (
 				A0BC8D82283040B400280B76 /* CustomUIElements */,
+				E96D9113283AEDA500EB90A6 /* Education */,
 				87741F1B2770C3AD007F4604 /* WhereAreMyTokens */,
 				87D5BBD82727D9B20053E6D2 /* API.swift */,
 				87D5BBCA2727D2910053E6D2 /* schema.json */,
@@ -5499,6 +5506,56 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
+		E96D9113283AEDA500EB90A6 /* Education */ = {
+			isa = PBXGroup;
+			children = (
+				E96D9120283C1DE200EB90A6 /* Coordinators */,
+				E96D911D283B08C200EB90A6 /* Views */,
+				E96D9118283AEE1A00EB90A6 /* Models */,
+				E96D9117283AEE0A00EB90A6 /* ViewControllers */,
+				E96D9116283AEDFF00EB90A6 /* ViewModels */,
+			);
+			path = Education;
+			sourceTree = "<group>";
+		};
+		E96D9116283AEDFF00EB90A6 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E96D911B283AEEBE00EB90A6 /* EducationViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		E96D9117283AEE0A00EB90A6 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E96D9119283AEE3E00EB90A6 /* EducationViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		E96D9118283AEE1A00EB90A6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E96D911D283B08C200EB90A6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E96D911E283B08DA00EB90A6 /* RoundedBlueCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E96D9120283C1DE200EB90A6 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -6536,6 +6593,7 @@
 				5E7C71B412DAE4BD7920436B /* ABIError.swift in Sources */,
 				5E7C729D43F311810652B1D5 /* UIActivityViewController.swift in Sources */,
 				87E2555624F52EAA00F025F7 /* GasSpeedTableViewHeaderViewModel.swift in Sources */,
+				E96D911C283AEEBE00EB90A6 /* EducationViewModel.swift in Sources */,
 				5E7C7BC8F2E31F4E2BA534D9 /* Ether.swift in Sources */,
 				E4033BD22848280800772FFF /* SendReceiveButton.swift in Sources */,
 				87620028266E14A80059B05A /* PopularTokenViewCell.swift in Sources */,
@@ -6557,6 +6615,7 @@
 				5E7C77D5AD018763345D8DD5 /* CanOpenContractWebPage.swift in Sources */,
 				5E7C7F1B297CE042114EF095 /* LockEnterPasscodeViewController.swift in Sources */,
 				87713EB2264BAB4700B1B9CB /* TokenInfoPageView.swift in Sources */,
+				E96D911F283B08DA00EB90A6 /* RoundedBlueCell.swift in Sources */,
 				5E7C71DC13B2040F5408BF3C /* ImportMagicTokenCardRowViewModel.swift in Sources */,
 				874ED68827D880C4001AB374 /* RestartQueueHandler.swift in Sources */,
 				5E7C77BFA252C7AA63BA5B90 /* TokenCardRowView.swift in Sources */,
@@ -6773,6 +6832,7 @@
 				5E7C7D1EE18AC83D633A6749 /* EnterPasswordCoordinator.swift in Sources */,
 				5E7C793BF142AEC0792A68C3 /* BackupSeedPhraseCoordinator.swift in Sources */,
 				5E7C7FE1E7806D33001F9867 /* ShowSeedPhraseViewController.swift in Sources */,
+				E96D911A283AEE3E00EB90A6 /* EducationViewController.swift in Sources */,
 				5E7C75F1B2340BB6AA86A2EE /* ShowSeedPhraseViewModel.swift in Sources */,
 				5E7C7A4700C79350AA486E09 /* SeedPhraseCell.swift in Sources */,
 				5E7C767848E46E079557A039 /* SeedPhraseCellViewModel.swift in Sources */,
