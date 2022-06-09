@@ -896,7 +896,7 @@ extension UISearchBar {
         //Hack to hide the horizontal separator below the search bar
         searchBar.superview?.firstSubview(ofType: UIImageView.self)?.isHidden = true
         //Remove border line
-        searchBar.layer.borderWidth = 1
+        searchBar.layer.borderWidth = 0
         searchBar.layer.borderColor = UIColor.clear.cgColor
         searchBar.backgroundImage = UIImage()
         searchBar.placeholder = R.string.localizable.tokensSearchbarPlaceholder()

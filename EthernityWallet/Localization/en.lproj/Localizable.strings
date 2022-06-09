@@ -728,7 +728,7 @@
 "sortTokens.param.nameDescending" = "Name: Descending";
 "sortTokens.param.valueDescending" = "Value: Descending";
 "sortTokens.param.mostUsed" = "Most Used";
-"sortTokens.sortBy" = "Sort: By %@";
+"sortTokens.sortBy" = "By %@";
 "switchChainRequest.title" = "Switch Chain Request";
 "switchChainRequest.action.enableSwitchReload" = "Enable, Switch & Reload";
 "switchChainRequest.action.switchReload" = "Switch & Reload";
