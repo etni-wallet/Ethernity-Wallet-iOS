@@ -21,7 +21,7 @@ class EnableServersHeaderView: UIView {
 
         toggle.addTarget(self, action: #selector(toggled), for: .valueChanged)
 
-        let stackView = [.spacerWidth(16), label, .spacer(), toggle, .spacerWidth(16)].asStackView(axis: .horizontal, alignment: .center)
+        let stackView = [.spacerWidth(30), label, .spacerWidth(16), toggle, .spacerWidth(16)].asStackView(axis: .horizontal, alignment: .center)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stackView)
 
@@ -29,7 +29,7 @@ class EnableServersHeaderView: UIView {
 
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            //stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.topAnchor.constraint(equalTo: topAnchor),
 
             bottomSeparatorView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -45,14 +45,16 @@ class EnableServersHeaderView: UIView {
 
     func configure(mode: EnabledServersViewModel.Mode, isEnabled: Bool) {
         self.mode = mode
-        backgroundColor  = GroupedTable.Color.background
+        backgroundColor  = UIColor.white
 
-        label.backgroundColor = GroupedTable.Color.background
-        label.textColor = GroupedTable.Color.title
+        label.backgroundColor = UIColor.white
+        label.textColor = UIColor(hex: "101010")
         label.font = Fonts.tableHeader
         label.text = mode.headerText
 
         toggle.isOn = isEnabled
+        toggle.onTintColor = UIColor(hex: "F89430")
+        
     }
 
     @objc private func toggled() {

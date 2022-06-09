@@ -81,10 +81,10 @@
 "send.invalid.Token" = "Invalid token";
 "send.available" = "Available: %@";
 "settings.biometricsDisabled.label.title" = "Passcode";
-"settings.biometricsEnabled.label.title" = "Passcode / %@";
+"settings.biometricsEnabled.label.title" = "%@ & Passcode";
 "settings.error.failedToSendEmail" = "Failed to send email. Make sure you have Mail app installed.";
 "settings.network.button.title" = "Network";
-"settings.enabledNetworks.button.title" = "Enabled Networks";
+"settings.enabledNetworks.button.title" = "Active Networks";
 "settings.enabledNetworks.mainnet" = "Mainnet";
 "settings.enabledNetworks.testnet" = "Testnet";
 "settings.enabledNetworks.promptEnableTestnet.title" = "What is Testnet?";
@@ -127,6 +127,7 @@
 "settings.section.help.title" = "Help";
 "settings.section.system.title" = "System";
 "settings.section.wallet.title" = "Wallet";
+"settings.section.community.title" = "Community";
 "settings.change.wallet.title" = "Change / Add Wallet";
 "settings.show.my.wallet.title" = "Show My Wallet Address";
 "suppport.title" = "Support";
@@ -763,7 +764,7 @@
 "url.twitter" = "Twitter";
 "url.reddit" = "Reddit";
 "url.facebook" = "Facebook";
-"url.faq" = "faq";
+"url.faq" = "About";
 "url.github" = "Github (File an issue)";
 "support.blog.title" = "Blog";
 "support.email.title" = "Email";
@@ -856,8 +857,15 @@
 "transactionState.unknown" = "Unknown";
 "settings.checkTransactionState" = "Check Transaction State";
 "advanced.settings.features.title" = "Features";
+"settings.about.title" = "About %@";
+"settings.about.app.description" = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Rhoncus egestas tempus, fermentum at at imperdiet quisque erat. Et lectus nascetur nunc feugiat est egestas enim. Est diam tortor enim, et elementum at elit commodo augue.";
+"settings.about.copyrights" = "Copyright %@ Ethernity Cloud Ltd.";
+"settings.redirect.url.modal.title" = "You will be redirected to the following app:";
+"settings.redirect.url.modal.cancel" = "Cancel";
+"settings.redirect.url.modal.ok" = "Allow";
 
 // Ethernity Wallet
 "backup.wallet.introduction.nav.title" = "Backup Wallet";
 "wallets.flow.send.button.title" = "Send";
 "wallets.flow.receive.button.title" = "Receive";
+"app.name" = "Ethernity Cloud";

@@ -17,6 +17,7 @@ protocol ServerImageTableViewCellViewModelType {
     var backgroundColor: UIColor { get }
     var isSelected: Bool { get }
     var isTopSeparatorHidden: Bool { get }
+    var isSecondLabelHidden: Bool {get}
     var primaryFont: UIFont { get }
     var primaryText: String { get }
     var primaryFontColor: UIColor { get }
@@ -68,11 +69,13 @@ struct ServerImageViewModel: ServerImageTableViewCellViewModelType {
     let isSelected: Bool
     let server: RPCServer
     let isTopSeparatorHidden: Bool
+    let isSecondLabelHidden: Bool
 
     init(server: RPCServer, selected: Bool) {
         self.server = server
         self.isSelected = selected
-        self.isTopSeparatorHidden = true
+        self.isTopSeparatorHidden = false
+        self.isSecondLabelHidden = true
     }
 
     var backgroundColor: UIColor = Colors.appBackground
@@ -82,8 +85,8 @@ struct ServerImageViewModel: ServerImageTableViewCellViewModelType {
     var primaryText: String {
         return server.displayName
     }
-    var primaryFont: UIFont = R.font.sourceSansProRegular(size: 20.0)!
-    var primaryFontColor: UIColor = R.color.black()!
+    var primaryFont: UIFont = R.font.interRegular(size: 17.0)!
+    var primaryFontColor: UIColor = UIColor(hex: "101010")
 
     var secondaryText: String {
         return "ChainID: \(server.chainID)"
