@@ -286,7 +286,8 @@ class ActiveWalletCoordinator: NSObject, Coordinator, DappRequestHandlerDelegate
                 walletConnectCoordinator: walletConnectCoordinator,
                 coinTickersFetcher: coinTickersFetcher,
                 activitiesService: activitiesService,
-                walletBalanceService: walletBalanceService
+                walletBalanceService: walletBalanceService,
+                viewModel: .init(configuration: .summary, animatedPresentation: true)
         )
         coordinator.rootViewController.tabBarItem = UITabBarController.Tabs.tokens.tabBarItem
         coordinator.rootViewController.tabBarItem.title = nil
@@ -740,6 +741,22 @@ extension ActiveWalletCoordinator: WhereAreMyTokensCoordinatorDelegate {
 }
 
 extension ActiveWalletCoordinator: TokensCoordinatorDelegate {
+    func didCancel(in coordinator: TokensCoordinator) {
+        
+    }
+    
+    func didAddAccount(account: Wallet, in coordinator: TokensCoordinator) {
+        
+    }
+    
+    func didDeleteAccount(account: Wallet, in coordinator: TokensCoordinator) {
+        
+    }
+    
+    func didFinishBackup(account: AlphaWallet.Address, in coordinator: TokensCoordinator) {
+        
+    }
+    
 
     func viewWillAppearOnce(in coordinator: TokensCoordinator) {
         //NOTE: need to figure out creating xml handlers, object creating takes a lot of resources

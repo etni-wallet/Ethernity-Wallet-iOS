@@ -66,7 +66,7 @@ class AppCoordinator: NSObject, Coordinator {
         let honeySwapService = HoneySwap()
         honeySwapService.theme = navigationController.traitCollection.honeyswapTheme
         service.register(service: honeySwapService)
-
+        
         //NOTE: Disable uniswap swap provider
 
         //var uniswap = Uniswap()

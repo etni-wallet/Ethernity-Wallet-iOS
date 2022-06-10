@@ -72,14 +72,14 @@ class AccountsCoordinator: Coordinator {
     }()
 
     weak var delegate: AccountsCoordinatorDelegate?
-    private let viewModel: AccountsCoordinatorViewModel
+    private let viewModel: TokensCoordinatorViewModel
 
     init(
         config: Config,
         navigationController: UINavigationController,
         keystore: Keystore,
         analyticsCoordinator: AnalyticsCoordinator,
-        viewModel: AccountsCoordinatorViewModel,
+        viewModel: TokensCoordinatorViewModel,
         walletBalanceService: WalletBalanceService
     ) {
         self.config = config

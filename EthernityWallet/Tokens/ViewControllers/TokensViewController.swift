@@ -15,6 +15,10 @@ protocol TokensViewControllerDelegate: AnyObject {
     func walletConnectSelected(in viewController: UIViewController)
     func whereAreMyTokensSelected(in viewController: UIViewController)
     func didPressAddHideTokens(viewModel: TokensViewModel)
+    
+    func didSelectAccount(account: Wallet, in viewController: TokensViewController)
+    func didDeleteAccount(account: Wallet, in viewController: TokensViewController)
+    func didSelectInfoForAccount(account: Wallet, sender: UIView, in viewController: TokensViewController)
 }
 
 class TokensViewController: UIViewController {
@@ -28,6 +32,7 @@ class TokensViewController: UIViewController {
             viewModel.filter = oldValue.filter
         }
     }
+    let accountsViewModel: AccountsViewModel
     private let sessions: ServerDictionary<WalletSession>
     private let account: Wallet
 
@@ -162,12 +167,14 @@ class TokensViewController: UIViewController {
     
     init(sessions: ServerDictionary<WalletSession>,
          account: Wallet,
+
          tokenCollection: TokenCollection,
          assetDefinitionStore: AssetDefinitionStore,
          tokensFilter: TokensFilter,
          config: Config,
          walletConnectCoordinator: WalletConnectCoordinator,
-         walletBalanceService: WalletBalanceService
+         walletBalanceService: WalletBalanceService,
+         accountsViewModel: AccountsViewModel
     ) {
         self.sessions = sessions
         self.account = account
@@ -175,7 +182,7 @@ class TokensViewController: UIViewController {
         self.assetDefinitionStore = assetDefinitionStore
         self.config = config
         self.walletConnectCoordinator = walletConnectCoordinator
-
+        self.accountsViewModel = accountsViewModel
         viewModel = TokensViewModel(tokensFilter: tokensFilter, tokens: [], config: config)
 
         searchController = UISearchController(searchResultsController: nil)
@@ -937,17 +944,19 @@ extension TokensViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let numberOfItems = 3
+        let numberOfItems = viewModel.numberOfItems(for: section)
         pageControl.numberOfPages = numberOfItems
         
         return numberOfItems
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
+        guard let walletViewModel = viewModel.accountViewModel(forIndexPath: indexPath) else {return UITableViewCell()}
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! AccountWalletCollectionViewCell
+        let cellViewModel = AccountWalletCollectionViewCellViewModel(accountTitle: "Wallet \(indexPath.row)", walletAddress: walletViewModel.addressesAttrinutedString, amount: walletViewModel.)
         // Configure the cell
-    
+        
+        
         return cell
     }
 
@@ -959,11 +968,14 @@ extension TokensViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-//
-//        return CGSize(width: UIScreen.main.bounds.width, height: 300)
-//    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let visibleRect = CGRect(origin: walletsCollectionView.contentOffset, size: walletsCollectionView.bounds.size)
+        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+        let visibleIndexPath = walletsCollectionView.indexPathForItem(at: visiblePoint)
+        pageControl.currentPage = visibleIndexPath!.row
+    }
+
 }
 
 class SnappingCollectionViewLayout: UICollectionViewFlowLayout {
@@ -988,33 +1000,3 @@ class SnappingCollectionViewLayout: UICollectionViewFlowLayout {
         return CGPoint(x: proposedContentOffset.x + offsetAdjustment, y: proposedContentOffset.y)
     }
 }
-
-//extension TokensViewController {
-//
-//    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
-//        let visibleCenterPositionOfScrollView = Float(walletsCollectionView.contentOffset.x + (self.walletsCollectionView.bounds.size.width / 2))
-//        var closestCellIndex = -1
-//        var closestDistance: Float = .greatestFiniteMagnitude
-//
-//        for i in 0..<walletsCollectionView.visibleCells.count {
-//            let cell = walletsCollectionView.visibleCells[i]
-//            let cellWidth = cell.bounds.size.width
-//            let cellCenter = Float(cell.frame.origin.x + cellWidth / 2)
-//
-//            // Now calculate closest cell
-//            let distance: Float = fabsf(visibleCenterPositionOfScrollView - cellCenter)
-//            if distance < closestDistance {
-//                closestDistance = distance
-//                closestCellIndex = walletsCollectionView.indexPath(for: cell)!.row
-//            }
-//        }
-//
-//        if closestCellIndex != -1 {
-//            let indexPath =  IndexPath(row: closestCellIndex, section: 0)
-//
-//
-//            self.walletsCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-//            self.walletsCollectionView.isUserInteractionEnabled = false
-//        }
-//    }
-//}

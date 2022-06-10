@@ -20,6 +20,43 @@ protocol TokensCoordinatorDelegate: CanOpenURL, SendTransactionDelegate {
     func whereAreMyTokensSelected(in coordinator: TokensCoordinator)
     func didSelectAccount(account: Wallet, in coordinator: TokensCoordinator)
     func viewWillAppearOnce(in coordinator: TokensCoordinator)
+    
+    func didCancel(in coordinator: TokensCoordinator)
+    func didAddAccount(account: Wallet, in coordinator: TokensCoordinator)
+    func didDeleteAccount(account: Wallet, in coordinator: TokensCoordinator)
+    func didFinishBackup(account: AlphaWallet.Address, in coordinator: TokensCoordinator)
+}
+
+struct TokensCoordinatorViewModel {
+    var configuration: Configuration
+    var animatedPresentation: Bool = false
+
+    enum Configuration {
+        case changeWallets
+        case summary
+
+        var hidesBackButton: Bool {
+            switch self {
+            case .changeWallets:
+                return false
+            case .summary:
+                return true
+            }
+        }
+
+        var allowsAccountDeletion: Bool {
+            return true
+        }
+
+        var navigationTitle: String {
+            switch self {
+            case .changeWallets:
+                return R.string.localizable.walletNavigationTitle()
+            case .summary:
+                return R.string.localizable.walletsNavigationTitle()
+            }
+        }
+    }
 }
 
 class TokensCoordinator: Coordinator {
@@ -52,9 +89,14 @@ class TokensCoordinator: Coordinator {
         queue.maxConcurrentOperationCount = 1
         return queue
     }()
+    
+    private let viewModel: TokensCoordinatorViewModel
     private let activitiesService: ActivitiesServiceType
     //NOTE: private (set) - `For test purposes only`
     private (set) lazy var tokensViewController: TokensViewController = {
+        let viewModel = AccountsViewModel(keystore: keystore, config: config, configuration: self.viewModel.configuration, analyticsCoordinator: analyticsCoordinator, walletBalanceService: walletBalanceService)
+        viewModel.allowsAccountDeletion = self.viewModel.configuration.allowsAccountDeletion
+        
         let controller = TokensViewController(
             sessions: sessions,
             account: sessions.anyValue.account,
@@ -63,7 +105,8 @@ class TokensCoordinator: Coordinator {
             tokensFilter: tokensFilter,
             config: config,
             walletConnectCoordinator: walletConnectCoordinator,
-            walletBalanceService: walletBalanceService
+            walletBalanceService: walletBalanceService,
+            accountsViewModel: viewModel
         )
         controller.delegate = self
         return controller
@@ -72,6 +115,9 @@ class TokensCoordinator: Coordinator {
     private var sendToAddress: AlphaWallet.Address? = .none
     private var singleChainTokenCoordinators: [SingleChainTokenCoordinator] {
         return coordinators.compactMap { $0 as? SingleChainTokenCoordinator }
+    }
+    private var accountsCoordinator: AccountsCoordinator {
+        return coordinators.first(where: {$0 is AccountsCoordinator}) as! AccountsCoordinator
     }
     private let walletConnectCoordinator: WalletConnectCoordinator
     let navigationController: UINavigationController
@@ -107,7 +153,8 @@ class TokensCoordinator: Coordinator {
             walletConnectCoordinator: WalletConnectCoordinator,
             coinTickersFetcher: CoinTickersFetcherType,
             activitiesService: ActivitiesServiceType,
-            walletBalanceService: WalletBalanceService
+            walletBalanceService: WalletBalanceService,
+            viewModel: TokensCoordinatorViewModel
     ) {
         self.navigationController = navigationController
         self.sessions = sessions
@@ -123,8 +170,11 @@ class TokensCoordinator: Coordinator {
         self.coinTickersFetcher = coinTickersFetcher
         self.activitiesService = activitiesService
         self.walletBalanceService = walletBalanceService
+        self.viewModel = viewModel
+        
         promptBackupCoordinator.prominentPromptDelegate = self
         setupSingleChainTokenCoordinators()
+        setupAccountsCoordinator()
 
         let addBarButton = UIBarButtonItem.addBarButton(self, selector: #selector(moreButtonSelected))
         let qrCodeBarButton = UIBarButtonItem.qrCodeBarButton(self, selector: #selector(scanQRCodeButtonSelected))
@@ -174,6 +224,20 @@ class TokensCoordinator: Coordinator {
     deinit {
         autoDetectTransactedTokensQueue.cancelAllOperations()
         autoDetectTokensQueue.cancelAllOperations()
+    }
+    
+    private func setupAccountsCoordinator() {
+        let coordinator = AccountsCoordinator(
+                config: config,
+                navigationController: navigationController,
+                keystore: keystore,
+                analyticsCoordinator: analyticsCoordinator,
+                viewModel: .init(configuration: .summary, animatedPresentation: true),
+                walletBalanceService: walletBalanceService
+        )
+        coordinator.delegate = self
+        coordinator.start()
+        addCoordinator(coordinator)
     }
 
     private func setupSingleChainTokenCoordinators() {
@@ -235,6 +299,18 @@ class TokensCoordinator: Coordinator {
 }
 
 extension TokensCoordinator: TokensViewControllerDelegate {
+    func didSelectAccount(account: Wallet, in viewController: TokensViewController) {
+        
+    }
+    
+    func didDeleteAccount(account: Wallet, in viewController: TokensViewController) {
+        
+    }
+    
+    func didSelectInfoForAccount(account: Wallet, sender: UIView, in viewController: TokensViewController) {
+        
+    }
+    
 
     func whereAreMyTokensSelected(in viewController: UIViewController) {
         delegate?.whereAreMyTokensSelected(in: self)
@@ -242,7 +318,7 @@ extension TokensCoordinator: TokensViewControllerDelegate {
 
     private func getWalletName() {
         let viewModel = tokensViewController.viewModel
-
+        
         tokensViewController.title = viewModel.walletDefaultTitle
 
         firstly {
@@ -625,5 +701,27 @@ extension TokensCoordinator: PromptBackupCoordinatorProminentPromptDelegate {
 extension TokensCoordinator: AddHideTokensCoordinatorDelegate {
     func didClose(coordinator: AddHideTokensCoordinator) {
         removeCoordinator(coordinator)
+    }
+}
+
+extension TokensCoordinator: AccountsCoordinatorDelegate {
+    func didCancel(in coordinator: AccountsCoordinator) {
+        
+    }
+    
+    func didSelectAccount(account: Wallet, in coordinator: AccountsCoordinator) {
+        
+    }
+    
+    func didAddAccount(account: Wallet, in coordinator: AccountsCoordinator) {
+        
+    }
+    
+    func didDeleteAccount(account: Wallet, in coordinator: AccountsCoordinator) {
+        
+    }
+    
+    func didFinishBackup(account: AlphaWallet.Address, in coordinator: AccountsCoordinator) {
+        
     }
 }

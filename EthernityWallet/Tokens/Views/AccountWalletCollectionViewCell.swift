@@ -14,7 +14,12 @@ protocol AccountWalletCollectionViewCellDelegate: AnyObject {
     func accountWalletCollectionViewCellDidTapMoreButton(indexPath: IndexPath)
 }
 
+protocol AccountWalletcollectionViewCellDisplayLogic {
+    func configure(viewModel: AccountWalletCollectionViewCellViewModel)
+}
+
 class AccountWalletCollectionViewCell: UICollectionViewCell {
+    
     private let background: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -22,7 +27,16 @@ class AccountWalletCollectionViewCell: UICollectionViewCell {
         
         return view
     }()
-    private let mainAccount: UILabel = {
+    private let backgroundImageView: UIImageView = {
+        let imgView = UIImageView()
+        imgView.image = R.image.walletCards()!
+        imgView.translatesAutoresizingMaskIntoConstraints = false
+        imgView.layer.cornerRadius = 12.0
+        imgView.contentMode = .scaleToFill
+        
+        return imgView
+    }()
+    private let accountTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
@@ -68,11 +82,12 @@ class AccountWalletCollectionViewCell: UICollectionViewCell {
         receiveButton.delegate = self
         
         contentView.backgroundColor = .clear
-        background.backgroundColor = .blue
+        background.backgroundColor = .clear
         
         contentView.addSubview(background)
         
-        background.addSubview(mainAccount)
+        background.addSubview(backgroundImageView)
+        background.addSubview(accountTitle)
         background.addSubview(walletAddress)
         background.addSubview(amount)
         background.addSubview(sendButton)
@@ -81,18 +96,19 @@ class AccountWalletCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             background.anchorsConstraint(to: contentView),
+            backgroundImageView.anchorsConstraint(to: background),
             
-            mainAccount.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 23.0),
-            mainAccount.topAnchor.constraint(equalTo: background.topAnchor, constant: 23.0),
+            accountTitle.leadingAnchor.constraint(equalTo: background.leadingAnchor, constant: 23.0),
+            accountTitle.topAnchor.constraint(equalTo: background.topAnchor, constant: 23.0),
             
-            amount.centerYAnchor.constraint(equalTo: mainAccount.centerYAnchor),
+            amount.centerYAnchor.constraint(equalTo: accountTitle.centerYAnchor),
             amount.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -28.0),
             
-            walletAddress.leadingAnchor.constraint(equalTo: mainAccount.leadingAnchor),
-            walletAddress.topAnchor.constraint(equalTo: mainAccount.bottomAnchor, constant: 8.0),
+            walletAddress.leadingAnchor.constraint(equalTo: accountTitle.leadingAnchor),
+            walletAddress.topAnchor.constraint(equalTo: accountTitle.bottomAnchor, constant: 8.0),
             
 //            sendButton.topAnchor.constraint(equalTo: walletAddress.bottomAnchor, constant: 40),
-            sendButton.leadingAnchor.constraint(equalTo: mainAccount.leadingAnchor),
+            sendButton.leadingAnchor.constraint(equalTo: accountTitle.leadingAnchor),
             sendButton.bottomAnchor.constraint(equalTo: background.bottomAnchor, constant: -12.0),
 //            sendButton.heightAnchor.constraint(equalToConstant: 41.0),
             
@@ -104,19 +120,9 @@ class AccountWalletCollectionViewCell: UICollectionViewCell {
             moreButton.trailingAnchor.constraint(equalTo: background.trailingAnchor, constant: -28.0)
             
         ])
-        
-        background.constraintsAffectingLayout(for: .vertical)
-        background.constraintsAffectingLayout(for: .horizontal)
+
         
         moreButton.addTarget(self, action: #selector(moreButtonTapped(sender:)), for: .touchUpInside)
-        
-        configureView()
-    }
-    
-    private func configureView() {
-        mainAccount.text = "Main Account"
-        amount.text = "$310.000"
-        walletAddress.configure(walletAddress: "0xRdad274..ETNY")
     }
     
     @objc func moreButtonTapped(sender: UIButton) {
@@ -125,6 +131,17 @@ class AccountWalletCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension AccountWalletCollectionViewCell: AccountWalletcollectionViewCellDisplayLogic {
+    func configure(viewModel: AccountWalletCollectionViewCellViewModel) {
+        accountTitle.font = viewModel.accountTitleFont
+        accountTitle.text = viewModel.accountTitle
+        amount.font = viewModel.amountFont
+        amount.text = "\(viewModel.amount)"
+        
+        walletAddress.configure(walletAddress: viewModel.walletAddress)
     }
 }
 
@@ -159,7 +176,12 @@ fileprivate class WalletAddressCustomView: UIControl, WalletAddressCustomViewDis
         
         return imageView
     }()
-    private let walletAddressLabel = UILabel()
+    private let walletAddressLabel: UILabel = {
+        let label = UILabel()
+        label.font = Fonts.regular(size: 16.0)
+        
+        return label
+    }()
     
     weak var delegate: WalletAddressCustomViewDelegate?
     
@@ -170,7 +192,7 @@ fileprivate class WalletAddressCustomView: UIControl, WalletAddressCustomViewDis
         backgroundColor = .clear
         semiTransparentBackground.translatesAutoresizingMaskIntoConstraints = false
         addSubview(semiTransparentBackground)
-        semiTransparentBackground.backgroundColor = .blue
+        semiTransparentBackground.backgroundColor = R.color.walletAddressBackground()
         semiTransparentBackground.alpha = 0.4
         semiTransparentBackground.layer.cornerRadius = 3.0
         

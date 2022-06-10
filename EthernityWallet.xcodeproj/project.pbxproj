@@ -1101,6 +1101,7 @@
 		CCCD74FD1FD2D38D004A087D /* CheckDeviceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCD74FC1FD2D38D004A087D /* CheckDeviceCoordinator.swift */; };
 		E4033BD02848110600772FFF /* AccountWalletCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4033BCF2848110600772FFF /* AccountWalletCollectionViewCell.swift */; };
 		E4033BD22848280800772FFF /* SendReceiveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4033BD12848280800772FFF /* SendReceiveButton.swift */; };
+		E490CF5F284A694D00D463F9 /* AccountWalletCollectionViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E490CF5E284A694D00D463F9 /* AccountWalletCollectionViewCellViewModel.swift */; };
 		E4BB9F4E282116AF00077CEF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E4BB9F4D282116AF00077CEF /* GoogleService-Info.plist */; };
 		E96D9122283E45AD00EB90A6 /* CIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96D9121283E45AD00EB90A6 /* CIImageExtension.swift */; };
 /* End PBXBuildFile section */
@@ -2251,6 +2252,7 @@
 		CCCD74FC1FD2D38D004A087D /* CheckDeviceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDeviceCoordinator.swift; sourceTree = "<group>"; };
 		E4033BCF2848110600772FFF /* AccountWalletCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountWalletCollectionViewCell.swift; sourceTree = "<group>"; };
 		E4033BD12848280800772FFF /* SendReceiveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendReceiveButton.swift; sourceTree = "<group>"; };
+		E490CF5E284A694D00D463F9 /* AccountWalletCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountWalletCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
 		E4BB9F4D282116AF00077CEF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E96D9121283E45AD00EB90A6 /* CIImageExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIImageExtension.swift; sourceTree = "<group>"; };
 		EAC6758527A096EC009C3344 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = fi; path = fi.lproj/privacyPolicy.html; sourceTree = "<group>"; };
@@ -3005,6 +3007,7 @@
 				874DED1824C1BD2C006C8FCE /* SelectTokenViewModel.swift */,
 				8762002B266E150B0059B05A /* WalletTokenViewCellViewModel.swift */,
 				8762002D266E15310059B05A /* PopularTokenViewCellViewModel.swift */,
+				E490CF5E284A694D00D463F9 /* AccountWalletCollectionViewCellViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -6831,6 +6834,7 @@
 				5E7C72D6C4AB97A1FCB3AA32 /* MnemonicInWordListValidator.swift in Sources */,
 				87D1757824ADAEEB002130D2 /* BlockchainTagLabel.swift in Sources */,
 				8499D446C6ADE858FE633096 /* GetERC721ForTicketsBalanceCoordinator.swift in Sources */,
+				E490CF5F284A694D00D463F9 /* AccountWalletCollectionViewCellViewModel.swift in Sources */,
 				8499D8751F2D70FBD13F3C93 /* GetERC721ForTicketsBalance.swift in Sources */,
 				8499D235831FBC245735B2C7 /* GetInterfaceSupported165Encode.swift in Sources */,
 				02C91C822770143E00EB10FB /* AvailableRpcNetwork.swift in Sources */,

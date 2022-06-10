@@ -25,7 +25,7 @@ class AccountsViewModel {
         }
     }
 
-    let configuration: AccountsCoordinatorViewModel.Configuration
+    let configuration: TokensCoordinatorViewModel.Configuration
     var allowsAccountDeletion: Bool = false
     var subscribeForBalanceUpdates: Bool {
         switch configuration {
@@ -61,7 +61,7 @@ class AccountsViewModel {
         return configuration.navigationTitle
     }
 
-    init(keystore: Keystore, config: Config, configuration: AccountsCoordinatorViewModel.Configuration, analyticsCoordinator: AnalyticsCoordinator, walletBalanceService: WalletBalanceService) {
+    init(keystore: Keystore, config: Config, configuration: TokensCoordinatorViewModel.Configuration, analyticsCoordinator: AnalyticsCoordinator, walletBalanceService: WalletBalanceService) {
 
         self.config = config
         self.keystore = keystore

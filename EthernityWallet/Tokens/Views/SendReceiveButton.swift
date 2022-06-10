@@ -62,6 +62,8 @@ class SendReceiveButton: UIControl {
         backgroundColor = .clear
         addSubview(background)
         
+        titleLabel.font = Fonts.regular(size: 14)
+        
         background.addSubview(titleLabel)
         background.addSubview(iconImgView)
         
