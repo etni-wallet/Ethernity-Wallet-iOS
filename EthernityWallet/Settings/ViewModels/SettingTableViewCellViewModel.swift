@@ -21,7 +21,7 @@ struct SettingTableViewCellViewModel {
     }
 
     var titleTextColor: UIColor {
-        return Colors.black
+        return R.color.electricBlueLightest()!
     }
 
     var subTitleFont: UIFont {
@@ -30,6 +30,10 @@ struct SettingTableViewCellViewModel {
 
     var subTitleTextColor: UIColor {
         return R.color.dove()!
+    }
+    
+    var chevronTintColor: UIColor {
+        return R.color.electricBlueLightest()!
     }
 }
 
@@ -42,5 +46,10 @@ extension SettingTableViewCellViewModel {
     init(settingsWalletRow row: SettingsWalletRow) {
         titleText = row.title
         icon = row.icon
+    }
+    
+    init(settingsCommunityRow row: SettingsComnmunityRow) {
+        titleText = row.title
+        icon = row.image
     }
 }

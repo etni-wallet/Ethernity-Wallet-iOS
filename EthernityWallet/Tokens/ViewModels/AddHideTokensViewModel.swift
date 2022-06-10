@@ -2,13 +2,14 @@
 
 import Foundation
 import PromiseKit
+import UIKit
 
 enum AddHideTokenSections: Int {
     case sortingFilters
     case availableNewTokens
     case displayedTokens
     case hiddenTokens
-    case popularTokens
+    //case popularTokens
 
     var description: String {
         switch self {
@@ -20,19 +21,19 @@ enum AddHideTokenSections: Int {
             return R.string.localizable.addHideTokensSectionDisplayedTokens()
         case .hiddenTokens:
             return R.string.localizable.addHideTokensSectionHiddenTokens()
-        case .popularTokens:
-            return R.string.localizable.addHideTokensSectionPopularTokens()
+//        case .popularTokens:
+//            return R.string.localizable.addHideTokensSectionPopularTokens()
         }
     }
 
     static var enabledSectins: [AddHideTokenSections] {
-        [.sortingFilters, .displayedTokens, .hiddenTokens, .popularTokens]
+        [.sortingFilters, .displayedTokens, .hiddenTokens, /*.popularTokens*/]
     }
 }
 
 //NOTE: Changed to class to prevent update all ViewModel copies and apply updates only in one place.
 class AddHideTokensViewModel {
-    var sections: [AddHideTokenSections] = [.sortingFilters, .displayedTokens, .hiddenTokens, .popularTokens]
+    var sections: [AddHideTokenSections] = [.sortingFilters, .displayedTokens, .hiddenTokens, /*.popularTokens*/]
     private let tokensFilter: TokensFilter
     private var tokens: [TokenObject]
     private var allPopularTokens: [PopularToken] = []
@@ -71,7 +72,7 @@ class AddHideTokensViewModel {
     }
 
     var backgroundColor: UIColor {
-        GroupedTable.Color.background
+        UIColor(hex: "F4F4F4")
     }
 
     var numberOfSections: Int {
@@ -90,8 +91,8 @@ class AddHideTokensViewModel {
             return hiddenTokens.count
         case .availableNewTokens:
             return 0
-        case .popularTokens:
-            return popularTokens.count
+//        case .popularTokens:
+//            return popularTokens.count
         case .sortingFilters:
             return 0
         }
@@ -101,7 +102,7 @@ class AddHideTokensViewModel {
         switch sections[indexPath.section] {
         case .displayedTokens:
             return true
-        case .availableNewTokens, .popularTokens, .hiddenTokens, .sortingFilters:
+        case .availableNewTokens, /*.popularTokens,*/ .hiddenTokens, .sortingFilters:
             return false
         }
     }
@@ -136,21 +137,21 @@ class AddHideTokensViewModel {
             if let sectionIndex = sections.index(of: .displayedTokens) {
                 return .value((token, IndexPath(row: max(0, displayedTokens.count - 1), section: Int(sectionIndex))))
             }
-        case .popularTokens:
-            let token = popularTokens[indexPath.row]
-
-            let promise = fetchContractDataPromise(forServer: token.server, address: token.contractAddress).then { token -> Promise<TokenWithIndexToInsert?> in
-                self.popularTokens.remove(at: indexPath.row)
-                self.displayedTokens.append(token)
-
-                if let sectionIndex = self.sections.index(of: .displayedTokens) {
-                    return .value((token, IndexPath(row: max(0, self.displayedTokens.count - 1), section: Int(sectionIndex))))
-                }
-
-                return .value(nil)
-            }
-
-            return .promise(promise)
+//        case .popularTokens:
+//            let token = popularTokens[indexPath.row]
+//
+//            let promise = fetchContractDataPromise(forServer: token.server, address: token.contractAddress).then { token -> Promise<TokenWithIndexToInsert?> in
+//                self.popularTokens.remove(at: indexPath.row)
+//                self.displayedTokens.append(token)
+//
+//                if let sectionIndex = self.sections.index(of: .displayedTokens) {
+//                    return .value((token, IndexPath(row: max(0, self.displayedTokens.count - 1), section: Int(sectionIndex))))
+//                }
+//
+//                return .value(nil)
+//            }
+//
+//            return .promise(promise)
         }
 
         return .value(nil)
@@ -165,7 +166,7 @@ class AddHideTokensViewModel {
             if let sectionIndex = sections.index(of: .hiddenTokens) {
                 return .value((token, IndexPath(row: 0, section: Int(sectionIndex))))
             }
-        case .hiddenTokens, .availableNewTokens, .popularTokens, .sortingFilters:
+        case .hiddenTokens, .availableNewTokens, /*.popularTokens,*/ .sortingFilters:
             break
         }
 
@@ -176,7 +177,7 @@ class AddHideTokensViewModel {
         switch sections[indexPath.section] {
         case .displayedTokens:
             return .delete
-        case .availableNewTokens, .popularTokens, .hiddenTokens:
+        case .availableNewTokens, /*.popularTokens,*/ .hiddenTokens:
             return .insert
         case .sortingFilters:
             return .none
@@ -187,7 +188,7 @@ class AddHideTokensViewModel {
         switch sections[indexPath.section] {
         case .displayedTokens:
             return true
-        case .availableNewTokens, .popularTokens, .hiddenTokens, .sortingFilters:
+        case .availableNewTokens, /*.popularTokens,*/ .hiddenTokens, .sortingFilters:
             return false
         }
     }
@@ -200,8 +201,8 @@ class AddHideTokensViewModel {
             return .walletToken(hiddenTokens[indexPath.row])
         case .availableNewTokens:
             return nil
-        case .popularTokens:
-            return .popularToken(popularTokens[indexPath.row])
+//        case .popularTokens:
+//            return .popularToken(popularTokens[indexPath.row])
         case .sortingFilters:
             return nil
         }
@@ -214,7 +215,7 @@ class AddHideTokensViewModel {
             displayedTokens.insert(token, at: to.row)
 
             return displayedTokens
-        case .hiddenTokens, .availableNewTokens, .popularTokens, .sortingFilters:
+        case .hiddenTokens, .availableNewTokens, /*.popularTokens,*/ .sortingFilters:
             return nil
         }
     }
@@ -262,9 +263,9 @@ extension AddHideTokensViewModel.functional {
             if !hiddenTokens.isEmpty {
                 sections.append(.hiddenTokens)
             }
-            if !popularTokens.isEmpty {
-                sections.append(.popularTokens)
-            }
+//            if !popularTokens.isEmpty {
+//                sections.append(.popularTokens)
+//            }
             return sections
         } else {
             return AddHideTokenSections.enabledSectins

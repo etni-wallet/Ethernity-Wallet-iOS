@@ -24,7 +24,6 @@ class SettingsCoordinator: Coordinator {
 	private var config: Config
 	private let sessions: ServerDictionary<WalletSession>
     private let restartQueue: RestartTaskQueue
-    private let promptBackupCoordinator: PromptBackupCoordinator
 	private let analyticsCoordinator: AnalyticsCoordinator
     private let walletConnectCoordinator: WalletConnectCoordinator
     private let walletBalanceService: WalletBalanceService
@@ -62,12 +61,10 @@ class SettingsCoordinator: Coordinator {
 		self.config = config
 		self.sessions = sessions
         self.restartQueue = restartQueue
-        self.promptBackupCoordinator = promptBackupCoordinator
 		self.analyticsCoordinator = analyticsCoordinator
         self.walletConnectCoordinator = walletConnectCoordinator
         self.walletBalanceService = walletBalanceService
         self.blockscanChatService = blockscanChatService
-		promptBackupCoordinator.subtlePromptDelegate = self
 	}
 
 	func start() {
@@ -90,10 +87,6 @@ class SettingsCoordinator: Coordinator {
     }
 }
 
-extension SettingsCoordinator: SupportViewControllerDelegate {
-
-}
-
 extension SettingsCoordinator: RenameWalletViewControllerDelegate {
 
     func didFinish(in viewController: RenameWalletViewController) {
@@ -102,6 +95,24 @@ extension SettingsCoordinator: RenameWalletViewControllerDelegate {
 }
 
 extension SettingsCoordinator: SettingsViewControllerDelegate {
+    
+    func settingsViewControllerShouldShowRedirectAlert(in controller: SettingsViewController, for urlServiceProvider: URLServiceProvider) {
+        let redirectAlertViewModel = RedirectAlertViewModel(urlServiceProvider: urlServiceProvider)
+        let viewController = RedirectAlertViewController(viewModel: redirectAlertViewModel)
+        viewController.delegate = controller
+        viewController.modalPresentationStyle = .overFullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        
+        navigationController.present(viewController, animated: true, completion: nil)
+    }
+    
+    func settingsViewControllerAboutSelected(in controller: SettingsViewController) {
+        let viewController = AboutViewController()
+        viewController.navigationItem.largeTitleDisplayMode = .never
+        viewController.hidesBottomBarWhenPushed = true
+
+        navigationController.pushViewController(viewController, animated: true)
+    }
 
     func settingsViewControllerNameWalletSelected(in controller: SettingsViewController) {
         let viewModel = RenameWalletViewModel(account: account.address)
@@ -134,48 +145,8 @@ extension SettingsCoordinator: SettingsViewControllerDelegate {
         }
     }
 
-    func settingsViewControllerHelpSelected(in controller: SettingsViewController) {
-        let viewController = SupportViewController(analyticsCoordinator: analyticsCoordinator)
-        viewController.delegate = self
-        viewController.navigationItem.largeTitleDisplayMode = .never
-        viewController.hidesBottomBarWhenPushed = true
-
-        navigationController.pushViewController(viewController, animated: true)
-    }
-
-    func settingsViewControllerChangeWalletSelected(in controller: SettingsViewController) {
-        let coordinator = AccountsCoordinator(
-                config: config,
-                navigationController: navigationController,
-                keystore: keystore,
-				analyticsCoordinator: analyticsCoordinator,
-                viewModel: .init(configuration: .changeWallets, animatedPresentation: true),
-                walletBalanceService: walletBalanceService
-        )
-        coordinator.delegate = self
-        coordinator.start()
-        addCoordinator(coordinator)
-    }
-
     func settingsViewControllerMyWalletAddressSelected(in controller: SettingsViewController) {
         delegate?.didPressShowWallet(in: self)
-    }
-
-    func settingsViewControllerBackupWalletSelected(in controller: SettingsViewController) {
-        switch account.type {
-        case .real(let account):
-            let coordinator = BackupCoordinator(
-                    navigationController: navigationController,
-                    keystore: keystore,
-                    account: account,
-					analyticsCoordinator: analyticsCoordinator
-            )
-            coordinator.delegate = self
-            coordinator.start()
-            addCoordinator(coordinator)
-        case .watch:
-            break
-        }
     }
 
     func settingsViewControllerActiveNetworksSelected(in controller: SettingsViewController) {
@@ -214,39 +185,6 @@ extension SettingsCoordinator: CanOpenURL {
 	}
 }
 
-extension SettingsCoordinator: AccountsCoordinatorDelegate {
-
-    func didFinishBackup(account: AlphaWallet.Address, in coordinator: AccountsCoordinator) {
-        promptBackupCoordinator.markBackupDone()
-        promptBackupCoordinator.showHideCurrentPrompt()
-    }
-
-	func didAddAccount(account: Wallet, in coordinator: AccountsCoordinator) {
-        //no-op
-	}
-
-	func didDeleteAccount(account: Wallet, in coordinator: AccountsCoordinator) {
-        guard !coordinator.accountsViewController.viewModel.hasWallets else { return }
-        coordinator.navigationController.popViewController(animated: true)
-		delegate?.didCancel(in: self)
-	}
-
-	func didCancel(in coordinator: AccountsCoordinator) {
-		coordinator.navigationController.popViewController(animated: true)
-		removeCoordinator(coordinator)
-	}
-
-    func didSelectAccount(account: Wallet, in coordinator: AccountsCoordinator) {
-        coordinator.navigationController.popViewController(animated: true)
-        removeCoordinator(coordinator)
-        if self.account == account {
-            //no-op
-        } else {
-            restart(for: account, reason: .walletChange)
-        }
-    }
-}
-
 extension SettingsCoordinator: LocalesCoordinatorDelegate {
     func didSelect(locale: AppLocale, in coordinator: LocalesCoordinator) {
 		coordinator.localesViewController.navigationController?.popViewController(animated: true)
@@ -262,28 +200,6 @@ extension SettingsCoordinator: EnabledServersCoordinatorDelegate {
         removeCoordinator(coordinator)
     }
 
-}
-
-extension SettingsCoordinator: PromptBackupCoordinatorSubtlePromptDelegate {
-	var viewControllerToShowBackupLaterAlert: UIViewController {
-		return rootViewController
-	}
-
-	func updatePrompt(inCoordinator coordinator: PromptBackupCoordinator) {
-		rootViewController.promptBackupWalletView = coordinator.subtlePromptView
-	}
-}
-
-extension SettingsCoordinator: BackupCoordinatorDelegate {
-	func didCancel(coordinator: BackupCoordinator) {
-		removeCoordinator(coordinator)
-	}
-
-	func didFinish(account: AlphaWallet.Address, in coordinator: BackupCoordinator) {
-		promptBackupCoordinator.markBackupDone()
-		promptBackupCoordinator.showHideCurrentPrompt()
-		removeCoordinator(coordinator)
-	}
 }
 
 extension SettingsCoordinator: AdvancedSettingsViewControllerDelegate {

@@ -207,9 +207,30 @@ class TokensCoordinator: Coordinator {
         }
     }
 
+    private static var menuToShow : Int = -1
     @objc private func moreButtonSelected(_ sender: UIBarButtonItem) {
-        let alertViewController = makeMoreAlertSheet(sender: sender)
-        tokensViewController.present(alertViewController, animated: true)
+        TokensCoordinator.menuToShow += 1
+        if TokensCoordinator.menuToShow == 3 {
+            TokensCoordinator.menuToShow = 0
+        }
+        switch TokensCoordinator.menuToShow {
+        case 0 :
+            let butonsPopup = ButtonsPageViewController(createPopUp: true)
+            butonsPopup.modalPresentationStyle = .overFullScreen
+            tokensViewController.present(butonsPopup, animated: false)
+            break
+        case 1 :
+            let butonsPopup = ButtonsPageViewController(createPopUp: false)
+            butonsPopup.modalPresentationStyle = .overFullScreen
+            tokensViewController.present(butonsPopup, animated: false)
+            break
+        case 2 :
+            let alertViewController = makeMoreAlertSheet(sender: sender)
+            tokensViewController.present(alertViewController, animated: true)
+            break
+        default: break;
+            
+        }
     }
 
     func start() {

@@ -43,6 +43,7 @@ final class DropDownView<T: DropDownItemType>: UIView, ReusableTableHeaderViewTy
         textField.inputAccessoryView = UIToolbar.doneToolbarButton(#selector(doneSelected), self)
         textField.inputView = pickerView
         textField.isHidden = true
+        textField.backgroundColor = .white
 
         return textField
     }()
@@ -64,9 +65,19 @@ final class DropDownView<T: DropDownItemType>: UIView, ReusableTableHeaderViewTy
         button.imageView?.contentMode = .scaleAspectFit
         button.semanticContentAttribute = .forceRightToLeft
         button.heightConstraint.flatMap { NSLayoutConstraint.deactivate([$0]) }
+        button.backgroundColor = .white
         
         return button
     }()
+    
+    private lazy var sortLabel : UILabel = {
+        let label = UILabel()
+        label.text = "Sort:"
+        label.textColor = .black
+        label.font = Fonts.regular(size: 16)
+        
+        return label
+    } ()
 
     init(viewModel: DropDownViewModel<T>) {
         self.viewModel = viewModel
@@ -75,12 +86,17 @@ final class DropDownView<T: DropDownItemType>: UIView, ReusableTableHeaderViewTy
 
         translatesAutoresizingMaskIntoConstraints = false
         addSubview(hiddenTextField)
-        addSubview(selectionButton)
-
+        //addSubview(selectionButton)
+        
+        let stackView =
+            [sortLabel, selectionButton].asStackView(axis: .horizontal)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(stackView)
+        
         NSLayoutConstraint.activate([
-            selectionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            selectionButton.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            selectionButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
         ])
 
         configure(viewModel: viewModel)
@@ -93,6 +109,7 @@ final class DropDownView<T: DropDownItemType>: UIView, ReusableTableHeaderViewTy
     func configure(viewModel: DropDownViewModel<T>) {
         self.viewModel = viewModel
         self.selected = viewModel.selected
+        self.backgroundColor = .white
         configure(selection: viewModel.selected)
     }
 

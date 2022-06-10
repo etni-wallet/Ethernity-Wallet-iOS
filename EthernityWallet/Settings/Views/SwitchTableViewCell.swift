@@ -28,6 +28,7 @@ class SwitchTableViewCell: UITableViewCell {
 
     private let switchView: UISwitch = {
         let switchView = UISwitch()
+        switchView.onTintColor = R.color.electricBlueSecondary()!
         switchView.translatesAutoresizingMaskIntoConstraints = false
         return switchView
     }()
@@ -54,10 +55,7 @@ class SwitchTableViewCell: UITableViewCell {
         contentView.addSubview(stackView)
 
         NSLayoutConstraint.activate([
-            iconImageView.widthAnchor.constraint(equalToConstant: 40),
-            iconImageView.heightAnchor.constraint(equalToConstant: 40),
-
-            stackView.anchorsConstraint(to: contentView, edgeInsets: .init(top: 10, left: 16, bottom: 10, right: 20))
+            stackView.anchorsConstraint(to: contentView, edgeInsets: .init(top: 16, left: 23, bottom: 16, right: 20))
         ])
     }
 

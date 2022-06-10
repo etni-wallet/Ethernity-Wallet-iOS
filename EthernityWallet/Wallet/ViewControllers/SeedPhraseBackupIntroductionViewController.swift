@@ -75,7 +75,7 @@ class SeedPhraseBackupIntroductionViewController: UIViewController {
             footerBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             footerBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).set(priority: .defaultHigh),
-            footerBar.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -Style.insets.safeBottom - 64).set(priority: .required),
+            footerBar.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -Style.insets.safeBottom - ScreenChecker.size(big: 64, medium: 64, small: 32)).set(priority: .required),
             footerBar.topAnchor.constraint(equalTo: buttonsBar.topAnchor),
 
         ] + roundedBackground.anchorsConstraint(to: view))

@@ -43,7 +43,7 @@ extension UINavigationBarAppearance {
         appearance.backgroundColor = Colors.appWhite
         appearance.shadowColor = Colors.appWhite
         appearance.shadowImage = nil
-        appearance.setBackIndicatorImage(R.image.backWhite(), transitionMaskImage: R.image.backWhite())
+        appearance.setBackIndicatorImage(R.image.ethNavBarBackArrow(), transitionMaskImage: R.image.ethNavBarBackArrow())
         appearance.titleTextAttributes = [
             .foregroundColor: R.color.black()!,
             .font: Fonts.semibold(size: 20) as Any
@@ -122,7 +122,7 @@ struct Colors {
     static let appRed = UIColor(red: 204, green: 71, blue: 65)
     static let apprecationRed = UIColor(hex: "ff3b30")
     static let apprecationGreen = Colors.appHighlightGreen
-    static let appGrayLabel = UIColor(red: 155, green: 155, blue: 155)
+    static let appGrayLabel = UIColor(hex: "101010")
     static let settingsSubtitle = UIColor(red: 141, green: 141, blue: 141)
     static let qrCodeRectBorders = UIColor(red: 216, green: 216, blue: 216)
     static let loadingIndicatorBorder = UIColor(red: 237, green: 237, blue: 237)
@@ -160,7 +160,7 @@ struct Fonts {
     static func interMedium(size: CGFloat) -> UIFont {
         return UIFont(resource: R.font.interMedium, size: size)!
     }
-    static let tableHeader = Fonts.semibold(size: 15)
+    static let tableHeader = Fonts.semibold(size: 18)
 }
 
 extension UISegmentedControl {
@@ -292,7 +292,7 @@ enum DataEntry {
 
     enum Font {
         static let text = Fonts.regular(size: isNarrowScreen ? 12: 15)
-        static let label = Fonts.bold(size: 13)
+        static let label = Fonts.bold(size: 14)
         static let textFieldTitle = Fonts.regular(size: 13)
         static let textFieldStatus = Fonts.bold(size: 13)
         static let textField = Fonts.regular(size: isNarrowScreen ? 12: 15)
@@ -405,7 +405,7 @@ enum Style {
     }
     enum AccessoryView {
         static var chevron: UIImageView {
-            let imageView = UIImageView(image: R.image.iconsSystemArrowRight())
+            let imageView = UIImageView(image: R.image.iconsSystemArrowRight()?.withTintColor(R.color.electricBlueLightest()!))
             NSLayoutConstraint.activate([
                 imageView.widthAnchor.constraint(equalToConstant: 24.0),
                 imageView.heightAnchor.constraint(equalToConstant: 24.0)
@@ -447,11 +447,11 @@ enum Style {
     
     enum NavigationBar {
         enum Separator {
-            static let color: UIColor = R.color.mercury()!
+            static let color: UIColor = .white
         }
     }
     enum RPCServerTableView {
-        static let HeaderHeight: CGFloat = 50.0
+        static let HeaderHeight: CGFloat = 60.0
         enum Cell {
             enum text {
                 static let color: UIColor = R.color.black()!

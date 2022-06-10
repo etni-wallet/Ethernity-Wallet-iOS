@@ -40,13 +40,13 @@ class SwitchView: UIView {
 
         toggle.addTarget(self, action: #selector(toggled), for: .valueChanged)
 
-        let stackView = [.spacerWidth(edgeInsets.left), label, .spacer(), toggle, .spacerWidth(edgeInsets.right)].asStackView(axis: .horizontal, alignment: .center)
+        let stackView = [.spacerWidth(edgeInsets.left), label, .spacerWidth(16), toggle, .spacerWidth(edgeInsets.right)].asStackView(axis: .horizontal, alignment: .center)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stackView)
 
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            //stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             stackView.topAnchor.constraint(lessThanOrEqualTo: topAnchor),
             stackView.bottomAnchor.constraint(greaterThanOrEqualTo: bottomAnchor),
             stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -67,6 +67,7 @@ class SwitchView: UIView {
         label.text = viewModel.text
 
         toggle.isOn = viewModel.isOn
+        toggle.onTintColor = UIColor(hex: "F89430")
     }
 
     @objc private func toggled() {

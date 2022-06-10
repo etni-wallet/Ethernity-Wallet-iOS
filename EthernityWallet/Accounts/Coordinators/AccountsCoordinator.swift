@@ -106,13 +106,13 @@ class AccountsCoordinator: Coordinator {
                 alertButtonTitles: [
                     R.string.localizable.walletCreateButtonTitle(),
                     R.string.localizable.walletImportButtonTitle(),
-                    R.string.localizable.walletWatchButtonTitle(),
+                    //R.string.localizable.walletWatchButtonTitle(),
                     R.string.localizable.cancel()
                 ],
                 alertButtonStyles: [
                     .default,
                     .default,
-                    .default,
+                    //.default,
                     .cancel
                 ],
                 viewController: navigationController,
@@ -122,9 +122,10 @@ class AccountsCoordinator: Coordinator {
                         strongSelf.showCreateWallet()
                     } else if index == 1 {
                         strongSelf.showImportWallet()
-                    } else if index == 2 {
-                        strongSelf.showWatchWallet()
                     }
+//                    else if index == 2 {
+//                        strongSelf.showWatchWallet()
+//                    }
         }
 	}
 

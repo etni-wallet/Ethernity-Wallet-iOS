@@ -12,7 +12,7 @@ struct WalletTokenViewCellViewModel {
     private let shortFormatter = EtherNumberFormatter.short
     private let token: TokenObject
     private let assetDefinitionStore: AssetDefinitionStore
-    private let isVisible: Bool
+    let isVisible: Bool
 
     init(token: TokenObject, assetDefinitionStore: AssetDefinitionStore, isVisible: Bool = true) {
         self.token = token
@@ -46,12 +46,12 @@ struct WalletTokenViewCellViewModel {
     var titleAttributedString: NSAttributedString {
         return NSAttributedString(string: title, attributes: [
             .foregroundColor: Screen.TokenCard.Color.title,
-            .font: Screen.TokenCard.Font.title
+            .font: Fonts.regular(size: 16)//Screen.TokenCard.Font.title
         ])
     }
 
     var alpha: CGFloat {
-        return isVisible ? 1.0 : 0.4
+        return isVisible ? 1.0 : 1.0
     }
 
     var iconImage: Subscribable<TokenImage> {

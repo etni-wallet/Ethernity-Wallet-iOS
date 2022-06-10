@@ -32,7 +32,7 @@ struct DropDownViewModel<T: DropDownItemType> {
 
     func attributedString(item: T) -> NSAttributedString {
         return NSAttributedString(string: item.title, attributes: [
-            .font: Fonts.regular(size: 23),
+            .font: Fonts.regular(size: 15),
             .foregroundColor: Colors.sortByTextColor
         ])
     }
