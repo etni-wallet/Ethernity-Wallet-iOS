@@ -77,7 +77,8 @@ class AccountWalletCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        contentView.isUserInteractionEnabled = true
+        background.isUserInteractionEnabled = true
         sendButton.delegate = self
         receiveButton.delegate = self
         
@@ -137,11 +138,11 @@ class AccountWalletCollectionViewCell: UICollectionViewCell {
 extension AccountWalletCollectionViewCell: AccountWalletcollectionViewCellDisplayLogic {
     func configure(viewModel: AccountWalletCollectionViewCellViewModel) {
         accountTitle.font = viewModel.accountTitleFont
-        accountTitle.text = viewModel.accountTitle
+        accountTitle.text = "Main Account"
         amount.font = viewModel.amountFont
-        amount.text = "\(viewModel.amount)"
+        amount.text = "$310.000"
         
-        walletAddress.configure(walletAddress: viewModel.walletAddress)
+        walletAddress.configure(walletAddress: "0xRdad274..ETNY")
     }
 }
 

@@ -944,19 +944,17 @@ extension TokensViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let numberOfItems = viewModel.numberOfItems(for: section)
+        let numberOfItems = 3
         pageControl.numberOfPages = numberOfItems
         
         return numberOfItems
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let walletViewModel = viewModel.accountViewModel(forIndexPath: indexPath) else {return UITableViewCell()}
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! AccountWalletCollectionViewCell
-        let cellViewModel = AccountWalletCollectionViewCellViewModel(accountTitle: "Wallet \(indexPath.row)", walletAddress: walletViewModel.addressesAttrinutedString, amount: walletViewModel.)
-        // Configure the cell
-        
-        
+        let viewModel = AccountWalletCollectionViewCellViewModel(accountTitle: "", walletAddress: "", amount: "")
+        cell.configure(viewModel: viewModel)
+        cell.delegate = self
         return cell
     }
 
@@ -976,6 +974,26 @@ extension TokensViewController: UICollectionViewDelegate, UICollectionViewDataSo
         pageControl.currentPage = visibleIndexPath!.row
     }
 
+}
+
+extension TokensViewController: AccountWalletCollectionViewCellDelegate {
+    func accountWalletCollectionViewCellDidTapCopyButton(indexPath: IndexPath) {
+        print("accountWalletCollectionViewCellDidTapCopyButton \(indexPath.row)")
+    }
+    
+    func accountWalletCollectionViewCellDidTapSend(indexPath: IndexPath) {
+        print("accountWalletCollectionViewCellDidTapSend \(indexPath.row)")
+    }
+    
+    func accountWalletCollectionViewCellDidTapReceive(indexPath: IndexPath) {
+        print("accountWalletCollectionViewCellDidTapReceive \(indexPath.row)")
+    }
+    
+    func accountWalletCollectionViewCellDidTapMoreButton(indexPath: IndexPath) {
+        print("accountWalletCollectionViewCellDidTapMoreButton \(indexPath.row)")
+    }
+    
+    
 }
 
 class SnappingCollectionViewLayout: UICollectionViewFlowLayout {

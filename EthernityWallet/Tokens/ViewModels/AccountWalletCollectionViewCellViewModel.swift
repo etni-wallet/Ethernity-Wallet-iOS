@@ -18,5 +18,5 @@ struct AccountWalletCollectionViewCellViewModel {
     
     let accountTitle: String
     let walletAddress: String
-    let amount: Double
+    let amount: String
 }
