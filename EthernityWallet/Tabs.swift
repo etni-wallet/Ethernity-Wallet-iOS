@@ -33,15 +33,15 @@ extension UITabBarController {
         var tabBarItem: UITabBarItem {
             switch self {
             case .tokens:
-                return UITabBarItem(title: R.string.localizable.walletTokensTabbarItemTitle(), image: R.image.tab_wallet(), selectedImage: nil)
+                return UITabBarItem(title: nil, image: R.image.tab_wallet(), selectedImage: R.image.tab_wallet_selected())
             case .settings:
-                return UITabBarItem(title: R.string.localizable.aSettingsNavigationTitle(), image: R.image.tab_settings(), selectedImage: nil)
+                return UITabBarItem(title: nil, image: R.image.tab_settings(), selectedImage: R.image.tab_settings_selected())
             case .transactions:
                 return UITabBarItem(title: R.string.localizable.transactionsTabbarItemTitle(), image: R.image.tab_transactions(), selectedImage: nil)
             case .activities:
-                return UITabBarItem(title: R.string.localizable.activityTabbarItemTitle(), image: R.image.tab_transactions(), selectedImage: nil)
+                return UITabBarItem(title: nil, image: R.image.tab_transactions(), selectedImage: R.image.tab_transactions_selected())
             case .browser:
-                return UITabBarItem(title: R.string.localizable.browserTabbarItemTitle(), image: R.image.tab_browser(), selectedImage: nil)
+                return UITabBarItem(title: nil, image: R.image.tab_browser(), selectedImage: nil)
             }
         }
     }

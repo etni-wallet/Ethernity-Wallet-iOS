@@ -88,8 +88,8 @@ class ActiveWalletCoordinator: NSObject, Coordinator, DappRequestHandlerDelegate
         return PromptBackupCoordinator(keystore: keystore, wallet: wallet, config: config, analyticsCoordinator: analyticsCoordinator)
     }()
 
-    lazy var tabBarController: UITabBarController = {
-        let tabBarController: UITabBarController = .withOverridenBarAppearence()
+    lazy var tabBarController: CustomTabController = {
+        let tabBarController: CustomTabController = .withOverridenBarAppearence()
         tabBarController.delegate = self
 
         return tabBarController
@@ -286,9 +286,11 @@ class ActiveWalletCoordinator: NSObject, Coordinator, DappRequestHandlerDelegate
                 walletConnectCoordinator: walletConnectCoordinator,
                 coinTickersFetcher: coinTickersFetcher,
                 activitiesService: activitiesService,
-                walletBalanceService: walletBalanceService
+                walletBalanceService: walletBalanceService,
+                viewModel: .init(configuration: .summary, animatedPresentation: true)
         )
         coordinator.rootViewController.tabBarItem = UITabBarController.Tabs.tokens.tabBarItem
+        coordinator.rootViewController.tabBarItem.title = nil
         coordinator.delegate = self
         coordinator.start()
 
@@ -372,8 +374,8 @@ class ActiveWalletCoordinator: NSObject, Coordinator, DappRequestHandlerDelegate
             viewControllers.append(transactionCoordinator.navigationController)
         }
 
-        let browserCoordinator = createBrowserCoordinator(sessions: sessionsSubject.value, browserOnly: false, analyticsCoordinator: analyticsCoordinator)
-        viewControllers.append(browserCoordinator.navigationController)
+//        let browserCoordinator = createBrowserCoordinator(sessions: sessionsSubject.value, browserOnly: false, analyticsCoordinator: analyticsCoordinator)
+//        viewControllers.append(browserCoordinator.navigationController)
 
         let settingsCoordinator = createSettingsCoordinator(keystore: keystore, promptBackupCoordinator: promptBackupCoordinator)
         viewControllers.append(settingsCoordinator.navigationController)
@@ -739,6 +741,22 @@ extension ActiveWalletCoordinator: WhereAreMyTokensCoordinatorDelegate {
 }
 
 extension ActiveWalletCoordinator: TokensCoordinatorDelegate {
+    func didCancel(in coordinator: TokensCoordinator) {
+        
+    }
+    
+    func didAddAccount(account: Wallet, in coordinator: TokensCoordinator) {
+        
+    }
+    
+    func didDeleteAccount(account: Wallet, in coordinator: TokensCoordinator) {
+        
+    }
+    
+    func didFinishBackup(account: AlphaWallet.Address, in coordinator: TokensCoordinator) {
+        
+    }
+    
 
     func viewWillAppearOnce(in coordinator: TokensCoordinator) {
         //NOTE: need to figure out creating xml handlers, object creating takes a lot of resources

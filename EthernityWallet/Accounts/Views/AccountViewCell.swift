@@ -63,24 +63,5 @@ class AccountViewCell: UITableViewCell {
         accessoryView = Style.AccessoryView.chevron
         selectedIndicator.isHidden = !viewModel.isSelected
 
-        viewModel.addressesAttrinutedString
-            .sink { [weak addressLabel] value in
-                addressLabel?.attributedText = value
-            }.store(in: &cancelable)
-
-        viewModel.blockieImage
-            .sink { [weak blockieImageView] image in
-                blockieImageView?.setBlockieImage(image: image)
-            }.store(in: &cancelable)
-
-        viewModel.balance
-            .sink { [weak balanceLabel] value in
-                balanceLabel?.attributedText = value
-            }.store(in: &cancelable)
-
-        viewModel.apprecation24hour
-            .sink { [weak apprecation24hourLabel] value in
-                apprecation24hourLabel?.attributedText = value
-            }.store(in: &cancelable)
     }
 }

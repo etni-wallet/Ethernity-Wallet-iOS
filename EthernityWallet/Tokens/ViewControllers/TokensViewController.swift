@@ -5,6 +5,8 @@ import Result
 import PromiseKit
 import Combine
 
+private let reuseIdentifier = "AccountWalletCollectionViewCell"
+
 protocol TokensViewControllerDelegate: AnyObject {
     func viewWillAppear(in viewController: UIViewController)
     func didSelect(token: TokenObject, in viewController: UIViewController)
@@ -12,6 +14,11 @@ protocol TokensViewControllerDelegate: AnyObject {
     func didTapOpenConsole(in viewController: UIViewController)
     func walletConnectSelected(in viewController: UIViewController)
     func whereAreMyTokensSelected(in viewController: UIViewController)
+    func didPressAddHideTokens(viewModel: TokensViewModel)
+    
+    func didSelectAccount(account: Wallet, in viewController: TokensViewController)
+    func didDeleteAccount(account: Wallet, in viewController: TokensViewController)
+    func didSelectInfoForAccount(account: Wallet, sender: UIView, in viewController: TokensViewController)
 }
 
 class TokensViewController: UIViewController {
@@ -25,8 +32,35 @@ class TokensViewController: UIViewController {
             viewModel.filter = oldValue.filter
         }
     }
+    let accountsViewModel: AccountsViewModel
     private let sessions: ServerDictionary<WalletSession>
     private let account: Wallet
+
+    private let walletsCollectionView: UICollectionView = {
+        let layout: UICollectionViewFlowLayout = SnappingCollectionViewLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumInteritemSpacing = 1
+        layout.minimumLineSpacing = 1
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.width - 40, height: 200)
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.decelerationRate = .fast
+        collectionView.isPagingEnabled = false
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(AccountWalletCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return collectionView
+    }()
+    private var pageControl: UIPageControl = {
+        let pc = UIPageControl()
+        pc.translatesAutoresizingMaskIntoConstraints = false
+        pc.pageIndicatorTintColor = .gray
+        pc.currentPageIndicatorTintColor = EthernityColors.electricYellow
+        
+        return pc
+    }()
+    
     lazy private var tableViewFilterView: ScrollableSegmentedControl = {
         let cellConfiguration = Style.ScrollableSegmentedControlCell.configuration
         let controlConfiguration = Style.ScrollableSegmentedControl.configuration
@@ -35,8 +69,24 @@ class TokensViewController: UIViewController {
         }
         let control = ScrollableSegmentedControl(cells: cells, configuration: controlConfiguration)
         control.setSelection(cellIndex: 0, animated: false)
+        control.translatesAutoresizingMaskIntoConstraints = false
         return control
     }()
+    
+    private let segmentedControl : UISegmentedControl = {
+        let segmentedControl = UISegmentedControl (items: TokensViewModel.segmentedControlTitles)
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.selectedSegmentTintColor = UIColor(hex: "0C86FF")
+        segmentedControl.layer.backgroundColor = UIColor.white.cgColor
+        segmentedControl.backgroundColor = UIColor.white
+        segmentedControl.tintColor = UIColor.white
+        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.white, NSAttributedString.Key.font: Fonts.regular(size: 14)], for: .selected)
+        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor(hex: "6D6D6D"), NSAttributedString.Key.font: Fonts.regular(size: 13)], for: .normal)
+        
+        return segmentedControl
+    }()
+    
+    private var filtersSegmentedControl : CustomSegmentedControl?
     private let emptyTableView: EmptyTableView = {
         let view = EmptyTableView(title: "", image: R.image.activities_empty_list()!, heightAdjustment: 0)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -52,10 +102,10 @@ class TokensViewController: UIViewController {
         tableView.register(ServerTableViewCell.self)
         tableView.register(OpenSeaNonFungibleTokenPairTableCell.self)
 
-        tableView.registerHeaderFooterView(GeneralTableViewSectionHeader<ScrollableSegmentedControl>.self)
+        tableView.registerHeaderFooterView(GeneralTableViewSectionHeader<CustomSegmentedControl>.self)
         tableView.registerHeaderFooterView(GeneralTableViewSectionHeader<AddHideTokensView>.self)
         tableView.registerHeaderFooterView(ActiveWalletSessionView.self)
-        tableView.registerHeaderFooterView(GeneralTableViewSectionHeader<WalletSummaryView>.self)
+        //tableView.registerHeaderFooterView(GeneralTableViewSectionHeader<WalletSummaryView>.self)
         tableView.estimatedRowHeight = DataEntry.Metric.TableView.estimatedRowHeight
         tableView.tableFooterView = UIView.tableFooterToRemoveEmptyCellSeparators()
         tableView.separatorInset = .zero
@@ -70,24 +120,27 @@ class TokensViewController: UIViewController {
         return control
     }()
     private (set) lazy var blockieImageView: BlockieImageView = BlockieImageView(size: .init(width: 24, height: 24))
+    private var addHideButton: UIButton {
+        let button  = UIButton()
+        let imageButton = R.image.searchbar_add_hide_token()
+        button.setImage(imageButton, for: .normal)
+        button.backgroundColor = UIColor.white
+        button.cornerRadius = 6
+        button.contentEdgeInsets = .init(top:10, left: 10, bottom: 4, right: 4)
+        button.addTarget(self, action: #selector(addHideToken), for: .touchUpInside)
+        
+        return button
+    }
+    
     private let searchController: UISearchController
     private lazy var searchBar: DummySearchView = {
         return DummySearchView(closure: { [weak self] in
             guard let strongSelf = self else { return }
             strongSelf.enterSearchMode()
-        })
+        }, button: addHideButton)
     }()
 
-    private var consoleButton: UIButton {
-        return tableViewHeader.consoleButton
-    }
-    private var promptBackupWalletViewHolder: UIView {
-        return tableViewHeader.promptBackupWalletViewHolder
-    }
-    private var shouldHidePromptBackupWalletViewHolderBecauseSearchIsActive = false
-    private var tableViewHeader = {
-        return TableViewHeader(consoleButton: UIButton(type: .system), promptBackupWalletViewHolder: UIView())
-    }()
+
     private var isSearchBarConfigured = false
     private var bottomConstraint: NSLayoutConstraint!
     private lazy var keyboardChecker = KeyboardChecker(self, resetHeightDefaultValue: 0, ignoreBottomSafeArea: true)
@@ -101,58 +154,8 @@ class TokensViewController: UIViewController {
         return view
     }()
 
-    var isConsoleButtonHidden: Bool {
-        get {
-            return consoleButton.isHidden
-        }
-        set {
-            guard newValue != isConsoleButtonHidden else { return }
-            consoleButton.isHidden = newValue
-            adjustTableViewHeaderHeightToFitContents()
-        }
-    }
-    var isPromptBackupWalletViewHolderHidden: Bool {
-        get {
-            return promptBackupWalletViewHolder.isHidden
-        }
-        set {
-            guard newValue != isPromptBackupWalletViewHolderHidden else { return }
-            promptBackupWalletViewHolder.isHidden = newValue
-            adjustTableViewHeaderHeightToFitContents()
-        }
-    }
-
     weak var delegate: TokensViewControllerDelegate?
-    //TODO The name "bad" isn't correct. Because it includes "conflicts" too
-    var listOfBadTokenScriptFiles: [TokenScriptFileIndices.FileName] = .init() {
-        didSet {
-            if listOfBadTokenScriptFiles.isEmpty {
-                isConsoleButtonHidden = true
-            } else {
-                consoleButton.titleLabel?.font = Fonts.light(size: 22)
-                consoleButton.setTitleColor(Colors.black, for: .normal)
-                consoleButton.setTitle(R.string.localizable.tokenScriptShowErrors(), for: .normal)
-                consoleButton.bounds.size.height = 44
-                consoleButton.isHidden = false
-            }
-        }
-    }
-    var promptBackupWalletView: UIView? {
-        didSet {
-            oldValue?.removeFromSuperview()
-            if let promptBackupWalletView = promptBackupWalletView {
-                promptBackupWalletView.translatesAutoresizingMaskIntoConstraints = false
-                promptBackupWalletViewHolder.addSubview(promptBackupWalletView)
-                NSLayoutConstraint.activate([
-                    promptBackupWalletView.anchorsConstraint(to: promptBackupWalletViewHolder, edgeInsets: .init(top: 7, left: 7, bottom: 4, right: 7)),
-                ])
 
-                isPromptBackupWalletViewHolderHidden = shouldHidePromptBackupWalletViewHolderBecauseSearchIsActive
-            } else {
-                isPromptBackupWalletViewHolderHidden = true
-            }
-        }
-    }
     private var walletSummaryView = WalletSummaryView(edgeInsets: .init(top: 10, left: 0, bottom: 0, right: 0), spacing: 0)
     private lazy var searchBarHeader: TokensViewController.ContainerView<DummySearchView> = {
         let header: TokensViewController.ContainerView<DummySearchView> = .init(subview: searchBar)
@@ -161,15 +164,17 @@ class TokensViewController: UIViewController {
         return header
     }()
     private var cancellable = Set<AnyCancellable>()
-
+    
     init(sessions: ServerDictionary<WalletSession>,
          account: Wallet,
+
          tokenCollection: TokenCollection,
          assetDefinitionStore: AssetDefinitionStore,
          tokensFilter: TokensFilter,
          config: Config,
          walletConnectCoordinator: WalletConnectCoordinator,
-         walletBalanceService: WalletBalanceService
+         walletBalanceService: WalletBalanceService,
+         accountsViewModel: AccountsViewModel
     ) {
         self.sessions = sessions
         self.account = account
@@ -177,34 +182,56 @@ class TokensViewController: UIViewController {
         self.assetDefinitionStore = assetDefinitionStore
         self.config = config
         self.walletConnectCoordinator = walletConnectCoordinator
-
+        self.accountsViewModel = accountsViewModel
         viewModel = TokensViewModel(tokensFilter: tokensFilter, tokens: [], config: config)
 
         searchController = UISearchController(searchResultsController: nil)
 
         super.init(nibName: nil, bundle: nil)
 
+        
         searchController.delegate = self
         searchController.hidesNavigationBarDuringPresentation = false
-
-        view.backgroundColor = viewModel.backgroundColor
 
         tableViewFilterView.addTarget(self, action: #selector(didTapSegment(_:)), for: .touchUpInside)
         tableViewFilterView.translatesAutoresizingMaskIntoConstraints = false
 
-        consoleButton.addTarget(self, action: #selector(openConsole), for: .touchUpInside)
+        segmentedControl.addTarget(self, action: #selector(self.segmentedValueChanged(_:)), for: .valueChanged)
+        
+        filtersSegmentedControl = CustomSegmentedControl(subview: segmentedControl)
 
+        
+        view.addSubview(walletsCollectionView)
+        view.addSubview(pageControl)
+        
+        walletsCollectionView.delegate = self
+        walletsCollectionView.dataSource = self
+        
+        // Do any additional setup after loading the view.
+        
+        NSLayoutConstraint.activate([
+            walletsCollectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            walletsCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            walletsCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            walletsCollectionView.heightAnchor.constraint(equalToConstant: 300.0),
+            
+            pageControl.topAnchor.constraint(equalTo: walletsCollectionView.bottomAnchor),
+            pageControl.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+        
+        
         view.addSubview(tableView)
 
         bottomConstraint = tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         keyboardChecker.constraints = [bottomConstraint]
 
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.topAnchor.constraint(equalTo: pageControl.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             bottomConstraint
         ])
+        
 
         tableView.addSubview(emptyTableView)
         let heightConstraint = emptyTableView.centerYAnchor.constraint(equalTo: tableView.centerYAnchor, constant: 0)
@@ -230,16 +257,16 @@ class TokensViewController: UIViewController {
                 strongSelf.tableView.reloadData()
             }.store(in: &cancellable)
 
-        let initialWalletSummary = WalletSummary(balances: [walletBalanceService.walletBalance(wallet: account)])
+//        let initialWalletSummary = WalletSummary(balances: [walletBalanceService.walletBalance(wallet: account)])
 
-        let walletSummary = walletBalanceService
-            .walletBalancePublisher(wallet: account)
-            .map { return WalletSummary(balances: [$0]) }
-            .receive(on: RunLoop.main)
-            .prepend(initialWalletSummary)
-            .eraseToAnyPublisher()
-
-        walletSummaryView.configure(viewModel: .init(walletSummary: walletSummary, config: config, alignment: .center))
+//        let walletSummary = walletBalanceService
+//            .walletBalancePublisher(wallet: account)
+//            .map { return WalletSummary(balances: [$0]) }
+//            .receive(on: RunLoop.main)
+//            .prepend(initialWalletSummary)
+//            .eraseToAnyPublisher()
+//
+//        walletSummaryView.configure(viewModel: .init(walletSummary: walletSummary, config: config, alignment: .center))
 
         navigationItem.largeTitleDisplayMode = .never
     }
@@ -250,7 +277,8 @@ class TokensViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.addSubview(tableViewRefreshControl)
-
+        tableView.separatorColor = .clear
+        
         handleTokenCollectionUpdates()
     }
 
@@ -277,9 +305,9 @@ class TokensViewController: UIViewController {
         tableViewRefreshControl.beginRefreshing()
         fetch()
     }
-
-    @objc func openConsole() {
-        delegate?.didTapOpenConsole(in: self)
+    
+    @objc func addHideToken(){
+        delegate?.didPressAddHideTokens(viewModel: self.viewModel)
     }
 
     func fetch() {
@@ -296,7 +324,6 @@ class TokensViewController: UIViewController {
     }
 
     private func reload() {
-        isPromptBackupWalletViewHolderHidden = !(viewModel.shouldShowBackupPromptViewHolder && !promptBackupWalletViewHolder.subviews.isEmpty) || shouldHidePromptBackupWalletViewHolderBecauseSearchIsActive
         reloadTableData()
     }
 
@@ -306,7 +333,7 @@ class TokensViewController: UIViewController {
 
     func refreshView(viewModel: TokensViewModel) {
         view.backgroundColor = viewModel.backgroundColor
-        tableView.backgroundColor = viewModel.backgroundColor
+        tableView.backgroundColor = viewModel.walletTableBackground
     }
 
     private func handleTokenCollectionUpdates() {
@@ -324,12 +351,6 @@ class TokensViewController: UIViewController {
             }.store(in: &cancellable)
     }
 
-    private func adjustTableViewHeaderHeightToFitContents() {
-        let size = tableViewHeader.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize)
-        tableViewHeader.bounds.size.height = size.height
-        tableView.tableHeaderView = tableViewHeader
-    }
-
     @objc private func enterSearchMode() {
         let searchController = searchController
         navigationItem.searchController = searchController
@@ -344,6 +365,21 @@ class TokensViewController: UIViewController {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 searchController.searchBar.becomeFirstResponder()
             }
+        }
+    }
+    
+    @objc func segmentedValueChanged(_ sender:UISegmentedControl!)
+    {
+        let selectedIndex = UInt(sender.selectedSegmentIndex)
+        let controlSelection = ControlSelection.selected(selectedIndex)
+        guard let filter = viewModel.convertSegmentedControlSelectionToFilter(controlSelection) else { return }
+        apply(filter: filter, withSegmentAtSelection: controlSelection)
+        
+        if filter == .assets {
+            searchBar.buttonIsHidden(isHidden: false)
+        }
+        else {
+            searchBar.buttonIsHidden(isHidden: true)
         }
     }
 }
@@ -369,14 +405,14 @@ extension TokensViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         switch viewModel.sections[section] {
-        case .walletSummary:
-            let header: TokensViewController.GeneralTableViewSectionHeader<WalletSummaryView> = tableView.dequeueReusableHeaderFooterView()
-            header.subview = walletSummaryView
-
-            return header
+//        case .walletSummary:
+//            let header: TokensViewController.GeneralTableViewSectionHeader<WalletSummaryView> = tableView.dequeueReusableHeaderFooterView()
+//            header.subview = walletSummaryView
+//
+//            return header
         case .filters:
-            let header: TokensViewController.GeneralTableViewSectionHeader<ScrollableSegmentedControl> = tableView.dequeueReusableHeaderFooterView()
-            header.subview = tableViewFilterView
+            let header: TokensViewController.GeneralTableViewSectionHeader<CustomSegmentedControl> = tableView.dequeueReusableHeaderFooterView()
+            header.subview = filtersSegmentedControl
             header.useSeparatorLine = false
 
             return header
@@ -395,7 +431,7 @@ extension TokensViewController: UITableViewDelegate {
             return header
         case .search:
             return searchBarHeader
-        case .tokens, .collectiblePairs:
+        case .tokens, .collectiblePairs, .transactions:
             return nil
         }
     }
@@ -408,6 +444,11 @@ extension TokensViewController: UITableViewDelegate {
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         scrollView.contentOffset.y == 0 ? hideNavigationBarTopSeparatorLineInScrollEdgeAppearance() : showNavigationBarTopSeparatorLineInScrollEdgeAppearance()
+        
+//        pageControl.currentPage = Int(
+//            (walletsCollectionView.contentOffset.x / walletsCollectionView.frame.width)
+//                .rounded(.toNearestOrAwayFromZero)
+//            )
     }
 
 }
@@ -423,7 +464,7 @@ extension TokensViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch viewModel.sections[indexPath.section] {
-        case .search, .testnetTokens, .walletSummary, .filters, .activeWalletSession:
+        case .search, .testnetTokens/*, .walletSummary*/, .filters, .activeWalletSession:
             return UITableViewCell()
         case .tokens:
             switch viewModel.item(for: indexPath.row, section: indexPath.section) {
@@ -479,6 +520,9 @@ extension TokensViewController: UITableViewDataSource {
             cell.configure(viewModel: .init(leftViewModel: left, rightViewModel: right))
 
             return cell
+            
+        case .transactions:
+            return UITableViewCell()
         }
     }
 
@@ -487,6 +531,7 @@ extension TokensViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.contentView.layer.masksToBounds = true
         guard let cell = cell as? OpenSeaNonFungibleTokenPairTableCell else { return }
 
         cell.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
@@ -495,7 +540,7 @@ extension TokensViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let rowCount = viewModel.numberOfItems(for: section)
         let mode = viewModel.sections[section]
-        if mode == .tokens || mode == .collectiblePairs {
+        if mode == .tokens || mode == .collectiblePairs || mode == .transactions{
             handleTokensCountChange(rows: rowCount)
         }
         return rowCount
@@ -507,10 +552,12 @@ extension TokensViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         switch viewModel.sections[indexPath.section] {
-        case .collectiblePairs, .testnetTokens, .search, .walletSummary, .filters, .activeWalletSession:
+        case .collectiblePairs, .testnetTokens, .search/*, .walletSummary*/, .filters, .activeWalletSession:
             return nil
         case .tokens:
             return trailingSwipeActionsConfiguration(forRowAt: indexPath)
+        case .transactions:
+            return nil
         }
     }
 
@@ -553,6 +600,8 @@ extension TokensViewController: UITableViewDataSource {
         switch viewModel.filter {
         case .assets:
             title = R.string.localizable.emptyTableViewWalletTitle(R.string.localizable.aWalletContentsFilterAssetsOnlyTitle())
+        case .transactions:
+            title = "No transactions yet. \nSend and receive payments to get started"
         case .collectiblesOnly:
             title = R.string.localizable.emptyTableViewWalletTitle(R.string.localizable.aWalletContentsFilterCollectiblesOnlyTitle())
         case .defi:
@@ -613,7 +662,11 @@ extension TokensViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             //Important to update the segmented control (and hence add the segmented control back to the table) after they have been re-added to the table header through the table reload. Otherwise adding to the table header will break the animation for segmented control
             if let selection = selection, case let ControlSelection.selected(index) = selection {
-                self.tableViewFilterView.setSelection(cellIndex: Int(index))
+                //self.tableViewFilterView.setSelection(cellIndex: Int(index))
+                self.segmentedControl.selectedSegmentIndex = Int(index)
+                if filter == .assets {
+                    self.searchBar.buttonIsHidden(isHidden: false)
+                }
             }
         }
         //Exit search if user tapped on the wallet filter. Careful to not trigger an infinite recursion between changing the filter by "category" and search keywords which are all based on filters
@@ -621,7 +674,7 @@ extension TokensViewController {
             //do nothing
         } else {
             switch filter {
-            case .all, .defi, .governance, .assets, .collectiblesOnly, .type:
+            case .all, .defi, .governance, .assets, .transactions, .collectiblesOnly, .type:
                 searchController.isActive = false
             case .keyword:
                 break
@@ -654,10 +707,9 @@ extension TokensViewController: UISearchResultsUpdating {
     }
 
     private func processSearchWithKeywords() {
-        shouldHidePromptBackupWalletViewHolderBecauseSearchIsActive = searchController.isActive
         guard searchController.isActive else {
             switch viewModel.filter {
-            case .all, .defi, .governance, .assets, .collectiblesOnly, .type:
+            case .all, .defi, .governance, .assets, .transactions, .collectiblesOnly, .type:
                 break
             case .keyword:
                 //Handle when user taps Cancel button to stop search
@@ -675,7 +727,28 @@ extension TokensViewController: UISearchResultsUpdating {
     }
 
     private func setDefaultFilter() {
-        apply(filter: .all, withSegmentAtSelection: .selected(0))
+        apply(filter: .assets, withSegmentAtSelection: .selected(0))
+    }
+}
+
+fileprivate class CustomSegmentedControl : UIView, ReusableTableHeaderViewType {
+    
+    init(subview: UIView) {
+        super.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = false
+        subview.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(subview)
+        
+        NSLayoutConstraint.activate([
+            subview.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 14),
+            subview.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -14),
+            subview.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
+            subview.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8)
+            ])
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -685,7 +758,7 @@ fileprivate class DummySearchView: UIView {
         let searchBar: UISearchBar = UISearchBar(frame: .init(x: 0, y: 0, width: 100, height: 50))
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.isUserInteractionEnabled = false
-        UISearchBar.configure(searchBar: searchBar)
+        UISearchBar.configure(searchBar: searchBar, backgroundColor: Colors.walletTableBackground)
 
         return searchBar
     }()
@@ -698,17 +771,37 @@ fileprivate class DummySearchView: UIView {
 
         return view
     }()
+    
+    private var button: UIButton?
 
-    init(closure: @escaping () -> Void) {
+    init(closure: @escaping () -> Void, button : UIButton) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
 
-        addSubview(searchBar)
+        self.button = button
+        
+        let stackView = [
+            searchBar,
+            self.button!
+        ].asStackView(axis: .horizontal, /*spacing: 5,*/ alignment: .center)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        addSubview(stackView)
         addSubview(overlayView)
 
-        NSLayoutConstraint.activate(searchBar.anchorsConstraint(to: self) + overlayView.anchorsConstraint(to: self))
-
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
+            stackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
+            stackView.topAnchor.constraint(equalTo: self.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            //stackView.anchorsConstraint(to: self),
+            overlayView.anchorsConstraint(to: searchBar)])
+        
         UITapGestureRecognizer(addToView: overlayView, closure: closure)
+    }
+    
+    func buttonIsHidden(isHidden: Bool) {
+        self.button?.isHidden = isHidden
     }
 
     required init?(coder: NSCoder) {
@@ -735,7 +828,7 @@ extension TokensViewController: OpenSeaNonFungibleTokenPairTableCellDelegate {
             let pair = viewModel.collectiblePairs[indexPath.row]
             guard let token: TokenObject = isLeftCardSelected ? pair.left : pair.right else { return }
             delegate?.didSelect(token: token, in: self)
-        case .tokens, .testnetTokens, .activeWalletSession, .filters, .search, .walletSummary:
+        case .tokens, .transactions, .testnetTokens, .activeWalletSession, .filters, .search/*, .walletSummary*/:
             break
         }
     }
@@ -758,7 +851,7 @@ extension TokensViewController {
     private func setupFilteringWithKeyword() {
         navigationItem.hidesSearchBarWhenScrolling = false
         wireUpSearchController()
-        TokensViewController.functional.fixTableViewBackgroundColor(tableView: tableView, backgroundColor: viewModel.backgroundColor)
+        TokensViewController.functional.fixTableViewBackgroundColor(tableView: tableView, backgroundColor: viewModel.walletTableBackground)
         doNotDimTableViewToReuseTableForFilteringResult()
         makeSwitchToAnotherTabWorkWhileFiltering()
     }
@@ -771,7 +864,7 @@ extension TokensViewController {
     private func configureSearchBarOnce() {
         guard !isSearchBarConfigured else { return }
         isSearchBarConfigured = true
-        UISearchBar.configure(searchBar: searchController.searchBar)
+        UISearchBar.configure(searchBar: searchController.searchBar, backgroundColor: Colors.walletTableBackground)
     }
 }
 
@@ -803,8 +896,8 @@ extension UISearchBar {
         if let textField = searchBar.firstSubview(ofType: UITextField.self) {
             textField.textColor = Colors.appText
             if let imageView = textField.leftView as? UIImageView {
-                imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
-                imageView.tintColor = Colors.appText
+                imageView.image = R.image.search_bar_icon()!.withRenderingMode(.alwaysOriginal)
+                //imageView.tintColor = Colors.appText
             }
         }
         //Hack to hide the horizontal separator below the search bar
@@ -815,5 +908,113 @@ extension UISearchBar {
         searchBar.backgroundImage = UIImage()
         searchBar.placeholder = R.string.localizable.tokensSearchbarPlaceholder()
         searchBar.backgroundColor = backgroundColor
+        searchBar.textField?.textAlignment = .center
+        searchBar.textField?.layer.cornerRadius = 6
+        searchBar.textField?.layer.masksToBounds = true
+        searchBar.textField?.cornerRadius = 6
+        searchBar.cornerRadius = 6
+        searchBar.layer.cornerRadius = 6
+        searchBar.clipsToBounds = true
+        searchBar.setImage(R.image.search_bar_icon()!.withRenderingMode(.alwaysOriginal), for: .search, state: .normal)
+        
+        
+        //let textFieldInsideSearchBar = self.value(forKey: "searchField") as? UITextField
+
+//        //get the sizes
+//        guard let searchBarWidth = searchBar.textField?.frame.width else {return}
+//        let placeholderIconWidth = textFieldInsideSearchBar?.leftView?.frame.width
+//        let placeHolderWidth = textFieldInsideSearchBar?.attributedPlaceholder?.size().width
+//        let offsetIconToPlaceholder: CGFloat = 8
+//        let placeHolderWithIcon = placeholderIconWidth! + offsetIconToPlaceholder
+//        let offset = UIOffset(horizontal: ((searchBarWidth / 2) - (placeHolderWidth! / 2) - placeHolderWithIcon), vertical: 0)
+//        self.setPositionAdjustment(offset, for: .search)
+    }
+}
+
+
+extension TokensViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    // MARK: UICollectionViewDataSource
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        let numberOfItems = 1
+
+        
+        return numberOfItems
+    }
+
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let numberOfItems = 3
+        pageControl.numberOfPages = numberOfItems
+        
+        return numberOfItems
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! AccountWalletCollectionViewCell
+        let viewModel = AccountWalletCollectionViewCellViewModel(accountTitle: "", walletAddress: "", amount: "")
+        cell.configure(viewModel: viewModel)
+        cell.delegate = self
+        return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+    }
+    
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let visibleRect = CGRect(origin: walletsCollectionView.contentOffset, size: walletsCollectionView.bounds.size)
+        let visiblePoint = CGPoint(x: visibleRect.midX, y: visibleRect.midY)
+        let visibleIndexPath = walletsCollectionView.indexPathForItem(at: visiblePoint)
+        pageControl.currentPage = visibleIndexPath!.row
+    }
+
+}
+
+extension TokensViewController: AccountWalletCollectionViewCellDelegate {
+    func accountWalletCollectionViewCellDidTapCopyButton(indexPath: IndexPath) {
+        print("accountWalletCollectionViewCellDidTapCopyButton \(indexPath.row)")
+    }
+    
+    func accountWalletCollectionViewCellDidTapSend(indexPath: IndexPath) {
+        print("accountWalletCollectionViewCellDidTapSend \(indexPath.row)")
+    }
+    
+    func accountWalletCollectionViewCellDidTapReceive(indexPath: IndexPath) {
+        print("accountWalletCollectionViewCellDidTapReceive \(indexPath.row)")
+    }
+    
+    func accountWalletCollectionViewCellDidTapMoreButton(indexPath: IndexPath) {
+        print("accountWalletCollectionViewCellDidTapMoreButton \(indexPath.row)")
+    }
+    
+    
+}
+
+class SnappingCollectionViewLayout: UICollectionViewFlowLayout {
+
+    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+        guard let collectionView = collectionView else { return super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity) }
+
+        var offsetAdjustment = CGFloat.greatestFiniteMagnitude
+        let horizontalOffset = proposedContentOffset.x + collectionView.contentInset.left
+
+        let targetRect = CGRect(x: proposedContentOffset.x, y: 0, width: collectionView.bounds.size.width, height: collectionView.bounds.size.height)
+
+        let layoutAttributesArray = super.layoutAttributesForElements(in: targetRect)
+
+        layoutAttributesArray?.forEach({ (layoutAttributes) in
+            let itemOffset = layoutAttributes.frame.origin.x
+            if fabsf(Float(itemOffset - horizontalOffset)) < fabsf(Float(offsetAdjustment)) {
+                offsetAdjustment = itemOffset - horizontalOffset
+            }
+        })
+
+        return CGPoint(x: proposedContentOffset.x + offsetAdjustment, y: proposedContentOffset.y)
     }
 }

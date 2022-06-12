@@ -15,7 +15,7 @@ class FungibleTokenViewCell: UITableViewCell {
         [titleLabel, apprecation24hoursView, priceChangeLabel]
     }
 
-    private lazy var changeValueContainer: UIView = [priceChangeLabel, apprecation24hoursView].asStackView(spacing: 5)
+    private lazy var changeValueContainer: UIView = [/*priceChangeLabel,*/ apprecation24hoursView].asStackView(spacing: 0/*5*/)
 
     private var tokenIconImageView: TokenImageView = {
         let imageView = TokenImageView()
@@ -28,17 +28,18 @@ class FungibleTokenViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
+        contentView.layer.cornerRadius = 12
         contentView.addSubview(background)
         background.translatesAutoresizingMaskIntoConstraints = false
         priceChangeLabel.textAlignment = .center
         fiatValueLabel.textAlignment = .center
-        fiatValueLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
-        fiatValueLabel.setContentHuggingPriority(.required, for: .horizontal)
+        cryptoValueLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
+        cryptoValueLabel.setContentHuggingPriority(.required, for: .horizontal)
 
         let col0 = tokenIconImageView
-        let row1 = [cryptoValueLabel, UIView.spacerWidth(flexible: true), changeValueContainer, blockChainTagLabel].asStackView(spacing: 5, alignment: .center)
+        let row1 = [changeValueContainer, UIView.spacerWidth(flexible: true), fiatValueLabel/*, blockChainTagLabel*/].asStackView(spacing: 5, alignment: .center)
         let col1 = [
-            [titleLabel, UIView.spacerWidth(flexible: true), fiatValueLabel].asStackView(spacing: 5),
+            [titleLabel, UIView.spacerWidth(flexible: true), cryptoValueLabel].asStackView(spacing: 5),
             row1
         ].asStackView(axis: .vertical)
         let stackView = [col0, col1].asStackView(spacing: 12, alignment: .center)
@@ -61,7 +62,7 @@ class FungibleTokenViewCell: UITableViewCell {
     func configure(viewModel: FungibleTokenViewCellViewModel) {
         selectionStyle = .none
 
-        backgroundColor = viewModel.backgroundColor
+        backgroundColor = UIColor.clear
         background.backgroundColor = viewModel.contentsBackgroundColor
         contentView.backgroundColor = GroupedTable.Color.background
 
@@ -82,13 +83,15 @@ class FungibleTokenViewCell: UITableViewCell {
         }
         tokenIconImageView.subscribable = viewModel.iconImage
 
-        blockChainTagLabel.configure(viewModel: viewModel.blockChainTagViewModel)
+        //blockChainTagLabel.configure(viewModel: viewModel.blockChainTagViewModel)
         changeValueContainer.isHidden = !viewModel.blockChainTagViewModel.blockChainNameLabelHidden
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-
+        contentView.bounds = CGRect(origin: CGPoint(x: self.bounds.origin.x, y: self.bounds.origin.y), size: CGSize(width: (0.91 * self.bounds.size.width), height: self.bounds.size.height))
+        
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0))
         priceChangeLabel.layer.cornerRadius = 2.0
     }
 }

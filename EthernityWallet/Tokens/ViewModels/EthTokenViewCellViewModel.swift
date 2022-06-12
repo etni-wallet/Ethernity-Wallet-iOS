@@ -30,7 +30,8 @@ struct EthTokenViewCellViewModel {
     }
 
     private var title: String {
-        return token.shortTitleInPluralForm(withAssetDefinitionStore: assetDefinitionStore)
+        //return token.shortTitleInPluralForm(withAssetDefinitionStore: assetDefinitionStore)
+        return token.name
     }
 
     var backgroundColor: UIColor {
@@ -50,7 +51,7 @@ struct EthTokenViewCellViewModel {
 
     var cryptoValueAttributedString: NSAttributedString {
         return NSAttributedString(string: amount + " " + token.symbolInPluralForm(withAssetDefinitionStore: assetDefinitionStore), attributes: [
-            .foregroundColor: Screen.TokenCard.Color.subtitle,
+            .foregroundColor: Screen.TokenCard.Color.title,
             .font: Screen.TokenCard.Font.subtitle
         ])
     }
@@ -78,9 +79,9 @@ struct EthTokenViewCellViewModel {
         let valuePercentageChangeValue: String = {
             switch EthCurrencyHelper(ticker: ticker).change24h {
             case .appreciate(let percentageChange24h):
-                return "\(percentageChange24h)%"
+                return "↑\(percentageChange24h)%"
             case .depreciate(let percentageChange24h):
-                return "\(percentageChange24h)%"
+                return "↓\(percentageChange24h)%"
             case .none:
                 if priceChangeUSDValue == UiTweaks.noPriceMarker {
                     return UiTweaks.noPriceMarker
@@ -121,7 +122,7 @@ struct EthTokenViewCellViewModel {
 
     var fiatValueAttributedString: NSAttributedString {
         return NSAttributedString(string: amountAccordingRPCServer ?? UiTweaks.noPriceMarker, attributes: [
-            .foregroundColor: Screen.TokenCard.Color.title,
+            .foregroundColor: Screen.TokenCard.Color.valueChangeLabel,
             .font: Screen.TokenCard.Font.valueChangeValue
         ])
     }
@@ -166,14 +167,7 @@ struct EthTokenViewCellViewModel {
     }
 
     var apprecationViewModel: ApprecationViewModel {
-        let backgroundColor: UIColor = {
-            if apprecation24hoursAttributedString.string.isEmpty {
-                return .clear
-            } else {
-                return apprecation24hoursBackgroundColor
-            }
-        }()
-        return .init(icon: apprecation24hoursImage, valueAttributedString: apprecation24hoursAttributedString, backgroundColor: backgroundColor)
+        return .init(icon: .none, valueAttributedString: apprecation24hoursAttributedString, backgroundColor: UIColor.clear)
     }
 
     private func valuePercentageChangeColor(ticker: CoinTicker?) -> UIColor {

@@ -18,6 +18,7 @@ class EmptyTableView: UIView {
         label.textColor = Style.Search.Network.Empty.color
         label.font = Style.Search.Network.Empty.font
         label.textAlignment = .center
+        label.numberOfLines = 2
         return label
     }()
 

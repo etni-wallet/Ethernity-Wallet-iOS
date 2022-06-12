@@ -20,6 +20,43 @@ protocol TokensCoordinatorDelegate: CanOpenURL, SendTransactionDelegate {
     func whereAreMyTokensSelected(in coordinator: TokensCoordinator)
     func didSelectAccount(account: Wallet, in coordinator: TokensCoordinator)
     func viewWillAppearOnce(in coordinator: TokensCoordinator)
+    
+    func didCancel(in coordinator: TokensCoordinator)
+    func didAddAccount(account: Wallet, in coordinator: TokensCoordinator)
+    func didDeleteAccount(account: Wallet, in coordinator: TokensCoordinator)
+    func didFinishBackup(account: AlphaWallet.Address, in coordinator: TokensCoordinator)
+}
+
+struct TokensCoordinatorViewModel {
+    var configuration: Configuration
+    var animatedPresentation: Bool = false
+
+    enum Configuration {
+        case changeWallets
+        case summary
+
+        var hidesBackButton: Bool {
+            switch self {
+            case .changeWallets:
+                return false
+            case .summary:
+                return true
+            }
+        }
+
+        var allowsAccountDeletion: Bool {
+            return true
+        }
+
+        var navigationTitle: String {
+            switch self {
+            case .changeWallets:
+                return R.string.localizable.walletNavigationTitle()
+            case .summary:
+                return R.string.localizable.walletsNavigationTitle()
+            }
+        }
+    }
 }
 
 class TokensCoordinator: Coordinator {
@@ -52,9 +89,14 @@ class TokensCoordinator: Coordinator {
         queue.maxConcurrentOperationCount = 1
         return queue
     }()
+    
+    private let viewModel: TokensCoordinatorViewModel
     private let activitiesService: ActivitiesServiceType
     //NOTE: private (set) - `For test purposes only`
     private (set) lazy var tokensViewController: TokensViewController = {
+        let viewModel = AccountsViewModel(keystore: keystore, config: config, configuration: self.viewModel.configuration, analyticsCoordinator: analyticsCoordinator, walletBalanceService: walletBalanceService)
+        viewModel.allowsAccountDeletion = self.viewModel.configuration.allowsAccountDeletion
+        
         let controller = TokensViewController(
             sessions: sessions,
             account: sessions.anyValue.account,
@@ -63,7 +105,8 @@ class TokensCoordinator: Coordinator {
             tokensFilter: tokensFilter,
             config: config,
             walletConnectCoordinator: walletConnectCoordinator,
-            walletBalanceService: walletBalanceService
+            walletBalanceService: walletBalanceService,
+            accountsViewModel: viewModel
         )
         controller.delegate = self
         return controller
@@ -72,6 +115,9 @@ class TokensCoordinator: Coordinator {
     private var sendToAddress: AlphaWallet.Address? = .none
     private var singleChainTokenCoordinators: [SingleChainTokenCoordinator] {
         return coordinators.compactMap { $0 as? SingleChainTokenCoordinator }
+    }
+    private var accountsCoordinator: AccountsCoordinator {
+        return coordinators.first(where: {$0 is AccountsCoordinator}) as! AccountsCoordinator
     }
     private let walletConnectCoordinator: WalletConnectCoordinator
     let navigationController: UINavigationController
@@ -107,7 +153,8 @@ class TokensCoordinator: Coordinator {
             walletConnectCoordinator: WalletConnectCoordinator,
             coinTickersFetcher: CoinTickersFetcherType,
             activitiesService: ActivitiesServiceType,
-            walletBalanceService: WalletBalanceService
+            walletBalanceService: WalletBalanceService,
+            viewModel: TokensCoordinatorViewModel
     ) {
         self.navigationController = navigationController
         self.sessions = sessions
@@ -123,19 +170,26 @@ class TokensCoordinator: Coordinator {
         self.coinTickersFetcher = coinTickersFetcher
         self.activitiesService = activitiesService
         self.walletBalanceService = walletBalanceService
+        self.viewModel = viewModel
+        
         promptBackupCoordinator.prominentPromptDelegate = self
         setupSingleChainTokenCoordinators()
+        setupAccountsCoordinator()
 
-        let moreBarButton = UIBarButtonItem.moreBarButton(self, selector: #selector(moreButtonSelected))
+        let addBarButton = UIBarButtonItem.addBarButton(self, selector: #selector(moreButtonSelected))
         let qrCodeBarButton = UIBarButtonItem.qrCodeBarButton(self, selector: #selector(scanQRCodeButtonSelected))
-        moreBarButton.imageInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
-        qrCodeBarButton.imageInsets = .init(top: 0, left: 15, bottom: 0, right: -15)
-
-        tokensViewController.navigationItem.rightBarButtonItems = [
-            moreBarButton,
-            qrCodeBarButton
-        ]
-        tokensViewController.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: tokensViewController.blockieImageView)
+        //moreBarButton.imageInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
+        qrCodeBarButton.imageInsets = .init(top: 0, left: 0, bottom: 0, right: 15)
+        
+        tokensViewController.navigationItem.rightBarButtonItem = qrCodeBarButton
+        
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "  " + tokensViewController.viewModel.walletDefaultTitle
+        label.font = Fonts.semibold(size: 36)
+        label.textColor = UIColor.black
+        label.textAlignment = .left
+        tokensViewController.navigationItem.leftBarButtonItems = [UIBarButtonItem(customView: tokensViewController.blockieImageView), UIBarButtonItem(customView: label), addBarButton]
         tokensViewController.blockieImageView.addTarget(self, action: #selector(blockieButtonSelected), for: .touchUpInside)
     }
 
@@ -153,9 +207,30 @@ class TokensCoordinator: Coordinator {
         }
     }
 
+    private static var menuToShow : Int = -1
     @objc private func moreButtonSelected(_ sender: UIBarButtonItem) {
-        let alertViewController = makeMoreAlertSheet(sender: sender)
-        tokensViewController.present(alertViewController, animated: true)
+        TokensCoordinator.menuToShow += 1
+        if TokensCoordinator.menuToShow == 3 {
+            TokensCoordinator.menuToShow = 0
+        }
+        switch TokensCoordinator.menuToShow {
+        case 0 :
+            let butonsPopup = ButtonsPageViewController(createPopUp: true)
+            butonsPopup.modalPresentationStyle = .overFullScreen
+            tokensViewController.present(butonsPopup, animated: false)
+            break
+        case 1 :
+            let butonsPopup = ButtonsPageViewController(createPopUp: false)
+            butonsPopup.modalPresentationStyle = .overFullScreen
+            tokensViewController.present(butonsPopup, animated: false)
+            break
+        case 2 :
+            let alertViewController = makeMoreAlertSheet(sender: sender)
+            tokensViewController.present(alertViewController, animated: true)
+            break
+        default: break;
+            
+        }
     }
 
     func start() {
@@ -170,6 +245,20 @@ class TokensCoordinator: Coordinator {
     deinit {
         autoDetectTransactedTokensQueue.cancelAllOperations()
         autoDetectTokensQueue.cancelAllOperations()
+    }
+    
+    private func setupAccountsCoordinator() {
+        let coordinator = AccountsCoordinator(
+                config: config,
+                navigationController: navigationController,
+                keystore: keystore,
+                analyticsCoordinator: analyticsCoordinator,
+                viewModel: .init(configuration: .summary, animatedPresentation: true),
+                walletBalanceService: walletBalanceService
+        )
+        coordinator.delegate = self
+        coordinator.start()
+        addCoordinator(coordinator)
     }
 
     private func setupSingleChainTokenCoordinators() {
@@ -215,7 +304,7 @@ class TokensCoordinator: Coordinator {
     }
 
     func listOfBadTokenScriptFilesChanged(fileNames: [TokenScriptFileIndices.FileName]) {
-        tokensViewController.listOfBadTokenScriptFiles = fileNames
+//        tokensViewController.listOfBadTokenScriptFiles = fileNames
     }
 
     func launchUniversalScanner(fromSource source: Analytics.ScanQRCodeSource) {
@@ -231,6 +320,18 @@ class TokensCoordinator: Coordinator {
 }
 
 extension TokensCoordinator: TokensViewControllerDelegate {
+    func didSelectAccount(account: Wallet, in viewController: TokensViewController) {
+        
+    }
+    
+    func didDeleteAccount(account: Wallet, in viewController: TokensViewController) {
+        
+    }
+    
+    func didSelectInfoForAccount(account: Wallet, sender: UIView, in viewController: TokensViewController) {
+        
+    }
+    
 
     func whereAreMyTokensSelected(in viewController: UIViewController) {
         delegate?.whereAreMyTokensSelected(in: self)
@@ -238,7 +339,7 @@ extension TokensCoordinator: TokensViewControllerDelegate {
 
     private func getWalletName() {
         let viewModel = tokensViewController.viewModel
-
+        
         tokensViewController.title = viewModel.walletDefaultTitle
 
         firstly {
@@ -264,7 +365,7 @@ extension TokensCoordinator: TokensViewControllerDelegate {
     }
 
     func viewWillAppear(in viewController: UIViewController) {
-        getWalletName()
+        //getWalletName()
         getWalletBlockie()
 
         guard !viewWillAppearHandled else { return }
@@ -333,7 +434,7 @@ extension TokensCoordinator: TokensViewControllerDelegate {
         navigationController.pushViewController(viewController, animated: true)
     }
 
-    private func didPressAddHideTokens(viewModel: TokensViewModel) {
+    func didPressAddHideTokens(viewModel: TokensViewModel) {
         let coordinator: AddHideTokensCoordinator = .init(
             tokens: viewModel.tokens,
             assetDefinitionStore: assetDefinitionStore,
@@ -614,12 +715,34 @@ extension TokensCoordinator: PromptBackupCoordinatorProminentPromptDelegate {
     }
 
     func updatePrompt(inCoordinator coordinator: PromptBackupCoordinator) {
-        tokensViewController.promptBackupWalletView = coordinator.prominentPromptView
+//        tokensViewController.promptBackupWalletView = coordinator.prominentPromptView
     }
 }
 
 extension TokensCoordinator: AddHideTokensCoordinatorDelegate {
     func didClose(coordinator: AddHideTokensCoordinator) {
         removeCoordinator(coordinator)
+    }
+}
+
+extension TokensCoordinator: AccountsCoordinatorDelegate {
+    func didCancel(in coordinator: AccountsCoordinator) {
+        
+    }
+    
+    func didSelectAccount(account: Wallet, in coordinator: AccountsCoordinator) {
+        
+    }
+    
+    func didAddAccount(account: Wallet, in coordinator: AccountsCoordinator) {
+        
+    }
+    
+    func didDeleteAccount(account: Wallet, in coordinator: AccountsCoordinator) {
+        
+    }
+    
+    func didFinishBackup(account: AlphaWallet.Address, in coordinator: AccountsCoordinator) {
+        
     }
 }

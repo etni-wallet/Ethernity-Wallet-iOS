@@ -72,14 +72,14 @@ class AccountsCoordinator: Coordinator {
     }()
 
     weak var delegate: AccountsCoordinatorDelegate?
-    private let viewModel: AccountsCoordinatorViewModel
+    private let viewModel: TokensCoordinatorViewModel
 
     init(
         config: Config,
         navigationController: UINavigationController,
         keystore: Keystore,
         analyticsCoordinator: AnalyticsCoordinator,
-        viewModel: AccountsCoordinatorViewModel,
+        viewModel: TokensCoordinatorViewModel,
         walletBalanceService: WalletBalanceService
     ) {
         self.config = config
@@ -106,13 +106,13 @@ class AccountsCoordinator: Coordinator {
                 alertButtonTitles: [
                     R.string.localizable.walletCreateButtonTitle(),
                     R.string.localizable.walletImportButtonTitle(),
-                    R.string.localizable.walletWatchButtonTitle(),
+                    //R.string.localizable.walletWatchButtonTitle(),
                     R.string.localizable.cancel()
                 ],
                 alertButtonStyles: [
                     .default,
                     .default,
-                    .default,
+                    //.default,
                     .cancel
                 ],
                 viewController: navigationController,
@@ -122,9 +122,10 @@ class AccountsCoordinator: Coordinator {
                         strongSelf.showCreateWallet()
                     } else if index == 1 {
                         strongSelf.showImportWallet()
-                    } else if index == 2 {
-                        strongSelf.showWatchWallet()
                     }
+//                    else if index == 2 {
+//                        strongSelf.showWatchWallet()
+//                    }
         }
 	}
 

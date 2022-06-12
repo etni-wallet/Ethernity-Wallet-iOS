@@ -24,14 +24,8 @@ class AccountViewModel {
             .eraseToAnyPublisher()
     }()
 
-    lazy var balance: AnyPublisher<NSAttributedString, Never> = {
-        let initialBalance = balanceAttributedString(for: walletBalanceService.walletBalance(wallet: wallet).totalAmountString)
-
-        return walletBalanceService.walletBalancePublisher(wallet: wallet)
-            .map { self.balanceAttributedString(for: $0.totalAmountString) }
-            .receive(on: RunLoop.main)
-            .prepend(initialBalance)
-            .eraseToAnyPublisher()
+    lazy var balance: String = {
+        return balanceAttributedString(for: walletBalanceService.walletBalance(wallet: wallet).totalAmountString).string
     }()
     
     lazy var blockieImage: AnyPublisher<BlockiesImage, Never> = {
@@ -49,15 +43,8 @@ class AccountViewModel {
             .eraseToAnyPublisher()
     }()
 
-    lazy var addressesAttrinutedString: AnyPublisher<NSAttributedString, Never> = {
-        return domainResolver.resolveEns(address: wallet.address).publisher
-            .prepend((image: nil, resolution: .resolved(nil)))
-            .replaceError(with: (image: nil, resolution: .resolved(nil)))
-            .map { $0.resolution.value }
-            .map { self.addressAttributedString(ensName: $0) }
-            .receive(on: RunLoop.main)
-            .prepend(addressAttributedString(ensName: nil))
-            .eraseToAnyPublisher()
+    lazy var addressesAttrinutedString: String = {
+        return "MzQwSSnBHWHqSAqtTVQ6v47XtaisrJa1Vc"
     }()
 
     init(
