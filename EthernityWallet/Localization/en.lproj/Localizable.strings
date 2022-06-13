@@ -869,3 +869,6 @@
 "wallets.flow.send.button.title" = "Send";
 "wallets.flow.receive.button.title" = "Receive";
 "app.name" = "Ethernity Cloud";
+
+"education.safetyTip.Title" = "Safety tip";
+"education.guide.Title" = "Beginner’s Guide";
