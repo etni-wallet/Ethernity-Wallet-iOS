@@ -16,8 +16,8 @@ class ActivitiesCoordinator: NSObject, Coordinator {
     private let analyticsCoordinator: AnalyticsCoordinator
     weak var delegate: ActivitiesCoordinatorDelegate?
 
-    lazy var rootViewController: ActivitiesViewController = {
-        makeActivitiesViewController()
+    lazy var rootViewController: EducationViewController = {
+        makeEducationViewController()
     }()
 
     let navigationController: UINavigationController
@@ -45,12 +45,9 @@ class ActivitiesCoordinator: NSObject, Coordinator {
         subscribeForActivitiesUpdates()
     }
 
-    private func makeActivitiesViewController() -> ActivitiesViewController {
-        let viewModel = ActivitiesViewModel()
-        let controller = ActivitiesViewController(analyticsCoordinator: analyticsCoordinator, keystore: keystore, wallet: wallet, viewModel: viewModel, sessions: sessions)
-        controller.delegate = self
-        
-        return controller
+    private func makeEducationViewController() -> EducationViewController {
+        let viewController = EducationViewController(viewModel: EducationViewModel(), navigationController: navigationController)
+        return viewController
     }
 
     @objc func dismiss() {
@@ -65,13 +62,7 @@ class ActivitiesCoordinator: NSObject, Coordinator {
 extension ActivitiesCoordinator: ActivitiesViewControllerDelegate {
 
     func subscribeForActivitiesUpdates() {
-        subscriptionKey.flatMap { activitiesService.subscribableViewModel.unsubscribe($0) }
 
-        subscriptionKey = activitiesService.subscribableViewModel.subscribe { [weak rootViewController] viewModel in
-            guard let viewController = rootViewController, let viewModel = viewModel else { return }
-
-            viewController.configure(viewModel: viewModel)
-        }
     }
 
     func didPressActivity(activity: Activity, in viewController: ActivitiesViewController) {
