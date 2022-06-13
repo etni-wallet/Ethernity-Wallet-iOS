@@ -97,8 +97,8 @@ class EducationViewController: UIViewController {
     }
 
     func configure() {
-        title = "Education"
         view.backgroundColor = .white
+        navigationItem.title = "Education"
         navigationItem.largeTitleDisplayMode = .always
         let safetyTipStackView = [
             verticalLine,

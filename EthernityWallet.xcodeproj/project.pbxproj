@@ -2265,12 +2265,12 @@
 		E42226C3283B8F4000A3EB68 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		E42226C5283BBAE200A3EB68 /* AboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
 		E490CF5E284A694D00D463F9 /* AccountWalletCollectionViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountWalletCollectionViewCellViewModel.swift; sourceTree = "<group>"; };
-		E4BAEE7028572A7A006B0B34 /* EducationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EducationViewModel.swift; path = EthernityWallet/Tokens/ViewModels/EducationViewModel.swift; sourceTree = SOURCE_ROOT; };
-		E4BAEE7228572A93006B0B34 /* EducationDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EducationDetailsViewModel.swift; path = EthernityWallet/Tokens/ViewModels/EducationDetailsViewModel.swift; sourceTree = SOURCE_ROOT; };
+		E4BAEE7028572A7A006B0B34 /* EducationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EducationViewModel.swift; path = EthernityWallet/Education/ViewModels/EducationViewModel.swift; sourceTree = SOURCE_ROOT; };
+		E4BAEE7228572A93006B0B34 /* EducationDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EducationDetailsViewModel.swift; path = EthernityWallet/Education/ViewModels/EducationDetailsViewModel.swift; sourceTree = SOURCE_ROOT; };
 		E4BAEE7428572AC1006B0B34 /* EducationDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationDetailsViewController.swift; sourceTree = "<group>"; };
-		E4BAEE7628572ADC006B0B34 /* RoundedBlueCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RoundedBlueCellViewModel.swift; path = EthernityWallet/Education/ViewControllers/RoundedBlueCellViewModel.swift; sourceTree = SOURCE_ROOT; };
-		E4BAEE7828572AF3006B0B34 /* EducationGuideModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EducationGuideModel.swift; path = EthernityWallet/Education/ViewControllers/EducationGuideModel.swift; sourceTree = SOURCE_ROOT; };
-		E4BAEE7A28572B09006B0B34 /* EducationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EducationCoordinator.swift; path = EthernityWallet/Education/ViewControllers/EducationCoordinator.swift; sourceTree = SOURCE_ROOT; };
+		E4BAEE7628572ADC006B0B34 /* RoundedBlueCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RoundedBlueCellViewModel.swift; path = EthernityWallet/Education/ViewModels/RoundedBlueCellViewModel.swift; sourceTree = SOURCE_ROOT; };
+		E4BAEE7828572AF3006B0B34 /* EducationGuideModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EducationGuideModel.swift; path = EthernityWallet/Education/ViewModels/EducationGuideModel.swift; sourceTree = SOURCE_ROOT; };
+		E4BAEE7A28572B09006B0B34 /* EducationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EducationCoordinator.swift; path = EthernityWallet/Education/Coordinators/EducationCoordinator.swift; sourceTree = SOURCE_ROOT; };
 		E4BB9F4D282116AF00077CEF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E4C76305283E7E4000B89797 /* RedirectAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectAlertViewController.swift; sourceTree = "<group>"; };
 		E4C76307283E92BF00B89797 /* RedirectAlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectAlertViewModel.swift; sourceTree = "<group>"; };
@@ -5519,23 +5519,34 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
+		E4BAEE7C28572EE7006B0B34 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				E4BAEE7A28572B09006B0B34 /* EducationCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		E4BAEE7D28572EF3006B0B34 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E4BAEE7028572A7A006B0B34 /* EducationViewModel.swift */,
+				E4BAEE7228572A93006B0B34 /* EducationDetailsViewModel.swift */,
+				E4BAEE7628572ADC006B0B34 /* RoundedBlueCellViewModel.swift */,
+				E4BAEE7828572AF3006B0B34 /* EducationGuideModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		E96D9113283AEDA500EB90A6 /* Education */ = {
 			isa = PBXGroup;
 			children = (
-				E96D9120283C1DE200EB90A6 /* Coordinators */,
+				E4BAEE7D28572EF3006B0B34 /* ViewModels */,
+				E4BAEE7C28572EE7006B0B34 /* Coordinators */,
 				E96D911D283B08C200EB90A6 /* Views */,
-				E96D9118283AEE1A00EB90A6 /* Models */,
 				E96D9117283AEE0A00EB90A6 /* ViewControllers */,
-				E96D9116283AEDFF00EB90A6 /* ViewModels */,
 			);
 			path = Education;
-			sourceTree = "<group>";
-		};
-		E96D9116283AEDFF00EB90A6 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		E96D9117283AEE0A00EB90A6 /* ViewControllers */ = {
@@ -5547,31 +5558,12 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		E96D9118283AEE1A00EB90A6 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				E4BAEE7028572A7A006B0B34 /* EducationViewModel.swift */,
-				E4BAEE7228572A93006B0B34 /* EducationDetailsViewModel.swift */,
-				E4BAEE7628572ADC006B0B34 /* RoundedBlueCellViewModel.swift */,
-				E4BAEE7828572AF3006B0B34 /* EducationGuideModel.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		E96D911D283B08C200EB90A6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				E96D911E283B08DA00EB90A6 /* RoundedBlueCell.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		E96D9120283C1DE200EB90A6 /* Coordinators */ = {
-			isa = PBXGroup;
-			children = (
-				E4BAEE7A28572B09006B0B34 /* EducationCoordinator.swift */,
-			);
-			path = Coordinators;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
